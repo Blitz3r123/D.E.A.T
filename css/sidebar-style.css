@@ -1,0 +1,64 @@
+.page-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.main-content{min-width: 80%; max-width: 80%;}
+.main-content .page-title{font-size: 3em; padding: 3vh 0 3vh 3vw; text-decoration: underline;}
+
+.sidebar{
+    outline: 1px solid black;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: scroll;
+    min-width: 20%;
+    max-width: 20%;
+}
+
+/* Hide scroll bar */
+.sidebar::-webkit-scrollbar {width: 0 !important;}
+
+.logo{
+    /* outline: 1px solid red; */
+    text-align: center;
+    margin-left: 1vw;
+    font-size: 3.5em;
+    margin-bottom: 4vh;
+}
+
+.side-link{color: black; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
+.side-link:hover{color: white; text-decoration: none; cursor: pointer; background-color: black;}
+    .side-link ion-icon{margin-right: 1vw;}
+
+.sidebar-link{
+    border-top: 1px solid black;
+    display: block;
+    padding: 1vh 2vw;
+    font-size: 1.2em;
+    width: 20vw;
+}
+
+.sidebar-inner-link{
+    width: 16vw;
+    margin-left: 4vw;
+    display: block;
+    font-size: 1em;
+    padding: 1vh 2vw;
+    border-left: 2px solid black;
+}
+
+.sidebar-inner-inner-link{
+    width: 12vw;
+    margin-left: 8vw;
+    display: block;
+    font-size: 1em;
+    padding: 1vh 2vw;
+    border-left: 2px solid black;
+}
+
+/* Default Styles */
+.margin-bot-1vh{margin-bottom: 1vh;}
+.border-bot-1px-solid-black{border-bottom: 1px solid black;}
+.selected{background-color: black; color: white;}
+.selected:hover{color: white;}
+/* End of Default Styles */

@@ -1,0 +1,15 @@
+{
+  "name": "d.e.a.t",
+  "version": "1.0.0",
+  "description": "DDS Experiment Automation Tool",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Kaleem Peeroo",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^6.0.11",
+    "jquery": "^3.4.1"
+  }
+}

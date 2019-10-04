@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Bootstrap 4 CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- End of Bootstrap 4 CDN -->
+        
+        <!-- Custom CSS Stylesheets -->
+        <link rel="stylesheet" href="./../css/index-style.css">
+        <link rel="stylesheet" href="./../css/sidebar-style.css">
+        <!-- End of Custom CSS Stylesheets -->
+
+        <title>D.E.A.T Home</title>
+    </head>
+    <body>
+        
+        <div class="page-wrapper">
+            <div class="sidebar">
+    
+                <h1 class="logo">D.E.A.T</h1>
+    
+                <a href="index.html" class="sidebar-link side-link selected"><ion-icon name="home"></ion-icon>Home</a>
+                <a href="create.html" class="side-link sidebar-link"><ion-icon name="create"></ion-icon>Create</a>
+                    <a href="#" class="side-link sidebar-inner-link">
+                        <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
+                        Publisher
+                    </a>
+                    <a href="#" class="side-link sidebar-inner-link">
+                        <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
+                        Subscriber
+                    </a>
+                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh">
+                        <ion-icon name="speedometer" style="margin-bottom: -0.5vh;"></ion-icon>    
+                        Test
+                    </a>
+                <a href="#" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Run</a>
+                    <a href="#" class="side-link sidebar-inner-link">
+                        <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
+                        Publishers
+                    </a>
+                        <a href="#" class="side-link sidebar-inner-inner-link">Publisher 1</a>
+                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Publisher 2</a>
+                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh">
+                        <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
+                        Subscribers
+                    </a>
+                        <a href="#" class="side-link sidebar-inner-inner-link">Subscriber 1</a>
+                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Subscriber 2</a>
+                <a href="#" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="help"></ion-icon>Help</a>                
+    
+            </div><!-- End of div.sidebar -->
+            
+            <div class="main-content">
+                
+                <p class="page-title">HOME</p>
+
+                <div class="quick-section">
+
+                    <div class="quick-create">
+                        <p class="subtitle">
+                            <ion-icon name="create"></ion-icon>
+                            Quick Create
+                        </p>
+                        
+                        <a href="" class="create-button">Default Publisher</a>
+                        <a href="" class="create-button">Default Subscriber</a>
+
+                        <a href="" class="create-button">Custom Publisher</a>
+                        <a href="" class="create-button">Custom Subscriber</a>
+                    </div><!-- End of div.quick-create -->
+
+                    <div class="quick-run">
+                        <p class="subtitle">
+                            <ion-icon name="play" style="margin-left: 1vw;"></ion-icon>
+                            Quick Run
+                        </p>
+
+                        <div class="list-wrapper">
+
+                            <div class="publisher-list">
+                                <p class="list-title"><ion-icon name="paper-plane" style="margin-right: 0.5vw;"></ion-icon>Publishers</p>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a>
+                            </div><!-- End of Publisher List-->
+
+                            <div class="subscriber-list">
+                                <p class="list-title"><ion-icon name="mail-open" style="margin-right: 0.5vw;"></ion-icon>Subscribers</p>
+                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a>
+                            </div><!-- End of Subscriber List-->
+
+                        </div><!-- End of List wrapper -->
+
+                    </div><!-- End of div.quick-run -->
+
+
+                </div><!-- End of div.quick-section -->
+
+                <div class="recent-results">
+                    <p class="subtitle">
+                        <ion-icon name="stats" style="margin-bottom: -0.5vh;"></ion-icon>    
+                        Recent Results
+                    </p>
+
+                    <p class="empty-message">
+                        Looks like you haven't run any tests recently. Why not <a href="" class="action-link">run</a> some tests or <a href="" class="action-link">import</a> some results?
+                    </p>
+
+                </div><!-- End of div.recent-results -->
+
+            </div><!-- End of div.main-content -->
+        </div>
+
+        <!-- JavaScript Functions -->
+        <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
+        <script src="./../js/global.js"></script>
+        <!-- End of JavaScript Functions -->
+
+        <!-- JavaScript Dependencies -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        <!-- End of JavaScript Dependencies -->
+    </body>
+</html>
