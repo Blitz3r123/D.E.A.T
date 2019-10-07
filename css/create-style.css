@@ -62,3 +62,5 @@
 
 .checkmark{height: 4vh; width: 4vw; margin-right: 5vw;}
 .checkmark:hover{cursor: pointer;}
+
+#createButton:hover{cursor: pointer; color: white;}

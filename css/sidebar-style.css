@@ -1,3 +1,25 @@
+#error-message{
+    /* outline: 1px solid black; */
+    width: 20vw;
+    border-radius: 2px;
+    height: auto;
+    min-height: 10vh;
+    position: fixed;
+    top: 20vh;
+    color: white;
+    text-align: center;
+    padding: 3vh 2vw;
+}
+#error-message #error-close{
+    position: fixed;
+    color: white;
+    top: 20.5vh;
+    left: 58.5vw;
+}
+#error-close:hover{
+    cursor: pointer;
+}
+
 .page-wrapper{
     display: flex;
     justify-content: space-evenly;
