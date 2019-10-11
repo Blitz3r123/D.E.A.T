@@ -7,8 +7,17 @@
         
         <!-- Custom CSS Stylesheets -->
         <link rel="stylesheet" href="./../css/index-style.css">
+        <link rel="stylesheet" href="./../css/create-style.css">
         <link rel="stylesheet" href="./../css/sidebar-style.css">
         <!-- End of Custom CSS Stylesheets -->
+
+        <!-- Jquery Import -->
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- End of Jquery Import -->
 
         <title>D.E.A.T Home</title>
     </head>
@@ -19,8 +28,8 @@
     
                 <h1 class="logo">D.E.A.T</h1>
     
-                <a href="index.html" class="sidebar-link side-link selected"><ion-icon name="home"></ion-icon>Home</a>
-                <a href="create.html" class="side-link sidebar-link"><ion-icon name="create"></ion-icon>Create</a>
+                <a href="#" onClick="showContent('#indexContent')" class="sidebar-link side-link selected"><ion-icon name="home"></ion-icon>Home</a>
+                <a href="#" onClick="showContent('#createContent')" class="side-link sidebar-link"><ion-icon name="create"></ion-icon>Create</a>
                     <a href="#" class="side-link sidebar-inner-link">
                         <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
                         Publisher
@@ -50,7 +59,253 @@
     
             </div><!-- End of div.sidebar -->
             
-            <div class="main-content">
+            <div class="main-content " id="createContent">
+                
+                <div class="title-search-container">
+                    <p class="page-title">CREATE</p>
+                    <input type="text" placeholder="Search a Setting">
+                </div><!-- End of div.title-search-container -->
+
+                <div class="dropdown-reset-container">
+                    <select class="dropdown" id="type-select">
+                        <option value="publisher" selected>Publisher</option>
+                        <option value="subscriber">Subscriber</option>
+                    </select>
+                    <a id="reset-button" class="reset-button"><ion-icon name="refresh" style="margin-right: 1vw; font-size: 1.5em;"></ion-icon><span>Reset Values</span></a>
+                </div><!-- End of div.dropdown-reset-container -->
+
+                <div class="settings">
+
+                    <div class="settings-column">
+                        <h4 style="display: flex; align-items: center;">
+                            <ion-icon name="settings" style="margin-right: 1vw;"></ion-icon>
+                            <span>General Settings</span>
+                        </h4>
+
+                        <div class="search-setting" id="search-setting"></div>
+
+                        <p class="setting top-setting" title="Use best effort communication.">
+                            Best Effort
+                            <ion-icon name="close-circle-outline" class="checkmark" id="bestEffort"></ion-icon>
+                        </p>
+
+                        <p class="setting" title="Length of payload in bytes. Range: 28 - 2,147,483,128 bytes">
+                            Data Length (bytes)
+                            <input type="number" name="dataLen" id="dataLen" placeholder="100" min="28" max="2147483128">
+                        </p>
+
+                        <p class="setting" title="Run with different levels of verbosity for RTI Connext DDS.">
+                            Verbosity
+                            <select name="verbosity" id="verbosity">
+                                <option value="0">0 - SILENT</option>
+                                <option value="1" selected>1 - ERROR</option>
+                                <option value="2">2 - WARNING</option>
+                                <option value="3">3 - ALL</option>
+                            </select>
+                        </p>
+
+                        <p class="setting" title="Run using the Dynamic Data API functions instead of the rtiddsgen generated calls.">
+                            Use Dynamic Data
+                            <ion-icon name="close-circle-outline" class="checkmark" id="dynamicData"></ion-icon>
+                        </p>
+
+                        <p class="setting" title="Sets the durability kind.">
+                            Durability
+                            <select name="durability" id="durability">
+                                <option value="0" selected>0 - VOLATILE</option>
+                                <option value="1">1 - TRANSIENT LOCAL</option>
+                                <option value="2">2 - TRANSIENT</option>
+                                <option value="3">3 - PERSISTENT</option>
+                            </select>
+                        </p>
+
+                        <p class="setting" title="The publisher and subscriber applications must use the same domain ID in order to communicate. Range: 0 to 200.">
+                            Domain ID
+                            <input type="number" placeholder="1" name="domain" id="domain" min="0" max="200">
+                        </p>
+
+                        <p class="setting" title="Specifiy the use of a keyed type.">
+                            Use Keyed Data
+                            <ion-icon name="close-circle-outline" class="checkmark" id="keyed"></ion-icon>
+                        </p>
+
+                        <!-- This setting is only useful if -keyed is ticked. -->
+                        <p class="setting" id="instances-setting">
+                            Instances
+                            <input type="number" placeholder="Instances" name="instances" id="instances" min="0">
+                        </p>
+
+                        <p class="setting" title="Use Multicast to receive data. In addition, the Datawriter heartbeats will be sent using multicast instead of unicast.">
+                            Use Multicast
+                            <ion-icon name="close-circle-outline" class="checkmark" id="multicast"></ion-icon>
+                        </p>
+
+                        <!-- Show when multicast (above) is ticked -->
+                        <p class="setting" title="If unspecified, following default addressese will be used for each of the topics: latency: 239.255.1.2, throughput: 239.255.1.1, announcement: 239.255.1.100." id="multicastAddress-setting">
+                            Multicast Address
+                            <input type="text" name="multicastAddress" id="multicastAddress" placeholder="239.255.1.2">
+                        </p>
+
+                        <p class="setting" title="Indicates if the subscribing application will receive samples from the publishing application when RTI Persistence Service is used.">
+                            Use Direct Communication
+                            <ion-icon name="close-circle-outline" class="checkmark" id="directCommunication" checked></ion-icon>
+                        </p>
+
+                        <p class="setting" title="Enable use of positive acknowledgements in the reliable protocol.">
+                            Use Positive Acknowledgements
+                            <ion-icon name="close-circle-outline" class="checkmark" id="noPositiveAcks" checked></ion-icon>
+                        </p>
+
+                        <p class="setting" title="Print statistics at intervals during test.">
+                            Print Intervals
+                            <ion-icon name="checkmark-circle-outline" class="checkmark" id="printIntervals" checked></ion-icon>
+                        </p>
+
+                        <p class="setting" title="Path to the XML file containing DDS QoS profiles.">
+                            Use Custom QOS File
+                            <input type="file" name="qosFile" id="qosFile">
+                        </p>
+
+                        <p class="setting" title="Use a seperate thread (instead of a callback) to read data.">
+                            Use Read Thread
+                            <ion-icon name="checkmark-circle-outline" class="checkmark" id="useReadThreadh"></ion-icon>
+                        </p>
+
+                        <p class="setting" title="Process incoming data in groups, based on time, rather than individually.">
+                            Wait Set Delay (Micro Seconds)
+                            <input type="number" name="waitSetDelay" id="waitSetDelay" placeholder="100" min="0">
+                        </p>
+
+                        <p class="setting" title="Process incoming data in groups, based on the number of samples, rather than individually.">
+                            Wait Set Event Count
+                            <input type="number" name="waitSetEventCount" id="waitSetEventCount" placeholder="5" min="1">
+                        </p>
+
+                        <p class="setting" title="Enable asynchronous publishing in the DataWriter QoS.">
+                            Asynchronous
+                            <ion-icon name="close-circle-outline" class="checkmark" id="asynchronous"></ion-icon>
+                        </p>
+
+                        <p class="setting" title="Display the cpu used by the RTI Perftest process.">
+                            Display CPU
+                            <ion-icon name="close-circle-outline" class="checkmark" id="cpu"></ion-icon>
+                        </p>
+
+                        <!-- Only visible when publisher selected from dropdown -->
+                        <!-- Don't forget to add -pub to the test -->
+                        <div class="publisher-settings" id="publisher-settings">
+                            <h4 style="display: flex; align-items: center;">
+                                <ion-icon name="paper-plane" style="margin-right: 1vw;"></ion-icon>
+                                <span>Publisher Settings</span>
+                            </h4>
+                            
+                            <p class="setting top-setting" title="Enable batching and set the maximum batched message size. Disabled automatically if using large data.">
+                                Batch Size (bytes)
+                                <input type="number" placeholder="0" min="1" max="63000" id="batchSize">
+                            </p>
+
+                            <p class="setting" title="Enable the auto throttling feature.">
+                                Enable Auto Throttle
+                                <ion-icon class="checkmark" name="close-circle-outline" id="enableAutoThrottle"></ion-icon>
+                            </p>
+
+                            <p class="setting" title="Enables the turbo mode feature.">
+                                Enable Turbo Mode
+                                <ion-icon class="checkmark" name="close-circle-outline" id="enableTurboMode"></ion-icon>
+                            </p>
+
+                            <!-- If this changes then grey out numIter or warn user about using either this or that -->
+                            <p class="setting" title="Allows you to limit the test duration by specifying the number of seconds to run the test. The first condition triggerd will finish the test: Iteration Number or Execution Time.">
+                                Execution Time (seconds)
+                                <input type="number" placeholder="0" id="executionTime">
+                            </p>
+
+                            <!-- When numIter changes, max must be set to numIter -->
+                            <p class="setting" title="Number of samples to send before a latency ping packet is sent.">
+                                Latency Count
+                                <input type="number" name="latencyCount" id="latencyCount" placeholder="-1">
+                            </p>
+
+                            <p class="setting" title="Run a latency test consisting of a ping-pong. The publisher sends a ping, then blocks until it receives a pong from the subscriber. Can only be used on a publisher whose id is 0." id="latency-test-setting">
+                                Run Latency Test
+                                <ion-icon class="checkmark" name="close-circle-outline" id="latencyTest"></ion-icon>
+                            </p>
+
+                            <!-- When latencyTest ticked, set value to 10000000 -->
+                            <p class="setting" title="Number of samples to send.">
+                                Number of Iterations
+                                <input type="number" name="numIter" id="numIter" placeholder="100000000">
+                            </p>
+
+                            <p class="setting" title="Have the publisher application wait for this number of subscribing applications to start.">
+                                Number of Subscribers
+                                <input type="number" name="numSubscribers" id="numSubscribers" placeholder="1">
+                            </p>
+
+                            <p class="setting" title="Set the ID of the publisher in a multi publisher test. Use a unique value for each publisher running on the same host that uses the same domain ID.">
+                                Publisher ID
+                                <input type="number" name="pid" id="pid" placeholder="0">
+                            </p>
+
+                            <p class="setting" title="Size of the send queue.">
+                                Send Queue Size 
+                                <input type="number" name="sendQueueSize" id="sendQueueSize" placeholder="50" min="1" max="100000000">
+                            </p>
+
+                            <p class="setting" title="Time to sleep between each send.">
+                                Sleep Time (milliseconds)
+                                <input type="number" name="sleep" id="sleep" placeholder="0" min="0">
+                            </p>
+
+                            <p class="setting" title="Set the instance number to be sent.">
+                                Instance Number
+                                <input type="number" name="writeInstance" id="writeInstance" placeholder="Round-Robin schedule">
+                            </p>
+
+                        </div><!-- End of div.publisher-settings -->
+
+                        <!-- Show when user selects subscriber on the dropdown -->
+                        <div class="subscriber-settings" id="subscriber-settings">
+                            <h4 style="display: flex; align-items: center;">
+                                <ion-icon name="mail-open" style="margin-right: 1vw;"></ion-icon>
+                                <span>Subscriber Settings</span>
+                            </h4>
+
+                            <p class="setting top-setting" title="The subscribing application will wait for this number of publishing applications to start.">
+                                Number of Publishers
+                                <input type="number" name="numPublisher" id="numPublisher" placeholder="1" min="1">
+                            </p>
+
+                            <p class="setting" title="ID of the subscriber in a multi subscriber test. Use a unique value for each subscriber running on the same host that uses the same domain ID.">
+                                Subscriber ID
+                                <input type="number" name="sid" id="sid" placeholder="0">
+                            </p>
+
+                        </div><!-- End of div.subscriber-settings -->
+
+                        <br>
+                        <br>
+
+                        <p class="setting top-setting">
+                            Where would you like to store the scripts?
+                            <input type="file" name="saveLocation" id="saveLocation" multiple directory webkitdirectory>
+                        </p>
+
+                        <p class="setting">
+                            <a id="createButton" class="btn btn-outline-dark" style="width: 100%; font-size: 2em;">
+                                <ion-icon name="add" style="margin-bottom: -0.75vh;"></ion-icon>
+                                <span>Create</span>
+                            </a>
+                        </p>
+
+                    </div>
+
+
+                </div><!-- End of div.settings -->
+
+            </div><!-- End of div.main-content#createContent -->
+
+            <div class="main-content" id="indexContent">
                 
                 <p class="page-title">HOME</p>
 
@@ -124,16 +379,11 @@
             </div><!-- End of div.main-content -->
         </div>
 
-        <!-- JavaScript Functions -->
-        <script
-			  src="https://code.jquery.com/jquery-3.4.1.min.js"
-			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-			  crossorigin="anonymous"></script>
+         <!-- JavaScript Functions -->
         <script src="./../js/global.js"></script>
         <!-- End of JavaScript Functions -->
 
-        <!-- JavaScript Dependencies -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- JavaScript Dependencies --><script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>

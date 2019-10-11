@@ -1,5 +1,8 @@
 // -------------------- START UP --------------------
 
+// HIDE ALL WINDOWS EXCEPT INDEX
+document.querySelector('#createContent').style.display = "none";
+
 // Hide error message pop up
 // WORKING
 $('#error-message').hide();
@@ -17,6 +20,8 @@ $('#instances-setting').hide();
 $('#multicastAddress-setting').hide();
 
 // ----------------- END OF START UP ----------------
+
+
 
 // MAIN SCRIPT CREATION FUNCTION
 // Not working
@@ -198,4 +203,16 @@ function showError(errorMessage){
     errorMessagePopUp.appendChild(errorText);
 
     $('#error-message').show();
+}
+
+function showContent(content){
+    let toBeShown = document.querySelector(content);
+    let indexContent = document.querySelector('#indexContent');
+    
+    // Hide everything
+    $('#indexContent').hide();
+    $('#createContent').hide();
+
+    // Show parameter content
+    $(content).show();
 }
