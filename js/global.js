@@ -2,6 +2,7 @@
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 document.querySelector('#createContent').style.display = "none";
+$('#runContent').hide();
 
 // Hide error message pop up
 // WORKING
@@ -212,6 +213,7 @@ function showContent(content){
     // Hide everything
     $('#indexContent').hide();
     $('#createContent').hide();
+    $('#runContent').hide();
 
     // Show parameter content
     $(content).show();
