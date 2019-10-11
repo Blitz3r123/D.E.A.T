@@ -46,8 +46,86 @@ $('#reset-button').on('click', () => {
         showError("Data Length can't be more than 2147483128.");
     }
 
-    console.log(`dataLenValue: ${dataLenValue}`);
+    // Get Verbosity value
+    let verbosity = document.querySelector('#verbosity');
+    let verbosityValue = `-verbosity ${verbosity.value}`;
+    
+    // Get dynamic data value
+    let dynamicData = document.querySelector('#dynamicData').name;
+    let dynamicValue;
+    dynamicData === 'close-circle-outline' ? dynamicValue = '' : dynamicValue = '-dynamicData';
 
+    // Get durability value
+    let durabilityValue = '-durability ' + document.querySelector('#durability').value;
+
+    // Get domainID value
+    let domainID = document.querySelector('#domain').value;
+    if(domainID < 0){
+        showError("Domain ID can't be negative.");
+    }
+
+    // Get keyed value
+    let keyed = document.querySelector('#keyed').name;
+    let keyedValue;
+    keyed === 'close-circle-outline' ? keyedValue = '' : keyedValue = '-keyed';
+    
+    // Get instances value
+    let instances = document.querySelector('#instances').value;
+    let instancesValue;
+    
+    if(keyedValue == ''){
+        instancesValue = 1;
+    }else{
+        if(instances == ''){
+            instancesValue = 1;
+        }else{
+            instancesValue = instances;
+        }
+    }
+
+    // Get multicast value
+    let multicast = document.querySelector('#multicast').name;
+    let multicastAddress = document.querySelector('#multicastAddress').value;
+    let multicastValue;
+    let multicastAddressValue;
+    
+    multicast === 'close-circle-outline' ? multicastValue = '' : multicastValue = '-multicast';
+
+    if(multicastValue == ''){
+        multicastAddressValue = '';
+    }else{
+        if(multicastAddress == ''){
+            multicastAddressValue = '';
+        }else{
+            multicastAddressValue = `${multicastValue} ${multicastAddress}`;
+        }
+    }
+
+    if(multicastAddress !== '' && !multicastAddress.match(/\d/)){
+        showError("Multicast address can only be numeric.");
+    }
+
+    // Get dynamic data value
+    let directCommunication = document.querySelector('#directCommunication').name;
+    let directCommunicationValue;
+    directCommunication === 'close-circle-outline' ? directCommunicationValue = '-noDirectCommunication' : directCommunicationValue = '';
+
+    // Get positive acknowledgements value
+    let noPositiveAcks = document.querySelector('#noPositiveAcks').name;
+    let noPositiveAcksValue;
+    noPositiveAcks === 'close-circle-outline' ? noPositiveAcksValue = '-noPositiveAcks' : noPositiveAcksValue = '';
+
+    // Get print intervals value
+    let printIntervals = document.querySelector('#printIntervals').name;
+    let printIntervalsValue;
+    printIntervals === 'close-circle-outline' ? printIntervalsValue = '-noPrintIntervals' : printIntervalsValue = '';
+
+    // Get QOS file
+    let qosFileInput = document.querySelector('#qosFile');
+    let qosFileInputValue = qosFileInput.files[0].path;
+    
+    console.log(qosFileInput.value);
+    
 });
 
 // Close error message if opened
