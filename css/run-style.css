@@ -1,0 +1,9 @@
+.title-search-bar{display: flex; justify-content: space-between;}
+    #pub-sub-search{height: 6vh; margin-top: 6vh; margin-right: 4vw; padding-left: 1vw;}
+
+.lists{width: 75vw; margin-left: 2.5vw; height: 75vh; display: flex; justify-content: space-evenly;}
+    .run-pub-list, .run-sub-list, .run-test-list {width: 32%; padding: 2vh 2vw; border: 1px solid black;}
+    .run-list{overflow-y: scroll; max-height: 90%;}
+    .run-list::-webkit-scrollbar{width: 0px !important;}
+        .run-list-item{margin-left: 0vw; width: 100%; padding: 1vh 1vw; border-left: 1px solid black; background-image: radial-gradient(#aaa, #fff);}
+    

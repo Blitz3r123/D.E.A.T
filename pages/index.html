@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- <meta http-equiv="refresh" content="3"> -->
         <!-- Bootstrap 4 CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- End of Bootstrap 4 CDN -->
         
         <!-- Custom CSS Stylesheets -->
+        <link rel="stylesheet" href="./../css/sidebar-style.css">
         <link rel="stylesheet" href="./../css/index-style.css">
         <link rel="stylesheet" href="./../css/create-style.css">
-        <link rel="stylesheet" href="./../css/sidebar-style.css">
+        <link rel="stylesheet" href="./../css/run-style.css">
         <!-- End of Custom CSS Stylesheets -->
 
         <!-- Jquery Import -->
@@ -52,6 +54,19 @@
                     <a href="#" class="side-link sidebar-inner-link margin-bot-1vh">
                         <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
                         Subscribers
+                    </a>
+                        <a href="#" class="side-link sidebar-inner-inner-link">Subscriber 1</a>
+                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Subscriber 2</a>
+                <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Analyse</a>
+                    <a href="#" class="side-link sidebar-inner-link">
+                        <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
+                        Publisher Data
+                    </a>
+                        <a href="#" class="side-link sidebar-inner-inner-link">pub1.csv</a>
+                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">pub2.csv</a>
+                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh">
+                        <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
+                        Subscriber Data
                     </a>
                         <a href="#" class="side-link sidebar-inner-inner-link">Subscriber 1</a>
                         <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Subscriber 2</a>
@@ -380,9 +395,63 @@
 
             <div class="main-content" id="runContent">
                 
-                <p class="page-title">RUN</p>
+                <div class="title-search-bar">
+                    <p class="page-title">RUN</p>
+                    <input type="text" placeholder="Search" id="pub-sub-search">
+                </div>
 
-                
+                <div class="lists">
+                    <div class="run-pub-list">
+                        <h4>Publishers</h4>
+                        <div class="run-list">
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                            <p class="run-list-item">Publisher 1</p>
+                        </div>
+                    </div>
+                    <div class="run-sub-list">
+                        <h4>Subscribers</h4>
+                        <div class="run-list">
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                                <p class="run-list-item">Subscriber 1</p>
+                        </div>
+                    </div>
+                    <div class="run-test-list">
+                        <h4>Tests</h4>
+                        <div class="run-list">
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                                <p class="run-list-item">Test 1</p>
+                        </div>
+                    </div>
+                </div>                
 
             </div><!-- End of div.main-content#runContent -->
             

@@ -2,7 +2,7 @@
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 document.querySelector('#createContent').style.display = "none";
-$('#runContent').hide();
+$('#indexContent').hide();
 
 // Hide error message pop up
 // WORKING
