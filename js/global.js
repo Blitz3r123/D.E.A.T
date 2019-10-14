@@ -1,8 +1,8 @@
 // -------------------- START UP --------------------
 
 // HIDE ALL WINDOWS EXCEPT INDEX
-document.querySelector('#createContent').style.display = "none";
 $('#indexContent').hide();
+$('#runContent').hide();
 
 // Hide error message pop up
 // WORKING
@@ -127,10 +127,43 @@ $('#reset-button').on('click', () => {
     printIntervals === 'close-circle-outline' ? printIntervalsValue = '-noPrintIntervals' : printIntervalsValue = '';
 
     // Get QOS file
-    let qosFileInput = document.querySelector('#qosFile');
-    let qosFileInputValue = qosFileInput.files[0].path;
-    
-    console.log(qosFileInput.value);
+    let qosFileInput = document.querySelector('#qosFile').value;
+    let qosFileInputValue;
+    let qosFileInputValueText;
+
+    // Check they selected a file
+    if(qosFileInput !== ''){
+        qosFileInput = document.querySelector('#qosFile');
+        qosFileInputValue = qosFileInput.files[0].path;
+        qosFileInputValueText = `-qosFile '${qosFileInputValue}'`;
+    }else{
+        qosFileInputValueText = '';
+    }
+
+    // console.log(`qosFileInputValueText: [${qosFileInputValueText}]`);
+
+    // Get use read thread value
+    let useReadThread = document.querySelector('#useReadThread').name;
+    let useReadThreadValue;
+    useReadThread === 'close-circle-outline' ? useReadThreadValue = '' : useReadThreadValue = '-useReadThread';
+
+    // Get wait set delay value
+    let waitSetDelay = document.querySelector('#waitSetDelay').value;
+    let waitSetDelayValue;
+
+    // Check if delay is set
+    if(waitSetDelay !== ''){
+        if(waitSetDelay < 0){
+            showError('Delay has to be greater than zero.');
+            waitSetDelayValue = ``;
+        }else{
+            waitSetDelayValue = `-waitsetDelayUsec ${waitSetDelay}`;
+        }
+    }else{
+        waitSetDelayValue = '';
+    }
+
+    console.log(`waitSetDelayValue: [${waitSetDelayValue}]`);
     
 });
 
