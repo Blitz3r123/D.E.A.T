@@ -281,6 +281,24 @@ $('#reset-button').on('click', () => {
             console.error('Problem with execution time part thingy majingy.');
         }
 
+        // Get execution time value
+        let numIter = document.querySelector('#numIter').value;
+        let numIterValue;
+
+        if(numIter === ''){
+            numIterValue = '-numIter 0';
+        }else if(numIter !== ''){
+            numIterValue = `-numIter ${numIter}`;
+        }else{
+            console.error('Problem with num iter part thingy majingy.');
+        }
+
+        // Get latencyTest value
+        let latencyTest = document.querySelector('#latencyTest').name;
+        let latencyTestValue;
+
+        latencyTest === 'close-circle-outline' ? latencyTestValue = '' : latencyTestValue = '-latencyTest';
+
         // Get latencyCount value
         let latencyCount = document.querySelector('#latencyCount').value;
         let latencyCountValue;
@@ -343,6 +361,8 @@ $('#reset-button').on('click', () => {
             writeInstanceValue = `-writeInstance ${writeInstance}`;
         }
 
+        let pubOutput = `-pub ${batchSizeValue} ${enableAutoThrottleValue} ${enableTurboModeValue} ${executionTimeValue} ${numIterValue} ${latencyTestValue} ${latencyCountValue} ${numSubscribersValue} ${pidValue} ${sendQueueSizeValue} ${sleepValue} ${writeInstanceValue}`;
+
     }else if(testType === 'subscriber'){
 
         // Get number of publishers value
@@ -364,8 +384,6 @@ $('#reset-button').on('click', () => {
         }else{
             sideValue = `-sidMultiSubTest ${sid}`;
         }
-
-        
 
     }else{
         console.error(`Can't decide test type.`);
