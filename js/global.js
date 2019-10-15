@@ -343,9 +343,29 @@ $('#reset-button').on('click', () => {
             writeInstanceValue = `-writeInstance ${writeInstance}`;
         }
 
-        
-
     }else if(testType === 'subscriber'){
+
+        // Get number of publishers value
+        let numPublisher = document.querySelector('#numPublisher').value;
+        let numPublisherValue;
+
+        if(numPublisher == ''){
+            numPublisherValue = '-numPublishers 1';
+        }else{
+            numPublisherValue = `-numPublishers ${numPublisher}`;
+        }
+
+        // Get subscriber id value
+        let sid = document.querySelector('#sid').value;
+        let sidValue;
+
+        if(sid == ''){
+            sidValue = '-sidMultiSubTest 1';
+        }else{
+            sideValue = `-sidMultiSubTest ${sid}`;
+        }
+
+        
 
     }else{
         console.error(`Can't decide test type.`);
