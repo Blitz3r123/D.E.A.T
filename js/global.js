@@ -323,6 +323,26 @@ $('#reset-button').on('click', () => {
             sendQueueSizeValue = `-sendQueueSize ${sendQueueSize}`;
         }
 
+        // Get sleep time value
+        let sleep = document.querySelector('#sleep').value;
+        let sleepValue;
+
+        if(sleep === ''){
+            sleepValue = '-sleep 0';
+        }else{
+            sleepValue = `-sleep ${sleep}`;
+        }
+
+        // Get write instance value
+        let writeInstance = document.querySelector('#writeInstance').value;
+        let writeInstanceValue;
+
+        if(writeInstance == ''){
+            writeInstanceValue = '';
+        }else{
+            writeInstanceValue = `-writeInstance ${writeInstance}`;
+        }
+
         
 
     }else if(testType === 'subscriber'){
