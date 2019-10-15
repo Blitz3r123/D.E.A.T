@@ -85,6 +85,16 @@ $('#createButton').on('click', () => {
     let finalOutput;
     let finalTestType;
 
+    // Get perftest file location value
+    let perftestFileDOM = document.querySelector('#perftestLocation');
+    let perftestFilePath;
+
+    if(perftestFileDOM.value == ''){
+        showError('Please select where you perftest_java.bat file is located.');
+    }else{
+        perftestFilePath = perftestFileDOM.files[0].path;
+    }
+
     // Get BestEffort Value
     let BestEffort = document.querySelector('#bestEffort'); 
     let bestEffortValue;
@@ -367,7 +377,7 @@ $('#createButton').on('click', () => {
 
         let pubOutput = `-pub ${batchSizeValue} ${enableAutoThrottleValue} ${enableTurboModeValue} ${executionTimeValue} ${numIterValue} ${latencyTestValue} ${latencyCountValue} ${numSubscribersValue} ${pidValue} ${sendQueueSizeValue} ${sleepValue} ${writeInstanceValue}`;
 
-        finalOutput = `${generalSettingsValue} ${pubOutput}`;
+        finalOutput = `"${perftestFilePath}" ${generalSettingsValue} ${pubOutput}`;
         finalTestType = 'pub';
 
     }else if(testType === 'subscriber'){
@@ -394,7 +404,7 @@ $('#createButton').on('click', () => {
 
         let subOutput = `-sub ${numPublisherValue} ${sidValue}`;
 
-        finalOutput = `${generalSettingsValue} ${subOutput}`;
+        finalOutput = `"${perftestFilePath}" ${generalSettingsValue} ${subOutput}`;
         finalTestType = 'sub';
     }else{
         console.error(`Can't decide test type.`);
