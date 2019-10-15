@@ -75,6 +75,8 @@ $('#reset-button').on('click', () => {
         TRUE = checkmark-circle-outline
     */
 
+    let finalOutput;
+
     // Get BestEffort Value
     let BestEffort = document.querySelector('#bestEffort'); 
     let bestEffortValue;
@@ -363,6 +365,8 @@ $('#reset-button').on('click', () => {
 
         let pubOutput = `-pub ${batchSizeValue} ${enableAutoThrottleValue} ${enableTurboModeValue} ${executionTimeValue} ${numIterValue} ${latencyTestValue} ${latencyCountValue} ${numSubscribersValue} ${pidValue} ${sendQueueSizeValue} ${sleepValue} ${writeInstanceValue}`;
 
+        finalOutput = `${generalSettingsValue} ${pubOutput}`;
+
     }else if(testType === 'subscriber'){
 
         // Get number of publishers value
@@ -382,13 +386,18 @@ $('#reset-button').on('click', () => {
         if(sid == ''){
             sidValue = '-sidMultiSubTest 1';
         }else{
-            sideValue = `-sidMultiSubTest ${sid}`;
+            sidValue = `-sidMultiSubTest ${sid}`;
         }
 
+        let subOutput = `-sub ${numPublisherValue} ${sidValue}`;
+
+        finalOutput = `${generalSettingsValue} ${subOutput}`;
     }else{
         console.error(`Can't decide test type.`);
     }
-    
+
+    // FINAL STRING OUTPUT IS IN VARIABLE ${finalOutput}
+
 });
 
 // Close error message if opened
