@@ -313,22 +313,22 @@
                                 Execution Time (seconds)
                                 <input type="number" placeholder="0" id="executionTime">
                             </p>
-
-                            <!-- When numIter changes, max must be set to numIter -->
-                            <p class="setting" title="Number of samples to send before a latency ping packet is sent.">
-                                Latency Count
-                                <input type="number" name="latencyCount" id="latencyCount" placeholder="-1">
-                            </p>
-
-                            <p class="setting" title="Run a latency test consisting of a ping-pong. The publisher sends a ping, then blocks until it receives a pong from the subscriber. Can only be used on a publisher whose id is 0." id="latency-test-setting">
-                                Run Latency Test
-                                <ion-icon class="checkmark" name="close-circle-outline" id="latencyTest"></ion-icon>
-                            </p>
-
+                            
                             <!-- When latencyTest ticked, set value to 10000000 -->
                             <p class="setting" title="Number of samples to send.">
                                 Number of Iterations
                                 <input type="number" name="numIter" id="numIter" placeholder="100000000">
+                            </p>
+                            
+                            <p class="setting" title="Run a latency test consisting of a ping-pong. The publisher sends a ping, then blocks until it receives a pong from the subscriber. Can only be used on a publisher whose id is 0." id="latency-test-setting">
+                                Run Latency Test
+                                <ion-icon class="checkmark" name="close-circle-outline" id="latencyTest"></ion-icon>
+                            </p>
+                            
+                            <!-- When numIter changes, max must be set to numIter -->
+                            <p class="setting" title="Number of samples to send before a latency ping packet is sent.">
+                                Latency Count
+                                <input type="number" name="latencyCount" id="latencyCount" placeholder="-1">
                             </p>
 
                             <p class="setting" title="Have the publisher application wait for this number of subscribing applications to start.">

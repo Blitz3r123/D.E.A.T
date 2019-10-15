@@ -25,7 +25,44 @@ $('#multicastAddress-setting').hide();
 
 // ----------------- END OF START UP ----------------
 
+// --------------- START OF EVENTS ------------------
 
+$('#latencyTest').on('click', () => {
+    let latencyTestDOM = document.querySelector('#latencyTest');
+    let latencyCountDOM = document.querySelector('#latencyCount');
+    
+    if(!isChecked(latencyTestDOM.name)){
+        latencyCountDOM.setAttribute('value', '10000');
+        latencyCountDOM.setAttribute('disabled', 'true');
+    }else{
+        latencyCountDOM.setAttribute('value', '-1');
+        latencyCountDOM.removeAttribute('disabled');
+    }
+});
+
+$('#executionTime').on('keyup', () => {
+    let executionTimeDOM = document.querySelector('#executionTime');
+    let numIterDOM = document.querySelector('#numIter');
+
+    if(executionTimeDOM.value !== ''){
+        numIterDOM.setAttribute('disabled', 'true');
+    }else{
+        numIterDOM.removeAttribute('disabled');
+    }
+});
+
+$('#numIter').on('keyup', () => {
+    let executionTimeDOM = document.querySelector('#executionTime');
+    let numIterDOM = document.querySelector('#numIter');
+
+    if(numIterDOM.value !== ''){
+        executionTimeDOM.setAttribute('disabled', 'true');
+    }else{
+        executionTimeDOM.removeAttribute('disabled');
+    }
+});
+
+// ---------------- END OF EVENTS -------------------
 
 // MAIN SCRIPT CREATION FUNCTION
 // Not working
@@ -212,7 +249,52 @@ $('#reset-button').on('click', () => {
     if(testType === 'publisher'){
         // Get batch size value
         let batchSize = document.querySelector('#batchSize').value;
-        console.log(`batchSize: ${batchSize}`);
+        let batchSizeValue;
+
+        if(batchSize == ''){
+            batchSizeValue = '-batchSize 0';
+        }else{
+            batchSizeValue = `-batchSize ${batchSize}`;
+        }
+
+        // Get enableAutoThrottle value
+        let enableAutoThrottle = document.querySelector('#enableAutoThrottle').name;
+        let enableAutoThrottleValue;
+
+        enableAutoThrottle === 'close-circle-outline' ? enableAutoThrottleValue = '' : enableAutoThrottleValue = '-enableAutoThrottle';
+
+        // Get enableTurboMode value
+        let enableTurboMode = document.querySelector('#enableTurboMode').name;
+        let enableTurboModeValue;
+
+        enableTurboMode === 'close-circle-outline' ? enableTurboModeValue = '' : enableTurboModeValue = '-enableTurboMode';
+
+        // Get execution time value
+        let executionTime = document.querySelector('#executionTime').value;
+        let executionTimeValue;
+
+        if(executionTime === ''){
+            executionTimeValue = '-executionTime 0';
+        }else if(executionTime !== ''){
+            executionTimeValue = `-executionTime ${executionTime}`;
+        }else{
+            console.error('Problem with execution time part thingy majingy.');
+        }
+
+        // Get latencyCount value
+        let latencyCount = document.querySelector('#latencyCount').value;
+        let latencyCountValue;
+
+        if(latencyCount === ''){
+            latencyCountValue = '-latencyCount -1';
+        }else if(latencyCount !== ''){
+            latencyCountValue = `-latencyCount ${latencyCount}`;
+        }else{
+            console.error('Problem with latency count part thingy majingy.');
+        }               
+
+        console.log(latencyCountValue);
+
     }else if(testType === 'subscriber'){
 
     }else{
@@ -305,4 +387,12 @@ function showContent(content){
 
     // Show parameter content
     $(content).show();
+}
+
+function isChecked(name){
+    if(name === 'close-circle-outline'){
+        return false;
+    }else{
+        return true;
+    }
 }
