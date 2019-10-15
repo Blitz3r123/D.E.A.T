@@ -1,3 +1,10 @@
+/*
+    Notes:
+    - Need to get path to perftest_java.bat
+*/
+
+const fs = require('fs');
+
 // GLOBAL VARIABLES
 var hasError;
 
@@ -68,7 +75,7 @@ $('#numIter').on('keyup', () => {
 // Not working
 // CHANGE IT BACK TO #createButton AFTER IT IS WORKING
 
-$('#reset-button').on('click', () => {
+$('#createButton').on('click', () => {
     /*
         For all checkboxes:
         FALSE = close-circle-outline
@@ -76,6 +83,7 @@ $('#reset-button').on('click', () => {
     */
 
     let finalOutput;
+    let finalTestType;
 
     // Get BestEffort Value
     let BestEffort = document.querySelector('#bestEffort'); 
@@ -90,10 +98,8 @@ $('#reset-button').on('click', () => {
 
     if(dataLen.value < 28 && dataLen.value !== ''){
         showError("Data Length can't be less than 28.");
-        hasError = true;
     }else if(dataLen.value > 2147483128){
         showError("Data Length can't be more than 2147483128.");
-        hasError = true;
     }
 
     // Get Verbosity value
@@ -113,7 +119,6 @@ $('#reset-button').on('click', () => {
     let domainValue;
     if(domainID < 0){
         showError("Domain ID can't be negative.");
-        hasError = true;
         domainValue = '-domain 1';
     }else if(domainID !== ''){
         domainValue = `-domain ${domainID}`;
@@ -160,7 +165,6 @@ $('#reset-button').on('click', () => {
 
     if(multicastAddress !== '' && !multicastAddress.match(/\d/)){
         showError("Multicast address can only be numeric.");
-        hasError = true;
     }
 
     // Get dynamic data value
@@ -207,7 +211,6 @@ $('#reset-button').on('click', () => {
     if(waitSetDelay !== ''){
         if(waitSetDelay < 0){
             showError('Delay has to be greater than zero.');
-            hasError = true;
             waitSetDelayValue = ``;
         }else{
             waitSetDelayValue = `-waitsetDelayUsec ${waitSetDelay}`;
@@ -224,7 +227,6 @@ $('#reset-button').on('click', () => {
     if(waitSetEvent !== ''){
         if(waitSetEvent < 1){
             showError('Set Event Count has to be greater than 0.');
-            hasError = true;
             waitSetEventValue = '';
         }else{
             waitSetEventValue = `-waitSetEventCount ${waitSetEvent}`;
@@ -366,6 +368,7 @@ $('#reset-button').on('click', () => {
         let pubOutput = `-pub ${batchSizeValue} ${enableAutoThrottleValue} ${enableTurboModeValue} ${executionTimeValue} ${numIterValue} ${latencyTestValue} ${latencyCountValue} ${numSubscribersValue} ${pidValue} ${sendQueueSizeValue} ${sleepValue} ${writeInstanceValue}`;
 
         finalOutput = `${generalSettingsValue} ${pubOutput}`;
+        finalTestType = 'pub';
 
     }else if(testType === 'subscriber'){
 
@@ -392,11 +395,19 @@ $('#reset-button').on('click', () => {
         let subOutput = `-sub ${numPublisherValue} ${sidValue}`;
 
         finalOutput = `${generalSettingsValue} ${subOutput}`;
+        finalTestType = 'sub';
     }else{
         console.error(`Can't decide test type.`);
     }
 
-    // FINAL STRING OUTPUT IS IN VARIABLE ${finalOutput}
+    let saveLocationDOM = document.querySelector('#saveLocation');
+    
+    if(saveLocationDOM.value == ''){
+        showError('Please select somewhere to store the file.');
+    }else{
+        let saveLocationPath = document.querySelector('#saveLocation').files[0].path;
+        createFile(finalOutput, `${saveLocationPath}\\${finalTestType}.bat`);
+    }
 
 });
 
@@ -492,4 +503,8 @@ function isChecked(name){
     }else{
         return true;
     }
+}
+
+function createFile(output, path){
+    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log('file created successfully'));
 }
