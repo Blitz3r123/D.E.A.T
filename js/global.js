@@ -293,7 +293,17 @@ $('#reset-button').on('click', () => {
             console.error('Problem with latency count part thingy majingy.');
         }               
 
-        console.log(latencyCountValue);
+        // Get number of subscribers value
+        let numSubscribers = document.querySelector('#numSubscribers').value;
+        let numSubscribersValue;
+
+        if(numSubscribers == ''){
+            numSubscribersValue = '-numSubscribers 1';
+        }else{
+            numSubscribersValue = `-numSubscribers ${numSubscribers}`;
+        }
+
+        
 
     }else if(testType === 'subscriber'){
 
