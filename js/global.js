@@ -303,6 +303,26 @@ $('#reset-button').on('click', () => {
             numSubscribersValue = `-numSubscribers ${numSubscribers}`;
         }
 
+        // Get publisher id value
+        let pid = document.querySelector('#pid').value;
+        let pidValue;
+
+        if(pid == ''){
+            pidValue = '-pidMultiPubTest 0';
+        }else{
+            pidValue = `-pidMultiPubTest ${pid}`;
+        }
+
+        // Get sendQueueSize value
+        let sendQueueSize = document.querySelector('#sendQueueSize').value;
+        let sendQueueSizeValue;
+
+        if(sendQueueSize == ''){
+            sendQueueSizeValue = '-sendQueueSize 50';
+        }else{
+            sendQueueSizeValue = `-sendQueueSize ${sendQueueSize}`;
+        }
+
         
 
     }else if(testType === 'subscriber'){
