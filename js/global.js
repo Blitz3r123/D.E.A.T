@@ -1,3 +1,6 @@
+// GLOBAL VARIABLES
+var hasError;
+
 // -------------------- START UP --------------------
 
 // HIDE ALL WINDOWS EXCEPT INDEX
@@ -48,8 +51,10 @@ $('#reset-button').on('click', () => {
 
     if(dataLen.value < 28 && dataLen.value !== ''){
         showError("Data Length can't be less than 28.");
+        hasError = true;
     }else if(dataLen.value > 2147483128){
         showError("Data Length can't be more than 2147483128.");
+        hasError = true;
     }
 
     // Get Verbosity value
@@ -66,8 +71,15 @@ $('#reset-button').on('click', () => {
 
     // Get domainID value
     let domainID = document.querySelector('#domain').value;
+    let domainValue;
     if(domainID < 0){
         showError("Domain ID can't be negative.");
+        hasError = true;
+        domainValue = '-domain 1';
+    }else if(domainID !== ''){
+        domainValue = `-domain ${domainID}`;
+    }else{
+        domainValue = '-domain 1';
     }
 
     // Get keyed value
@@ -80,12 +92,12 @@ $('#reset-button').on('click', () => {
     let instancesValue;
     
     if(keyedValue == ''){
-        instancesValue = 1;
+        instancesValue = `-instances ` + 1;
     }else{
         if(instances == ''){
-            instancesValue = 1;
+            instancesValue = `-instances ` + 1;
         }else{
-            instancesValue = instances;
+            instancesValue = `-instances ` + instances;
         }
     }
 
@@ -109,6 +121,7 @@ $('#reset-button').on('click', () => {
 
     if(multicastAddress !== '' && !multicastAddress.match(/\d/)){
         showError("Multicast address can only be numeric.");
+        hasError = true;
     }
 
     // Get dynamic data value
@@ -155,6 +168,7 @@ $('#reset-button').on('click', () => {
     if(waitSetDelay !== ''){
         if(waitSetDelay < 0){
             showError('Delay has to be greater than zero.');
+            hasError = true;
             waitSetDelayValue = ``;
         }else{
             waitSetDelayValue = `-waitsetDelayUsec ${waitSetDelay}`;
@@ -163,7 +177,47 @@ $('#reset-button').on('click', () => {
         waitSetDelayValue = '';
     }
 
-    console.log(`waitSetDelayValue: [${waitSetDelayValue}]`);
+    // Get wait set event count value
+    let waitSetEvent = document.querySelector('#waitSetEventCount').value;
+    let waitSetEventValue;
+
+    // Check if count is set
+    if(waitSetEvent !== ''){
+        if(waitSetEvent < 1){
+            showError('Set Event Count has to be greater than 0.');
+            hasError = true;
+            waitSetEventValue = '';
+        }else{
+            waitSetEventValue = `-waitSetEventCount ${waitSetEvent}`;
+        }
+    }else{
+        waitSetEventValue = '';
+    }
+
+    // Get Asynchronous value
+    let async = document.querySelector('#asynchronous').name;
+    let asyncValue;
+    async === 'close-circle-outline' ? asyncValue = '' : asyncValue = '-asynchronous';
+
+    // Get display cpu value
+    let cpu = document.querySelector('#cpu').name;
+    let cpuValue;
+    cpu === 'close-circle-outline' ? cpuValue = '' : cpuValue = '-cpu';
+
+    // Make string for general settings
+    let generalSettingsValue = `${bestEffortValue} ${dataLenValue} ${verbosityValue} ${dynamicValue} ${durabilityValue} ${domainValue} ${keyedValue} ${instancesValue} ${multicastValue} ${multicastAddressValue} ${directCommunicationValue} ${noPositiveAcksValue} ${printIntervalsValue} ${qosFileInputValueText} ${useReadThreadValue} ${waitSetDelayValue} ${waitSetEventValue} ${asyncValue} ${cpuValue}`;
+
+    let testType = document.querySelector('#type-select').value;
+
+    if(testType === 'publisher'){
+        // Get batch size value
+        let batchSize = document.querySelector('#batchSize').value;
+        console.log(`batchSize: ${batchSize}`);
+    }else if(testType === 'subscriber'){
+
+    }else{
+        console.error(`Can't decide test type.`);
+    }
     
 });
 
@@ -231,6 +285,7 @@ $('#type-select').on('change', (e) => {
 // -------------------- FUNCTION DEFINITIONS --------------------
 
 function showError(errorMessage){
+    hasError = true;
     var errorMessagePopUp = document.querySelector('#error-message');
     var errorText = document.createTextNode(errorMessage);;
 

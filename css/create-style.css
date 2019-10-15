@@ -1,3 +1,7 @@
+#error-message{
+    margin-left: 20vw;
+}
+
 .title-search-container{
     display: flex;
     justify-content: space-between;
