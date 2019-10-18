@@ -54,6 +54,7 @@
 .settings-column{width: 90%; margin-left: 5%; padding: 3vh 0;}
 
 .setting{padding: 2vh 6vw; border-bottom: 1px solid black; border-right: 1px solid black; border-left: 1px solid black; margin: 0; display: flex; justify-content: space-between; align-items: center;}
+.create-setting{padding: 2vh 6vw; border-bottom: 1px solid black; border-right: 1px solid black; border-left: 1px solid black; margin: 0; display: flex; justify-content: space-between; align-items: center;}
 .search-setting{display: none;}
     .top-setting{border-top: 1px solid black;}
     .setting input{
@@ -68,3 +69,8 @@
 .checkmark:hover{cursor: pointer;}
 
 #createButton:hover{cursor: pointer; color: white;}
+
+.found-item{
+    margin-bottom: 2vh;
+    color: green;
+}

@@ -151,7 +151,7 @@
                 
                 <div class="title-search-container">
                     <p class="page-title">CREATE</p>
-                    <input type="text" placeholder="Search a Setting">
+                    <input type="text" placeholder="Search a Setting" autofocus id="searchSettingInput">
                 </div><!-- End of div.title-search-container -->
                 
                 <div id="error-message" class="bg-danger">
@@ -171,6 +171,7 @@
                 <div class="settings">
 
                     <div class="settings-column">
+                        <div id="search-results"></div>
                         <p class="setting top-setting">
                             Where is your perftest_java.bat file located?
                             <input type="file" id="perftestLocation">
@@ -389,7 +390,7 @@
                             <input type="file" name="saveLocation" id="saveLocation" multiple directory webkitdirectory>
                         </p>
 
-                        <p class="setting">
+                        <p class="create-setting">
                             <a id="createButton" class="btn btn-outline-dark" style="width: 100%; font-size: 2em;">
                                 <ion-icon name="add" style="margin-bottom: -0.75vh;"></ion-icon>
                                 <span>Create</span>

@@ -1,6 +1,6 @@
 /*
     Notes:
-    - Need to get path to perftest_java.bat
+    - Search features show the setting but changing values of settings isn't affecting it
 */
 
 const fs = require('fs');
@@ -33,6 +33,47 @@ $('#multicastAddress-setting').hide();
 // ----------------- END OF START UP ----------------
 
 // --------------- START OF EVENTS ------------------
+
+$('#searchSettingInput').on('keyup', (e) => {
+    var searchSettingDOM = document.getElementById('#searchSettingInput');
+    var foundArray;
+    var foundItem;
+    var textNode;
+    var innerHTML;
+    var searchResults = document.querySelector('#search-results');      
+
+    if(e.target.value === ''){
+
+        searchResults.removeChild(searchResults.firstChild);    
+
+        console.log(searchResults);
+    }else{
+
+        foundArray = $('.settings-column').find('p.setting');
+    
+        foundArray.each((index, item) => {
+            if(item.title.includes(e.target.value) || item.innerHTML.includes(e.target.value)){
+                // console.log(item);
+                
+                foundItem = document.createElement('p');
+                textNode = document.createTextNode(item.textContent);
+                foundItem.append(textNode);
+                foundItem.innerHTML = item.innerHTML;
+                foundItem.className = item.className;
+                foundItem.title = item.title;
+    
+            }
+        });
+        
+        foundItem.className += " found-item ";
+        // console.log(foundItem);
+    
+        let searchResultDOM = document.querySelector('#search-results');
+        searchResultDOM.innerHTML = '';
+        searchResultDOM.appendChild(foundItem);
+    }
+
+});
 
 $('#latencyTest').on('click', () => {
     let latencyTestDOM = document.querySelector('#latencyTest');
