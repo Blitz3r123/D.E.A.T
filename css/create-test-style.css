@@ -32,23 +32,25 @@
         .publishers::-webkit-scrollbar, .subscribers::-webkit-scrollbar {width: 0 !important;}
         .publishers, .subscribers{
             width: 100%;
-            height: 45%;
+            height: 26.5% !important;
+            min-height: 26.5% !important;
+            max-height: 26.5% !important;
             border: 1px solid #222;
             border-radius: 1px;
             overflow-y: scroll;
             padding: 2vh 1vw;
         }
 
-        .test-publisher:hover{cursor: pointer; color: white; background-color: #222;}
-        .test-publisher{
+        .test-publisher:hover, .test-subscriber:hover{cursor: pointer; color: white; background-color: #222;}
+        .test-publisher, .test-subscriber{
             outline: 1px solid black;
             padding: 1vw 1vw;
             transition-duration: 0.25s;
             -webkit-transition-duration: 0.25s;
             -moz-transition-duration: 0.25s;
         }    
-            .test-publisher ion-icon:hover{cursor: pointer;}
-            .test-publisher ion-icon{
+            .test-publisher ion-icon:hover, .test-subscriber ion-icon:hover{color: #999;}
+            .test-publisher ion-icon, .test-subscriber ion-icon{
                 float: right;
                 font-size: 1.5em;
             }
@@ -56,7 +58,7 @@
     .test-settings{
         /* background-color: red; */
         width: 49%;
-        height: 100%;
+        height: 59%;
         border: 1px solid #222;
         border-radius: 1px;
     }

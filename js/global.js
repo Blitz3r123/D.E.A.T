@@ -10,6 +10,23 @@ var hasError;
 
 // -------------------- START UP --------------------
 
+/*
+
+    SEARCH TAGS: create test, create, settings, create settings
+    STATUS: Complete
+    DESCRIPTION: Add a message to the settings window if they haven't selected any publishers/subscribers
+
+*/
+let testSettingsDOM = document.querySelector('#testSettings');                  
+let testSettingsMessageDOM = document.querySelector('#testSettingsMessage');
+
+if(!testSettingsDOM.className.includes('empty')){
+    testSettingsMessageDOM.style.display = 'none';
+}else{
+    testSettingsDOM.className = 'test-settings empty';
+    testSettingsMessageDOM.style.display = 'visible';
+}
+
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#indexContent').hide();
 $('#createContent').hide();
