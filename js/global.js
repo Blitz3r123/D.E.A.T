@@ -10,8 +10,6 @@ var hasError;
 
 // -------------------- START UP --------------------
 
-
-
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#indexContent').hide();
 $('#runContent').hide();
@@ -46,9 +44,9 @@ $('#searchSettingInput').on('keyup', (e) => {
 
     if(e.target.value === ''){
 
-        searchResults.removeChild(searchResults.firstChild);    
+        // searchResults.removeChild(searchResults.firstChild);    
 
-        console.log(searchResults);
+        // console.log(searchResults);
     }else{
 
         foundArray = $('.settings-column').find('p.setting');
@@ -512,15 +510,19 @@ $('.checkmark').on('click', (e) => {
 });
 
 // Show publisher/subscriber settings on drop down click
+// Set file name placeholder depending on test type
 // WORKING
 $('#type-select').on('change', (e) => {
+    let fileName = document.querySelector('#fileName');
 
     if(e.target.value == 'subscriber'){
         $('#publisher-settings').hide();
         $('#subscriber-settings').show();
+        fileName.setAttribute('placeholder', 'sub');
     }else{
         $('#subscriber-settings').hide();
         $('#publisher-settings').show();
+        fileName.setAttribute('placeholder', 'pub');
     }
 
 });
