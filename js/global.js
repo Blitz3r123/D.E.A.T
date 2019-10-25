@@ -12,6 +12,7 @@ var hasError;
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#indexContent').hide();
+$('#createContent').hide();
 $('#runContent').hide();
 
 // Hide error message pop up
@@ -276,8 +277,6 @@ $('#createButton').on('click', () => {
         qosFileInputValueText = '';
     }
 
-    // console.log(`qosFileInputValueText: [${qosFileInputValueText}]`);
-
     // Get use read thread value
     let useReadThread = document.querySelector('#useReadThread').name;
     let useReadThreadValue;
@@ -480,13 +479,23 @@ $('#createButton').on('click', () => {
         console.error(`Can't decide test type.`);
     }
 
+    // Get file name
+    let fileNameDOM = document.querySelector('#fileName');
+    let fileName;
+    // Check if empty
+    if(fileNameDOM.value === ''){
+        fileName = finalTestType;
+    }else{
+        fileName = fileNameDOM.value;
+    }
+
     let saveLocationDOM = document.querySelector('#saveLocation');
     
     if(saveLocationDOM.value == ''){
         showError('Please select somewhere to store the file.');
     }else{
         let saveLocationPath = document.querySelector('#saveLocation').files[0].path;
-        createFile(finalOutput, `${saveLocationPath}\\${finalTestType}.bat`);
+        createFile(finalOutput, `${saveLocationPath}\\${fileName}.bat`);
     }
 
 });
@@ -556,7 +565,30 @@ $('#type-select').on('change', (e) => {
 
 });
 
-// -------------------- FUNCTION DEFINITIONS --------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+// FUNCTION DEFINITIONS ------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+
+function createPublisher(){
+    let typeSelectDOM = document.querySelector('#type-select');
+    let fileNameDOM = document.querySelector('#fileName');
+
+    typeSelectDOM.selectedIndex = 0;                    // Select subscriber as test type dropdown
+    fileNameDOM.setAttribute('placeholder', 'pub');     // Set file name placeholder to sub
+
+    showContent('#createContent');                      // Show create content
+}
+
+function createSubscriber(){
+    let typeSelectDOM = document.querySelector('#type-select');
+    let fileNameDOM = document.querySelector('#fileName');
+
+    typeSelectDOM.selectedIndex = 1;                    // Select subscriber as test type dropdown
+    fileNameDOM.setAttribute('placeholder', 'sub');     // Set file name placeholder to sub
+
+    showContent('#createContent');                      // Show create content
+
+}
 
 function showError(errorMessage){
     hasError = true;
@@ -575,6 +607,7 @@ function showContent(content){
     // Hide everything
     $('#indexContent').hide();
     $('#createContent').hide();
+    $('#testContent').hide();
     $('#runContent').hide();
 
     // Show parameter content

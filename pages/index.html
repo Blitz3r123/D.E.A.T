@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="./../css/sidebar-style.css">
         <link rel="stylesheet" href="./../css/index-style.css">
         <link rel="stylesheet" href="./../css/create-style.css">
+        <link rel="stylesheet" href="./../css/create-test-style.css">
         <link rel="stylesheet" href="./../css/run-style.css">
         <!-- End of Custom CSS Stylesheets -->
 
@@ -32,15 +33,15 @@
     
                 <a href="#" onClick="showContent('#indexContent')" class="sidebar-link side-link"><ion-icon name="home"></ion-icon>Home</a>
                 <a href="#" onClick="showContent('#createContent')" class="side-link sidebar-link"><ion-icon name="create"></ion-icon>Create</a>
-                    <a href="#" class="side-link sidebar-inner-link">
+                    <a href="#" class="side-link sidebar-inner-link" onClick="createPublisher()">
                         <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
                         Publisher
                     </a>
-                    <a href="#" class="side-link sidebar-inner-link">
+                    <a href="#" class="side-link sidebar-inner-link" onClick="createSubscriber()">
                         <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
                         Subscriber
                     </a>
-                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh">
+                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh" onClick="showContent('#testContent')">
                         <ion-icon name="speedometer" style="margin-bottom: -0.5vh;"></ion-icon>    
                         Test
                     </a>
@@ -163,7 +164,7 @@
                 <div class="dropdown-reset-container">
                     <select class="dropdown" id="type-select">
                         <option value="publisher" selected>Publisher</option>
-                        <option value="subscriber">Subscriber</option>
+                        <option value="subscriber" id="subscriber-type-select">Subscriber</option>
                     </select>
                     <a id="reset-button" class="reset-button"><ion-icon name="refresh" style="margin-right: 1vw; font-size: 1.5em;"></ion-icon><span>Reset Values</span></a>
                 </div><!-- End of div.dropdown-reset-container -->
@@ -392,7 +393,7 @@
 
                         <p class="setting">
                             File Name
-                            <input type="text" name="fileName" id="fileName">
+                            <input type="text" name="fileName" id="fileName" placeholder="pub">
                         </p>
 
                         <p class="create-setting">
@@ -408,6 +409,39 @@
                 </div><!-- End of div.settings -->
 
             </div><!-- End of div.main-content#createContent -->
+
+            <div class="main-content" id="testContent" style="overflow-y: hidden;">
+                <p style="width: 100%; height: 12%;" class="page-title">CREATE TEST</p>
+
+                <div class="test-container">
+                    
+                    <div class="publisher-subscriber-container">
+                    
+                        <p class="sub-title"><span><ion-icon name="paper-plane"></ion-icon>Publishers</span><ion-icon name="add"></ion-icon></p>
+                        <div class="publishers">
+                            <p class="test-publisher">Publisher 1 <ion-icon name="trash"></ion-icon></p>
+                            <p class="test-publisher">Publisher 2 <ion-icon name="trash"></ion-icon></p>
+                            <p class="test-publisher">Publisher 3 <ion-icon name="trash"></ion-icon></p>
+                            <p class="test-publisher">Publisher 4 <ion-icon name="trash"></ion-icon></p>
+                            <p class="test-publisher">Publisher 5 <ion-icon name="trash"></ion-icon></p>
+                            <p class="test-publisher">Publisher 6 <ion-icon name="trash"></ion-icon></p>
+                            <p class="test-publisher">Publisher 7 <ion-icon name="trash"></ion-icon></p>
+                        </div><!-- End of div.publishers -->
+
+                        <p class="sub-title"><span><ion-icon name="mail-open"></ion-icon>Subscribers</span><ion-icon name="add"></ion-icon></p>
+                        <div class="subscribers">
+
+                        </div><!-- End of div.subscribers -->
+
+                    </div><!-- End of div.publisher-subscriber-container -->
+
+                    <div class="test-settings">
+
+                    </div><!-- End of div.test-settings -->
+
+                </div><!-- End of div.test-container -->
+
+            </div>
 
             <div class="main-content" id="runContent">
                 

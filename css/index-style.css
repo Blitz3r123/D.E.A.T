@@ -1,6 +1,9 @@
 html{
     overflow-x: hidden;
+    overflow-y: hidden;
 }
+
+.default-padding{padding: 2vh 2vw;}
 
 .page-wrapper{
     display: flex;
