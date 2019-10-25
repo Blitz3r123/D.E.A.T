@@ -34,6 +34,13 @@ $('#multicastAddress-setting').hide();
 
 // --------------- START OF EVENTS ------------------
 
+/*
+
+    SEARCH TAGS: search function, search feature, search, search setting input, searcher, searching
+    STATUS: In Progress
+    DESCRIPTION: Searches for a setting so that user can easily change a certain setting
+
+*/
 $('#searchSettingInput').on('keyup', (e) => {
     var searchSettingDOM = document.getElementById('#searchSettingInput');
     var foundArray;
@@ -75,6 +82,13 @@ $('#searchSettingInput').on('keyup', (e) => {
 
 });
 
+/*
+
+    SEARCH TAGS: latency test, latency, latency count, disable latency, disabling function
+    STATUS: Complete
+    DESCRIPTION: Changes/Disables latency count setting depending on if latency test option is ticked or not
+
+*/
 $('#latencyTest').on('click', () => {
     let latencyTestDOM = document.querySelector('#latencyTest');
     let latencyCountDOM = document.querySelector('#latencyCount');
@@ -88,6 +102,13 @@ $('#latencyTest').on('click', () => {
     }
 });
 
+/*
+
+    SEARCH TAGS: executionTime, execution time, numIter, iteration number, number of iterations, disabling function, disable numIter, disable executionTime
+    STATUS: Complete
+    DESCRIPTION: Either disables execution time or iteration number depending on what is chosen
+
+*/
 $('#executionTime').on('keyup', () => {
     let executionTimeDOM = document.querySelector('#executionTime');
     let numIterDOM = document.querySelector('#numIter');
@@ -99,6 +120,13 @@ $('#executionTime').on('keyup', () => {
     }
 });
 
+/*
+
+    SEARCH TAGS: numIter, disable execution time, executionTime, iteration number, execution time
+    STATUS: Complete
+    DESCRIPTION: Toggles execution time depending on whether numIter is set or not
+
+*/
 $('#numIter').on('keyup', () => {
     let executionTimeDOM = document.querySelector('#executionTime');
     let numIterDOM = document.querySelector('#numIter');
