@@ -10,6 +10,8 @@ var hasError;
 
 // -------------------- START UP --------------------
 
+
+
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#indexContent').hide();
 $('#runContent').hide();

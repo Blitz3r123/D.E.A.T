@@ -9,7 +9,7 @@
 }
 
 .title-search-container input{
-    /* outline: 1px solid black; */
+    /* outline: 1px solid #222; */
     max-height: 5vh;
     margin-right: 3vw;
     padding: 1vh 1vw;
@@ -23,14 +23,14 @@
 }
 
 .reset-button{
-    border: 1px solid black;
+    border: 1px solid #222;
     border-radius: 2px;
     margin-right: 3vw;
     display: block;
     padding: 1vh 2vw;
     width: 15vw;
     text-align: center;
-    color: black;
+    color: #222;
     transition-duration: 0.25s;
     -webkit-transition-duration: 0.25s;
 
@@ -38,11 +38,11 @@
     align-items: center;
 }
 
-.reset-button:hover{color: white !important; text-decoration: none; background-color: black; cursor: pointer;}
+.reset-button:hover{color: white !important; text-decoration: none; background-color: #222; cursor: pointer;}
 
 .settings::-webkit-scrollbar{width: 0 !important;}
 .settings{
-    outline: 1px solid black;
+    outline: 1px solid #222;
     margin-top: 2vh;
     width: 96%;
     margin-left: 2%;
@@ -53,10 +53,10 @@
 
 .settings-column{width: 90%; margin-left: 5%; padding: 3vh 0;}
 
-.setting{padding: 2vh 6vw; border-bottom: 1px solid black; border-right: 1px solid black; border-left: 1px solid black; margin: 0; display: flex; justify-content: space-between; align-items: center;}
-.create-setting{padding: 2vh 6vw; border-bottom: 1px solid black; border-right: 1px solid black; border-left: 1px solid black; margin: 0; display: flex; justify-content: space-between; align-items: center;}
+.setting{padding: 2vh 6vw; border-bottom: 1px solid #222; border-right: 1px solid #222; border-left: 1px solid #222; margin: 0; display: flex; justify-content: space-between; align-items: center;}
+.create-setting{padding: 2vh 6vw; border-bottom: 1px solid #222; border-right: 1px solid #222; border-left: 1px solid #222; margin: 0; display: flex; justify-content: space-between; align-items: center;}
 .search-setting{display: none;}
-    .top-setting{border-top: 1px solid black;}
+    .top-setting{border-top: 1px solid #222;}
     .setting input{
         border-right: none;
         box-shadow: none;
