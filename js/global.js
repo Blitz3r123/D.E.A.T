@@ -140,17 +140,18 @@ $('#numIter').on('keyup', () => {
 
 // ---------------- END OF EVENTS -------------------
 
-// MAIN SCRIPT CREATION FUNCTION
-// Not working
-// CHANGE IT BACK TO #createButton AFTER IT IS WORKING
+/*
 
-$('#createButton').on('click', () => {
-    /*
-        For all checkboxes:
+    SEARCH TAGS: main function, create, creation, test creation
+    STATUS: Complete
+    DESCRIPTION: Creates the test scripts
+
+    For all checkboxes:
         FALSE = close-circle-outline
         TRUE = checkmark-circle-outline
-    */
 
+*/
+$('#createButton').on('click', () => {
     let finalOutput;
     let finalTestType;
 
