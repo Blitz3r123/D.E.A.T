@@ -29,8 +29,9 @@ if(!testSettingsDOM.className.includes('empty')){
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
-$('#testContent').hide();
+// $('#createTestContent').hide();
 $('#runContent').hide();
+$('#indexContent').hide();
 
 // Hide error message pop up
 // WORKING
