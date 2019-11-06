@@ -10,6 +10,9 @@ var hasError;
 
 // -------------------- START UP --------------------
 
+// Temporary Functions
+readCreateTestData(__dirname + '/../data/CreateTest.json');
+
 /*
 
     SEARCH TAGS: create test, create, settings, create settings
@@ -636,11 +639,20 @@ function showContent(content){
     // Hide everything
     $('#indexContent').hide();
     $('#createContent').hide();
-    $('#testContent').hide();
+    $('#createTestContent').hide();
     $('#runContent').hide();
+
+    // Check for data if content is #createTestContent
+    // readCreateTestData('./../data/CreateTest.json');
 
     // Show parameter content
     $(content).show();
+}
+
+function readCreateTestData(path){
+    var createTestData = JSON.parse(fs.readFileSync(path, 'utf8'));
+
+    
 }
 
 function isChecked(name){
