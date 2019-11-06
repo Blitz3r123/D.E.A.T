@@ -28,8 +28,8 @@ if(!testSettingsDOM.className.includes('empty')){
 }
 
 // HIDE ALL WINDOWS EXCEPT INDEX
-$('#indexContent').hide();
 $('#createContent').hide();
+$('#testContent').hide();
 $('#runContent').hide();
 
 // Hide error message pop up
@@ -585,6 +585,17 @@ $('#type-select').on('change', (e) => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTION DEFINITIONS ------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------
+
+/*
+
+    SEARCH TAGS: reset, reset values, reset test script
+    STATUS: In Progress
+    DESCRIPTION: Resets test script options
+
+*/
+function resetValues(){
+    console.log("hello");
+}
 
 function createPublisher(){
     let typeSelectDOM = document.querySelector('#type-select');
