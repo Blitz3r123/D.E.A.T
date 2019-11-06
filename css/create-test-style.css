@@ -43,7 +43,7 @@
             padding: 2vh 1vw;
         }
 
-        .test-publisher:hover, .test-subscriber:hover{cursor: pointer; color: white; background-color: #222;}
+        .test-publisher:hover, .test-subscriber:hover{cursor: pointer;}
         .test-publisher, .test-subscriber{
             outline: 1px solid black;
             padding: 1vw 1vw;
@@ -64,3 +64,11 @@
         border: 1px solid #222;
         border-radius: 1px;
     }
+
+
+.publisher-input{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    padding-left: 2vw;
+}

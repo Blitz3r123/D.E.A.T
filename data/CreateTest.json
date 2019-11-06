@@ -1,6 +1,46 @@
 {
     "currentCreateTest": {
         "publisherAmount": 0,
-        "subscriberAmount": 0
-    }
+        "subscriberAmount": 0,
+        "publishers": [],
+        "subscribers": []
+    },
+    "allTests": [
+        {
+            "title": "Test One",
+            "publisherAmount": 1,
+            "subscriberAmount": 1,
+            "publishers": [
+                {
+                    "title": "Publisher 1",
+                    "settings": {
+                        "bestEffort": false,
+                        "dataLength": 100,
+                        "verbosity": "1 - Error"
+                    }
+                }
+            ],
+            "subscribers": [
+                {}
+            ]
+        },
+        {
+            "title": "Test Two",
+            "publisherAmount": 1,
+            "subscriberAmount": 1,
+            "publishers": [
+                {
+                    "title": "Publisher 1",
+                    "settings": {
+                        "bestEffort": false,
+                        "dataLength": 100,
+                        "verbosity": "1 - Error"
+                    }
+                }
+            ],
+            "subscribers": [
+                {}
+            ]
+        }
+    ]
 }

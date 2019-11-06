@@ -57,6 +57,48 @@ $('#multicastAddress-setting').hide();
 // --------------- START OF EVENTS ------------------
 
 /*
+    SEARCH TAGS:
+    STATUS: In Progress
+    DESCRIPTION: Adds publisher to create test and also writes to file
+*/
+$('#addPublisher').on('click', e => {
+    // Read createTestData file to see current test
+    let createTestData = JSON.parse(fs.readFileSync(__dirname + '/../data/CreateTest.json', 'utf8'));
+
+    let currentCreateTestData = createTestData.currentCreateTest;
+
+    currentCreateTestData.publisherAmount ++;
+
+    let publisherList = document.querySelector('#createTestPublishers');
+
+    let p = document.createElement('p');
+    p.className = "test-publisher";
+    // p.textContent = "Publisher 1";
+    
+    let input = document.createElement('input');
+    input.type = "text";
+    input.className = "publisher-input";
+    input.placeholder = "Publisher Name";
+
+    let trashIcon = document.createElement('ion-icon');
+    trashIcon.name = "trash";
+
+    p.appendChild(input);
+    p.appendChild(trashIcon);
+    
+    publisherList.appendChild(p);
+
+    // <p class="test-publisher">Publisher 1 <ion-icon name="trash"></ion-icon></p>
+
+    createTestData.currentCreateTest = currentCreateTestData;
+
+    fs.writeFile(__dirname + '/../data/CreateTest.json', createTestData, err => {
+        if(err) throw err;
+        console.log("File Saved");
+    });
+});
+
+/*
 
     SEARCH TAGS: search function, search feature, search, search setting input, searcher, searching
     STATUS: In Progress
@@ -652,7 +694,11 @@ function showContent(content){
 function readCreateTestData(path){
     var createTestData = JSON.parse(fs.readFileSync(path, 'utf8'));
 
-    
+    createTestData.allTests.forEach(test => {
+        console.log(test);
+    });
+
+    console.log(createTestData.allTests);
 }
 
 function isChecked(name){
