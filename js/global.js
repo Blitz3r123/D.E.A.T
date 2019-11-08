@@ -35,13 +35,17 @@ if(!testSettingsDOM.className.includes('empty')){
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
-// $('#createTestContent').hide();
-$('#runContent').hide();
+$('#createTestContent').hide();
+// $('#runContent').hide();
 $('#indexContent').hide();
 
 // Hide error message pop up
 // WORKING
 $('#error-message').hide();
+
+// Hide selection window on start
+// WORKING
+$('.selection-window').hide();
 
 // Hide subscriber settings on start
 // WORKING
@@ -61,6 +65,12 @@ $('#multicastAddress-setting').hide();
 // ----------------- END OF START UP ----------------
 
 // --------------- START OF EVENTS ------------------
+
+
+// Close selection window when x is pressed
+$('.selection-close-button').on('click', e => {
+    $('.selection-window').hide();
+});
 
 /*
     SEARCH TAGS:

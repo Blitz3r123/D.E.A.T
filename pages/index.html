@@ -41,23 +41,11 @@
                         <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
                         Subscriber
                     </a>
-                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh" onClick="showContent('#testContent')">
+                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh" onClick="showContent('#createTestContent')">
                         <ion-icon name="speedometer" style="margin-bottom: -0.5vh;"></ion-icon>    
                         Test
                     </a>
                 <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Run</a>
-                    <a href="#" class="side-link sidebar-inner-link">
-                        <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
-                        Publishers
-                    </a>
-                        <a href="#" class="side-link sidebar-inner-inner-link">Publisher 1</a>
-                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Publisher 2</a>
-                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh">
-                        <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
-                        Subscribers
-                    </a>
-                        <a href="#" class="side-link sidebar-inner-inner-link">Subscriber 1</a>
-                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Subscriber 2</a>
                 <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Analyse</a>
                     <a href="#" class="side-link sidebar-inner-link">
                         <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
@@ -630,61 +618,61 @@
                 
                 <div class="title-search-bar">
                     <p class="page-title">RUN</p>
-                    <input type="text" placeholder="Search" id="pub-sub-search">
                 </div>
 
-                <div class="lists">
-                    <div class="run-pub-list">
-                        <h4>Publishers</h4>
-                        <div class="run-list">
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                            <p class="run-list-item">Publisher 1</p>
-                        </div>
-                    </div>
-                    <div class="run-sub-list">
-                        <h4>Subscribers</h4>
-                        <div class="run-list">
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                                <p class="run-list-item">Subscriber 1</p>
-                        </div>
-                    </div>
-                    <div class="run-test-list">
-                        <h4>Tests</h4>
-                        <div class="run-list">
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                                <p class="run-list-item">Test 1</p>
-                        </div>
-                    </div>
-                </div>                
+                <div class="run-window">
+                    
+                    <div class="tab-titles">
+                        <div class="tab-title active-tab">Publisher 1</div>
+                        <div class="tab-title">Subscriber 1</div>
+                        <div class="tab-title">Subscriber 2</div>
+                        <div class="add-tab-button">
+                            <ion-icon name="add"></ion-icon>
+                        </div><!-- End of div.add-tab-button -->
+                    </div><!-- End of div.tab-titles -->
+
+                    <div class="current-window">
+
+                    </div><!-- End of div.current-window -->
+
+                </div><!-- End of div.run-window -->
+
+                <div class="selection-window">
+                    <ion-icon name="close" class="selection-close-button"></ion-icon>
+
+                    <p class="select-title">What would you like to run?</p>
+
+                    <div class="selection-lists">
+
+                        <div class="pub-selection-list selection-list">
+                            <p class="selection-list-title">Publishers</p>
+                            <div class="selection-item">Publisher 1</div>
+                            <div class="selection-item">Publisher 2</div>
+                            <div class="selection-item">Publisher 3</div>
+                            <div class="selection-item">Publisher 4</div>
+                        </div><!-- End of div.pub-selection-list-->
+
+                        <div class="sub-selection-list selection-list">
+                            <p class="selection-list-title">Subscribers</p>    
+                            <div class="selection-item">Subscriber 1</div>
+                            <div class="selection-item">Subscriber 2</div>
+                            <div class="selection-item">Subscriber 3</div>
+                            <div class="selection-item">Subscriber 4</div>
+                        </div><!-- End of div.sub-selection-list-->
+
+                        <div class="test-selection-list selection-list">
+                            <p class="selection-list-title">Tests</p>
+                            <div class="selection-item">Test 1</div>
+                            <div class="selection-item">Test 2</div>
+                            <div class="selection-item">Test 3</div>
+                            <div class="selection-item">Test 4</div>
+                        </div><!-- End of div.test-selection-list-->
+
+                    </div><!-- End of div.selection-lists -->
+
+                    <input type="file" name="test-select" id="testFileSelection">
+
+                </div><!-- End of div.selection-window -->
 
             </div><!-- End of div.main-content#runContent -->
             
