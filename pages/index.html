@@ -431,6 +431,195 @@
 
                     <div class="test-settings empty" id="testSettings">
                         <p class="empty-message" id="testSettingsMessage">Select an item to see its settings.</p>
+
+                        <div class="create-test-general-settings">
+                            
+                            <p class="settings-title">General Settings</p>
+
+                            <div class="create-test-setting">
+                                <span>Best Effort</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Data Length (bytes)</span>
+                                <input type="number" name="dataLen" id="createTestDataLength" value="100">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Verbosity</span>
+                                <select name="verbosity" id="createTestVerbosity">
+                                    <option value="0">0 - SILENT</option>
+                                    <option value="1" selected>1 - ERROR</option>
+                                    <option value="2">2 - WARNING</option>
+                                    <option value="3">3 - ALL</option>
+                                </select>
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Dynamic Data</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Durability</span>
+                                <select name="durability" id="createTestDurability">
+                                    <option value="0" selected>VOLATILE</option>
+                                    <option value="1">TRANSIENT LOCAL</option>
+                                    <option value="2">TRANSIENT</option>
+                                    <option value="3">PERSISTENT</option>
+                                </select>
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Domain</span>
+                                <input type="number" name="domain" id="createTestDomain" value="1">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Keyed</span>
+                                <ion-icon name="close-circle-outline" class="checkmark" id="createTestKeyed"></ion-icon>
+                            </div>
+
+                            <div class="create-test-setting" id="createTestInstancesSetting">
+                                <span>Instances</span>
+                                <input type="number" name="instances" id="createTestInstances" value="1">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Multicast</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Use Direct Communication</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Use Positive Acknowledgements</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Print Intervals</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Use Positive Acknowledgements</span>
+                                <input type="file" name="qosFile" id="createTestQosFile">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Use Read Thread</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Wait Set Delay (microseconds)</span>
+                                <input type="number" name="waitSetDelay" id="createTestWaitSetDelay" value="100">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Wait Set Event Count</span>
+                                <input type="number" name="waitSetEventCount" id="createTestWaitSetEventCount" value="5">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Asynchronous</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Display CPU used</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                        </div><!-- End of div.create-test-general-settings -->
+
+                        <div class="create-test-publisher-settings">
+
+                            <p class="settings-title">Publisher Settings</p>
+
+                            <div class="create-test-setting">
+                                <span>Batch Size</span>
+                                <input type="number" name="batchSize" id="createTestBatchSize" value="0">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Auto Throttle</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Turbo Mode</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Execution Time</span>
+                                <input type="number" name="executionTime" id="createTestExecutionTime" value="0">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Latency Count</span>
+                                <input type="number" name="latencyCount" id="createTestLatencyCount" value="-1">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Latency Test</span>
+                                <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>                                
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Iteration Number</span>
+                                <input type="number" name="numIter" id="createTestNumIter" value="100000000">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Subscriber Amount</span>
+                                <input type="number" name="numSubscribers" id="createTestNumSubscribers" value="1">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Publisher ID</span>
+                                <input type="number" name="pidMultiPubTest" id="createTestPidMultiPubTest" value="0">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Send Queue Size</span>
+                                <input type="number" name="sendQueueSize" id="createTestSendQueueSize" value="50">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Sleep Duration</span>
+                                <input type="number" name="sleep" id="createTestSleep" value="0">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Write Instance</span>
+                                <input type="number" name="writeInstance" id="createTestWriteInstance" value="0">
+                            </div>
+
+                        </div><!-- End of div.create-test-publisher-settings -->
+                        
+                        <div class="create-test-subscriber-settings">
+
+                            <p class="settings-title">Subscriber Settings</p>
+
+                            <div class="create-test-setting">
+                                <span>Publisher Amount</span>
+                                <input type="number" name="numPublishers" id="createTestNumPublishers" value="1">
+                            </div>
+
+                            <div class="create-test-setting">
+                                <span>Subscriber ID</span>
+                                <input type="number" name="sidMultiSubTest" id="createTestSidMultiSubTest" value="0">
+                            </div>
+
+                        </div><!-- End of create-test-subscriber-settings -->
+
                     </div><!-- End of div.test-settings -->
 
                 </div><!-- End of div.test-container -->

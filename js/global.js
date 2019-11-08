@@ -10,8 +10,8 @@ var hasError;
 
 // -------------------- START UP --------------------
 
-// Temporary Functions
-readCreateTestData(__dirname + '/../data/CreateTest.json');
+// Temporary Function
+// readCreateTestData(__dirname + '/../data/CreateTest.json');
 
 /*
 
@@ -28,6 +28,9 @@ if(!testSettingsDOM.className.includes('empty')){
 }else{
     testSettingsDOM.className = 'test-settings empty';
     testSettingsMessageDOM.style.display = 'visible';
+    $('.create-test-general-settings').hide();
+    $('.create-test-publisher-settings').hide();
+    $('.create-test-subscriber-settings').hide();
 }
 
 // HIDE ALL WINDOWS EXCEPT INDEX
@@ -47,6 +50,9 @@ $('#subscriber-settings').hide();
 // Hide instances settings on start
 // WORKING
 $('#instances-setting').hide();
+
+// Hide create test instances settings on start
+$('#createTestInstancesSetting').hide();
 
 // Hide multicast address on start
 // WORKING
@@ -586,6 +592,16 @@ $('#multicast').on('click', (e) => {
         $('#multicastAddress-setting').hide();
     }
 })
+
+// Show instances when keyed is true on create test page
+// IN PROGRESS
+$('#createTestKeyed').on('click', e => {
+    if(e.target.getAttribute('name') == 'close-circle-outline'){
+        $('#createTestInstancesSetting').show();
+    }else{
+        $('#createTestInstancesSetting').hide();
+    }
+});
 
 // Show instances when keyed is true
 // WORKING

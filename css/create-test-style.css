@@ -58,13 +58,23 @@
             }
 
     .test-settings{
-        /* background-color: red; */
         width: 49%;
         height: 84vh;
         border: 1px solid #222;
         border-radius: 1px;
+        padding: 1vh 1vw;
+        overflow-y: scroll;
     }
+    .test-settings::-webkit-scrollbar{width: 0vw !important;}
 
+        .settings-title{font-size: 1.2em; font-weight: 700;}
+        .create-test-setting{display: flex; justify-content: space-between; border-bottom: 1px solid #999; padding-bottom: 1vh; padding-top: 1vh;}
+            .create-test-setting span{min-width: 60%; max-width: 60%;}
+            .create-test-setting input, .create-test-setting select{text-align: center; width: 40%;}
+            .create-test-setting ion-icon {font-size: 1.5em; color: #444;}
+            .create-test-setting ion-icon:hover{cursor: pointer;}
+
+        .create-test-publisher-settings, .create-test-subscriber-settings{margin-top: 3vh;}
 
 .publisher-input{
     border: none;
