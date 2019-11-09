@@ -26,7 +26,7 @@
 }
 
 .main-content{min-width: 80%; max-width: 80%; color: #444;}
-.main-content .page-title{font-size: 3em; padding: 3vh 0 3vh 3vw; text-decoration: underline;}
+.main-content .page-title{font-size: 2em; padding: 3vh 0 3vh 3vw; text-decoration: underline;}
 
 .sidebar{
     outline: 1px solid #444;

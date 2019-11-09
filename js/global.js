@@ -724,6 +724,7 @@ function showContent(content){
     $('#createTestContent').hide();
     $('#runContent').hide();
     $('#analyseContent').hide();
+    $('#settingsContent').hide();
 
     // Check for data if content is #createTestContent
     // readCreateTestData('./../data/CreateTest.json');
