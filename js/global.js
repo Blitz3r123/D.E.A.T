@@ -40,9 +40,10 @@ if(!testSettingsDOM.className.includes('empty')){
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
 $('#createTestContent').hide();
-// $('#runContent').hide();
+$('#runContent').hide();
 $('#indexContent').hide();
 $('#analyseContent').hide();
+// $('#settingsContent').hide();
 
 // Hide analyse window on start
 // WORKING
