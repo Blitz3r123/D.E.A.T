@@ -4,7 +4,7 @@
 }
 
 .analyse-selection-list{
-    outline: 1px solid black;
+    outline: 1px solid #444;
     width: 30%;
     overflow-y: scroll;
     padding: 1vh 1vw;
@@ -20,7 +20,7 @@
 
     .analyse-section-list-primary-item ion-icon{margin-right: 0.5vw; font-size: 1.1em;}
     .analyse-section-list-secondary-item{
-        /* outline: 1px solid black; */
+        /* outline: 1px solid #444; */
         margin-left: 10%;
     }
         .analyse-section-list-secondary-item {color: #6f80ff; text-decoration: underline;}

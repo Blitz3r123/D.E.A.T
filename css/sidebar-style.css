@@ -1,5 +1,5 @@
 #error-message{
-    /* outline: 1px solid #222; */
+    /* outline: 1px solid #444; */
     width: 20vw;
     border-radius: 2px;
     height: auto;
@@ -25,11 +25,11 @@
     justify-content: space-evenly;
 }
 
-.main-content{min-width: 80%; max-width: 80%; color: #222;}
+.main-content{min-width: 80%; max-width: 80%; color: #444;}
 .main-content .page-title{font-size: 3em; padding: 3vh 0 3vh 3vw; text-decoration: underline;}
 
 .sidebar{
-    outline: 1px solid #222;
+    outline: 1px solid #444;
     min-height: 100vh;
     max-height: 100vh;
     overflow-y: scroll;
@@ -46,15 +46,15 @@
     margin-left: 1vw;
     font-size: 3.5em;
     margin-bottom: 4vh;
-    color: #222;
+    color: #444;
 }
 
-.side-link{color: #222; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
-.side-link:hover{color: white; text-decoration: none; cursor: pointer; background-color: #222;}
+.side-link{color: #444; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
+.side-link:hover{color: white; text-decoration: none; cursor: pointer; background-color: #444;}
     .side-link ion-icon{margin-right: 1vw;}
 
 .sidebar-link{
-    border-top: 1px solid #222;
+    border-top: 1px solid #444;
     display: block;
     padding: 1vh 2vw;
     font-size: 1.2em;
@@ -67,7 +67,7 @@
     display: block;
     font-size: 1em;
     padding: 1vh 2vw;
-    border-left: 2px solid #222;
+    border-left: 2px solid #444;
 }
 
 .sidebar-inner-inner-link{
@@ -76,12 +76,12 @@
     display: block;
     font-size: 1em;
     padding: 1vh 2vw;
-    border-left: 2px solid #222;
+    border-left: 2px solid #444;
 }
 
 /* Default Styles */
 .margin-bot-1vh{margin-bottom: 1vh;}
-.border-bot-1px-solid-#222{border-bottom: 1px solid #222;}
-.selected{background-color: #222; color: white;}
+.border-bot-1px-solid-#444{border-bottom: 1px solid #444;}
+.selected{background-color: #444; color: white;}
 .selected:hover{color: white;}
 /* End of Default Styles */
