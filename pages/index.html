@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="./../css/create-style.css">
         <link rel="stylesheet" href="./../css/create-test-style.css">
         <link rel="stylesheet" href="./../css/run-style.css">
+        <link rel="stylesheet" href="./../css/analyse-style.css">
         <!-- End of Custom CSS Stylesheets -->
 
         <!-- Jquery Import -->
@@ -46,7 +47,7 @@
                         Test
                     </a>
                 <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Run</a>
-                <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Analyse</a>
+                <a href="#" onClick="showContent('#analyseContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Analyse</a>
                     <a href="#" class="side-link sidebar-inner-link">
                         <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
                         Publisher Data
@@ -676,6 +677,48 @@
 
             </div><!-- End of div.main-content#runContent -->
             
+            <div id="analyseContent" class="main-content">
+
+                <div class="title-search-bar">
+                    <p class="page-title">Analyse</p>
+                </div>
+
+                <div class="analysis-window">
+                
+                    <div class="tab-titles">
+                        <div class="tab-title active-tab">Publisher 1</div>
+                        <div class="tab-title">Subscriber 1</div>
+                        <div class="tab-title">Subscriber 2</div>
+                        <div class="add-tab-button">
+                            <ion-icon name="add"></ion-icon>
+                        </div><!-- End of div.add-tab-button -->
+                    </div><!-- End of div.tab-titles -->
+
+                    <div class="current-window">
+
+                    </div><!-- End of div.current-window -->
+
+                </div><!-- End of div.analysis-window -->
+
+                <div class="analyse-selection-window">
+
+                    <div class="analyse-selection-list">
+                        <p class="selection-list-title">Publishers</p>
+                        
+                    </div><!-- End of div.analyse-selection-list -->
+
+                    <div class="analyse-selection-list">
+                        <p class="selection-list-title">Subscribers</p>    
+                    </div><!-- End of div.analyse-selection-list -->
+
+                    <div class="analyse-selection-list">
+                        <p class="selection-list-title">Tests</p>    
+                    </div><!-- End of div.analyse-selection-list -->
+
+                </div><!-- End of div.analyse-selection-window -->
+
+            </div> <!-- End of div.main-content#analyseContent -->
+
         </div>
 
          <!-- JavaScript Functions -->

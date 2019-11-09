@@ -36,8 +36,13 @@ if(!testSettingsDOM.className.includes('empty')){
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
 $('#createTestContent').hide();
-// $('#runContent').hide();
+$('#runContent').hide();
 $('#indexContent').hide();
+// $('#analyseContent').hide();
+
+// Hide analyse window on start
+// WORKING
+$('.analysis-window').hide();
 
 // Hide error message pop up
 // WORKING
@@ -709,6 +714,7 @@ function showContent(content){
     $('#createContent').hide();
     $('#createTestContent').hide();
     $('#runContent').hide();
+    $('#analyseContent').hide();
 
     // Check for data if content is #createTestContent
     // readCreateTestData('./../data/CreateTest.json');

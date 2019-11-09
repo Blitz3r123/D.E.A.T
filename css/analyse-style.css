@@ -1,0 +1,16 @@
+.analyse-selection-window{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.analyse-selection-list{
+    outline: 1px solid black;
+    width: 30%;
+    overflow-y: scroll;
+    padding: 1vh 1vw;
+
+    height: 80vh;
+    min-height: 80vh;
+    max-height: 80vh;
+}
+.analyse-selection-list::-webkit-scrollbar{width: 0px !important;}
