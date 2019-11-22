@@ -37,8 +37,8 @@ if(!testSettingsDOM.className.includes('empty')){
 $('#createContent').hide();
 $('#createTestContent').hide();
 $('#runContent').hide();
-$('#indexContent').hide();
-// $('#analyseContent').hide();
+// $('#indexContent').hide();
+$('#analyseContent').hide();
 
 // Hide analyse window on start
 // WORKING
