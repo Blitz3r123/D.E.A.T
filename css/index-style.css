@@ -20,16 +20,16 @@ html{
 
 .quick-section{display: flex; justify-content: space-evenly; }
 
-.quick-create{width: 35vw; outline: 1px solid #222; height: 40vh; padding: 2vh 1vw;}
-    .create-button{width: 100%; outline: 1px solid #222; display: block; padding: 1vh 1vw; margin-bottom: 2vh; color: #222; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
-    .create-button:hover{color: white; text-decoration: none; background-color: #222;}
-    .quick-run{width: 35vw; outline: 1px solid #222; height: 40vh; padding: 2vh 1vw;}
+.quick-create{width: 35vw; outline: 1px solid #444; height: 40vh; padding: 2vh 1vw;}
+    .create-button{width: 100%; outline: 1px solid #444; display: block; padding: 1vh 1vw; margin-bottom: 2vh; color: #444; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
+    .create-button:hover{color: white; text-decoration: none; background-color: #444;}
+    .quick-run{width: 35vw; outline: 1px solid #444; height: 40vh; padding: 2vh 1vw;}
     .list-wrapper{display: flex; justify-content: space-evenly;}
         .list-title{padding-left: 1vw; text-decoration: underline; margin-bottom: 1vh;}
-        .list-item{outline: 1px solid #222; display: block; width: 90%; margin-left: 5%; margin-bottom: 1vh; padding-left: 1vw; color: #222; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
-        .list-item:hover{text-decoration: none; color: white; background-color: #222;}
-        .publisher-list, .subscriber-list {outline: 1px solid #222; width: 45%; overflow: scroll; max-height: 28vh;}
+        .list-item{outline: 1px solid #444; display: block; width: 90%; margin-left: 5%; margin-bottom: 1vh; padding-left: 1vw; color: #444; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
+        .list-item:hover{text-decoration: none; color: white; background-color: #444;}
+        .publisher-list, .subscriber-list {outline: 1px solid #444; width: 45%; overflow: scroll; max-height: 28vh;}
         .publisher-list::-webkit-scrollbar, .subscriber-list::-webkit-scrollbar{width: 0px !important;}
-        .recent-results{width: 73vw; margin-left: 3.5vw; outline: 1px solid #222; margin-top: 3vh; height: 35vh; padding: 2vh 1vw;}
+        .recent-results{width: 73vw; margin-left: 3.5vw; outline: 1px solid #444; margin-top: 3vh; height: 35vh; padding: 2vh 1vw;}
     .empty-message{text-align: center; margin-top: 8vh;}
         .action-link{text-decoration: underline;}

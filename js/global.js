@@ -8,7 +8,11 @@ const fs = require('fs');
 // GLOBAL VARIABLES
 var hasError;
 
-// -------------------- START UP --------------------
+/*
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--  START UP  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
 
 // Temporary Function
 // readCreateTestData(__dirname + '/../data/CreateTest.json');
@@ -36,8 +40,8 @@ if(!testSettingsDOM.className.includes('empty')){
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
 $('#createTestContent').hide();
-$('#runContent').hide();
-// $('#indexContent').hide();
+// $('#runContent').hide();
+$('#indexContent').hide();
 $('#analyseContent').hide();
 
 // Hide analyse window on start
@@ -71,6 +75,10 @@ $('#multicastAddress-setting').hide();
 
 // --------------- START OF EVENTS ------------------
 
+// Show add run window when pressed
+$('#addTab').on('click', e => {
+    $('.selection-window').show();
+});
 
 // Close selection window when x is pressed
 $('.selection-close-button').on('click', e => {

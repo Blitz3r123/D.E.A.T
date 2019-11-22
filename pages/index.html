@@ -47,8 +47,8 @@
                         Test
                     </a>
                 <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Run</a>
-                <a href="#" onClick="showContent('#analyseContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Analyse</a>
-                    <a href="#" class="side-link sidebar-inner-link">
+                <a href="#" onClick="showContent('#analyseContent')" class="side-link sidebar-link"><ion-icon name="analytics"></ion-icon>Analyse</a>
+                    <!-- <a href="#" class="side-link sidebar-inner-link">
                         <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
                         Publisher Data
                     </a>
@@ -59,8 +59,9 @@
                         Subscriber Data
                     </a>
                         <a href="#" class="side-link sidebar-inner-inner-link">Subscriber 1</a>
-                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Subscriber 2</a>
-                <a href="#" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="help"></ion-icon>Help</a>                
+                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Subscriber 2</a> -->
+                <a href="#" onClick="showContent('#settingsContent')" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="settings"></ion-icon>Settings</a>    
+                <a href="#" onClick="showContent('#helpContent')" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="help"></ion-icon>Help</a>
     
             </div><!-- End of div.sidebar -->
             
@@ -627,7 +628,7 @@
                         <div class="tab-title active-tab">Publisher 1</div>
                         <div class="tab-title">Subscriber 1</div>
                         <div class="tab-title">Subscriber 2</div>
-                        <div class="add-tab-button">
+                        <div class="add-tab-button" id="addTab">
                             <ion-icon name="add"></ion-icon>
                         </div><!-- End of div.add-tab-button -->
                     </div><!-- End of div.tab-titles -->
@@ -703,16 +704,65 @@
                 <div class="analyse-selection-window">
 
                     <div class="analyse-selection-list">
-                        <p class="selection-list-title">Publishers</p>
+                        <p class="selection-list-title analyse-selection-list-title">Publishers</p>
+                        
+                        <p class="analyse-section-list-item">publisher.csv</p>
+                        <p class="analyse-section-list-item">publisherTwo.csv</p>
+                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
+                        <p class="analyse-section-list-item">publisher.csv</p>
+                        <p class="analyse-section-list-item">publisherTwo.csv</p>
+                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
+                        <p class="analyse-section-list-item">publisher.csv</p>
+                        <p class="analyse-section-list-item">publisherTwo.csv</p>
+                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
+                        <p class="analyse-section-list-item">publisher.csv</p>
+                        <p class="analyse-section-list-item">publisherTwo.csv</p>
+                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
+                        <p class="analyse-section-list-item">publisher.csv</p>
+                        <p class="analyse-section-list-item">publisherTwo.csv</p>
+                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
+                        <p class="analyse-section-list-item">publisher.csv</p>
+                        <p class="analyse-section-list-item">publisherTwo.csv</p>
+                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
+
+                    </div><!-- End of div.analyse-selection-list -->
+
+                    <div class="analyse-selection-list">
+                        <p class="selection-list-title analyse-selection-list-title">Subscribers</p>   
+                        
+                        <p class="analyse-section-list-item">subscriber.csv</p>
+                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
+                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
+                        <p class="analyse-section-list-item">subscriber.csv</p>
+                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
+                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
+                        <p class="analyse-section-list-item">subscriber.csv</p>
+                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
+                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
+                        <p class="analyse-section-list-item">subscriber.csv</p>
+                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
+                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
+                        <p class="analyse-section-list-item">subscriber.csv</p>
+                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
+                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
+                        <p class="analyse-section-list-item">subscriber.csv</p>
+                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
+                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
                         
                     </div><!-- End of div.analyse-selection-list -->
 
                     <div class="analyse-selection-list">
-                        <p class="selection-list-title">Subscribers</p>    
-                    </div><!-- End of div.analyse-selection-list -->
+                        <p class="selection-list-title analyse-selection-list-title">Tests</p>    
 
-                    <div class="analyse-selection-list">
-                        <p class="selection-list-title">Tests</p>    
+                        <p class="analyse-section-list-primary-item"><ion-icon name="remove"></ion-icon>TestOne</p>
+                        <p class="analyse-section-list-secondary-item"><ion-icon name="return-right"></ion-icon>publisher.csv</p>
+                        <p class="analyse-section-list-secondary-item"><ion-icon name="return-right"></ion-icon>subscriber.csv</p>
+
+                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
+                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
+                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
+                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
+
                     </div><!-- End of div.analyse-selection-list -->
 
                 </div><!-- End of div.analyse-selection-window -->
