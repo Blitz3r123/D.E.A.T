@@ -48,6 +48,9 @@ $('#analyseContent').hide();
 // WORKING
 $('.analysis-window').hide();
 
+// Hide perftest location setting on start
+$('#perftestLocationSetting').hide();
+
 // Hide error message pop up
 // WORKING
 $('#error-message').hide();
@@ -590,6 +593,14 @@ $('#createButton').on('click', () => {
         createFile(finalOutput, `${saveLocationPath}\\${fileName}.bat`);
     }
 
+});
+
+$('#useCustomLocation').on('click', (e) => {
+    if(e.target.getAttribute('name') == 'checkmark-circle-outline'){
+        $('#perftestLocationSetting').show();
+    }else{
+        $('#perftestLocationSetting').hide();
+    }
 });
 
 // Close error message if opened
