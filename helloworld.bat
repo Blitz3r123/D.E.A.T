@@ -1,0 +1,1 @@
+"perftest_java.bat"  -dataLen 100 -verbosity 1  -durability 0 -domain 1  -instances 1   -noDirectCommunication -noPositiveAcks   -useReadThread     -pub -batchSize 0   -executionTime 0 -numIter 0  -latencyCount -1 -numSubscribers 1 -pidMultiPubTest 0 -sendQueueSize 50 -sleep 0 

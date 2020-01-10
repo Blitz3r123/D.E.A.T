@@ -255,12 +255,18 @@ $('#createButton').on('click', () => {
     let perftestFileDOM = document.querySelector('#perftestLocation');
     let perftestFilePath;
 
-    if(perftestFileDOM.value == ''){
-        showError('Please select where you perftest_java.bat file is located.');
+    // Check if user wants to use custom location for perftest
+    // == none means user will use local location
+    if(document.querySelector('#perftestLocationSetting').style.display == 'none'){
+        perftestFilePath = 'perftest_java.bat';
     }else{
-        perftestFilePath = perftestFileDOM.files[0].path;
+        if(perftestFileDOM.value == ''){
+            showError('Please select where you perftest_java.bat file is located.');
+        }else{
+            perftestFilePath = perftestFileDOM.files[0].path;
+        }
     }
-
+    
     // Get BestEffort Value
     let BestEffort = document.querySelector('#bestEffort'); 
     let bestEffortValue;
@@ -590,13 +596,13 @@ $('#createButton').on('click', () => {
         showError('Please select somewhere to store the file.');
     }else{
         let saveLocationPath = document.querySelector('#saveLocation').files[0].path;
-        createFile(finalOutput, `${saveLocationPath}\\${fileName}.bat`);
+        createFile(finalOutput, `${saveLocationPath}/${fileName}.bat`);
     }
 
 });
 
 $('#useCustomLocation').on('click', (e) => {
-    if(e.target.getAttribute('name') == 'checkmark-circle-outline'){
+    if(e.target.getAttribute('name') == 'close-circle-outline'){
         $('#perftestLocationSetting').show();
     }else{
         $('#perftestLocationSetting').hide();
@@ -761,5 +767,5 @@ function isChecked(name){
 }
 
 function createFile(output, path){
-    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log('file created successfully'));
+    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log('file created successfully at ' + path));
 }
