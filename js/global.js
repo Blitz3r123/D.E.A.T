@@ -121,7 +121,7 @@ $('#addPublisher').on('click', e => {
 
     createTestData.currentCreateTest = currentCreateTestData;
 
-    fs.writeFile(__dirname + '/../data/CreateTest.json', createTestData, err => {
+    fs.writeFile(__dirname + '/../data/CreateTest.json', JSON.stringify(createTestData), err => {
         if(err) throw err;
         console.log("File Saved");
     });
