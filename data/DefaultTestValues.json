@@ -1,0 +1,16 @@
+{
+    "general": [
+        {
+            "title": "Best Effort",
+            "scriptvalue": "-bestEffort",
+            "value": "false"
+        },
+        {
+            "title": "Data Length (bytes)",
+            "scriptvalue": "-dataLen",
+            "value": 100
+        }
+    ],
+    "publisher": [],
+    "subscriber": []
+}

@@ -1,0 +1,54 @@
+#settingsContent{
+    padding: 3vh 3vw;
+}
+
+.general-setting-container{
+    /* outline: 1px solid black; */
+    padding: 1vh 1vw;
+    background-color: #efefef;
+    border-radius: 2px;
+    padding-bottom: 0;
+    margin-top: 1vh;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.general-setting-container input{
+    /* outline: 1px solid black; */
+    background-color: white;
+
+    height: 100%;
+}
+
+.quick-create-general-settings-container{
+    background-color: #efefef;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2vw;
+}
+
+.row{
+    /* outline: 1px solid black; */
+    width: 50%;
+    height: 100%;
+}
+
+.quick-create-setting{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    padding: 1vh 1vw;
+}
+
+.quick-create-setting p{
+    /* outline: 1px solid black; */
+    margin-bottom: 0;
+    margin-top: 1%;
+}
+
+.quick-create-setting ion-icon{
+    /* outline: 1px solid black; */
+    margin-right: 0;
+}

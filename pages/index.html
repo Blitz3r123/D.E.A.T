@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="./../css/create-test-style.css">
         <link rel="stylesheet" href="./../css/run-style.css">
         <link rel="stylesheet" href="./../css/analyse-style.css">
+        <link rel="stylesheet" href="./../css/settings-style.css">
         <!-- End of Custom CSS Stylesheets -->
 
         <!-- Jquery Import -->
@@ -775,6 +776,85 @@
                 </div><!-- End of div.analyse-selection-window -->
 
             </div> <!-- End of div.main-content#analyseContent -->
+
+            <div class="main-content" id="settingsContent">
+                <div id='general-settings-container'>
+                    
+                    <h1>General</h1>
+
+                    <div class="general-setting-container">
+                        <p>Default perftest_java.bat location:</p>
+                        <input type="file" name="perftest_location">
+                    </div><!-- div.general-setting-container -->
+
+                    <div class="general-setting-container">
+                        <p>Script Folder location:</p>
+                        <input type="file" name="script_location">
+                    </div><!-- div.general-setting-container -->
+
+                    <div class="general-setting-container">
+                        <p>Publisher Results location:</p>
+                        <input type="file" name="script_location">
+                    </div><!-- div.general-setting-container -->
+
+                    <div class="general-setting-container">
+                        <p>Subscriber Results location:</p>
+                        <input type="file" name="script_location">
+                    </div><!-- div.general-setting-container -->
+
+                    <div class="general-setting-container">
+                        <p>NDDS Home location:</p>
+                        <input type="file" name="script_location">
+                    </div><!-- div.general-setting-container -->
+
+                </div><!-- End of div#general-settings-container -->
+
+                <hr>
+
+                <div id='create-settings-container'>
+                    
+                    <h1>Create</h1>
+
+                    <div class="quick-create-settings-container">
+                        <h4>Quick Create General Settings</h4>
+
+                        <div class="quick-create-general-settings-container">
+
+                            <div class="row">
+                                
+                                <div class="quick-create-setting">
+                                    <p>Best Effort: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Data Length (bytes): </p>
+                                    <input type="number" name="">
+                                </div><!-- End of div.quick-create-setting -->
+
+                            </div><!-- End of div.row -->
+
+                            <div class="row">
+                                
+                                <div class="quick-create-setting">
+                                    <p>Best Effort: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Best Effort: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                            </div><!-- End of div.row -->
+
+                        </div><!-- End of div.quick-create-general-settings-container -->
+
+                    </div><!-- End of div.quick-create-settings-container -->
+
+                </div><!-- End of div#general-settings-container -->
+
+            </div><!-- End of div.main-content#settingsContent -->
 
         </div>
 
