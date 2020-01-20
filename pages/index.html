@@ -778,81 +778,161 @@
             </div> <!-- End of div.main-content#analyseContent -->
 
             <div class="main-content" id="settingsContent">
-                <div id='general-settings-container'>
+                
+                <div class="scroll">
+
+                    <div id='general-settings-container'>
                     
-                    <h1>General</h1>
+                        <h1>General</h1>
+    
+                        <div class="general-setting-container">
+                            <p>Default perftest_java.bat location:</p>
+                            <input type="file" name="perftest_location">
+                        </div><!-- div.general-setting-container -->
+    
+                        <div class="general-setting-container">
+                            <p>Script Folder location:</p>
+                            <input type="file" name="script_location">
+                        </div><!-- div.general-setting-container -->
+    
+                        <div class="general-setting-container">
+                            <p>Publisher Results location:</p>
+                            <input type="file" name="script_location">
+                        </div><!-- div.general-setting-container -->
+    
+                        <div class="general-setting-container">
+                            <p>Subscriber Results location:</p>
+                            <input type="file" name="script_location">
+                        </div><!-- div.general-setting-container -->
+    
+                        <div class="general-setting-container">
+                            <p>NDDS Home location:</p>
+                            <input type="file" name="script_location">
+                        </div><!-- div.general-setting-container -->
+    
+                    </div><!-- End of div#general-settings-container -->
+    
+                    <hr>
+    
+                    <div id='create-settings-container'>
+                        
+                        <h1>Create</h1>
+    
+                        <div class="quick-create-settings-container">
+                            <h4>Quick Create General Settings</h4>
+    
+                            <div class="quick-create-general-settings-container">
+    
+                                <div class="row">
+                                    
+                                    <div class="quick-create-setting">
+                                        <p>Best Effort: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Data Length (bytes): </p>
+                                        <input type="number" name="">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Verbosity: </p>
+                                        <select name="verbosity" id="verbosity">
+                                            <option value="0">0 - SILENT</option>
+                                            <option value="1" selected>1 - ERROR</option>
+                                            <option value="2">2 - WARNING</option>
+                                            <option value="3">3 - ALL</option>
+                                        </select>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Dynamic Data: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Durability: </p>
+                                        <select name="durability" id="durability">
+                                            <option value="0" selected>0 - VOLATILE</option>
+                                            <option value="1">1 - TRANSIENT LOCAL</option>
+                                            <option value="2">2 - TRANSIENT</option>
+                                            <option value="3">3 - PERSISTENT</option>
+                                        </select>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Domain ID: </p>
+                                        <input type="number" name="">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Keyed Data: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Multicast: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                </div><!-- End of div.row -->
+    
+                                <div class="row">
+                                    
+                                    <div class="quick-create-setting">
+                                        <p>Direct Communication: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Positive Acknowledgements: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Print Intervals: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Custom QOS File: </p>
+                                        <input type="file" name="" id="">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Use Read Thread: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Wait Set Delay (Micro Seconds): </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Wait Set Event Count: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Asynchronous: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Display CPU: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                </div><!-- End of div.row -->
+    
+                            </div><!-- End of div.quick-create-general-settings-container -->
+    
+                        </div><!-- End of div.quick-create-settings-container -->
+    
+                    </div><!-- End of div#create-settings-container -->
 
-                    <div class="general-setting-container">
-                        <p>Default perftest_java.bat location:</p>
-                        <input type="file" name="perftest_location">
-                    </div><!-- div.general-setting-container -->
-
-                    <div class="general-setting-container">
-                        <p>Script Folder location:</p>
-                        <input type="file" name="script_location">
-                    </div><!-- div.general-setting-container -->
-
-                    <div class="general-setting-container">
-                        <p>Publisher Results location:</p>
-                        <input type="file" name="script_location">
-                    </div><!-- div.general-setting-container -->
-
-                    <div class="general-setting-container">
-                        <p>Subscriber Results location:</p>
-                        <input type="file" name="script_location">
-                    </div><!-- div.general-setting-container -->
-
-                    <div class="general-setting-container">
-                        <p>NDDS Home location:</p>
-                        <input type="file" name="script_location">
-                    </div><!-- div.general-setting-container -->
-
-                </div><!-- End of div#general-settings-container -->
-
-                <hr>
-
-                <div id='create-settings-container'>
-                    
-                    <h1>Create</h1>
-
-                    <div class="quick-create-settings-container">
-                        <h4>Quick Create General Settings</h4>
-
-                        <div class="quick-create-general-settings-container">
-
-                            <div class="row">
-                                
-                                <div class="quick-create-setting">
-                                    <p>Best Effort: </p>
-                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                </div><!-- End of div.quick-create-setting -->
-
-                                <div class="quick-create-setting">
-                                    <p>Data Length (bytes): </p>
-                                    <input type="number" name="">
-                                </div><!-- End of div.quick-create-setting -->
-
-                            </div><!-- End of div.row -->
-
-                            <div class="row">
-                                
-                                <div class="quick-create-setting">
-                                    <p>Best Effort: </p>
-                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                </div><!-- End of div.quick-create-setting -->
-
-                                <div class="quick-create-setting">
-                                    <p>Best Effort: </p>
-                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                </div><!-- End of div.quick-create-setting -->
-
-                            </div><!-- End of div.row -->
-
-                        </div><!-- End of div.quick-create-general-settings-container -->
-
-                    </div><!-- End of div.quick-create-settings-container -->
-
-                </div><!-- End of div#general-settings-container -->
+                </div>
 
             </div><!-- End of div.main-content#settingsContent -->
 
@@ -860,6 +940,7 @@
 
          <!-- JavaScript Functions -->
         <script src="./../js/global.js"></script>
+        <script src="./../js/settings.js"></script>
         <!-- End of JavaScript Functions -->
 
         <!-- JavaScript Dependencies --><script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

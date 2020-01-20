@@ -2,6 +2,14 @@
     padding: 3vh 3vw;
 }
 
+.scroll{
+    /* background-color: red; */
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.scroll::-webkit-scrollbar{width: 0px !important;}
+
 .general-setting-container{
     /* outline: 1px solid black; */
     padding: 1vh 1vw;
