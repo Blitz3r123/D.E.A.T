@@ -6,6 +6,7 @@
     /* background-color: red; */
     height: 100vh;
     overflow-y: scroll;
+    padding-bottom: 5vh;
 }
 
 .scroll::-webkit-scrollbar{width: 0px !important;}
@@ -29,7 +30,7 @@
     height: 100%;
 }
 
-.quick-create-general-settings-container{
+.quick-create-general-settings-container, .quick-create-publisher-settings-container, .quick-create-subscriber-settings-container{
     background-color: #efefef;
     display: flex;
     justify-content: space-between;
@@ -59,4 +60,21 @@
 .quick-create-setting ion-icon{
     /* outline: 1px solid black; */
     margin-right: 0;
+}
+
+#field-selection-container{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #efefef;
+    padding: 3vh 3vw;
+}
+
+.checkbox-container{
+    /* background-color: red; */
+    width: 100%;
+}
+
+.checkbox-container p input{
+    margin-right: 1vw;
+    margin-top: 1vh;
 }

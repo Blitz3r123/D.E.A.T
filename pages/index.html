@@ -875,15 +875,15 @@
                                         <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
                                     </div><!-- End of div.quick-create-setting -->
     
-                                </div><!-- End of div.row -->
-    
-                                <div class="row">
-                                    
                                     <div class="quick-create-setting">
                                         <p>Direct Communication: </p>
                                         <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
                                     </div><!-- End of div.quick-create-setting -->
+
+                                </div><!-- End of div.row -->
     
+                                <div class="row">
+
                                     <div class="quick-create-setting">
                                         <p>Positive Acknowledgements: </p>
                                         <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
@@ -927,12 +927,180 @@
                                 </div><!-- End of div.row -->
     
                             </div><!-- End of div.quick-create-general-settings-container -->
+
+                            <h4 style="margin-top: 3vh;">Quick Create Publisher Settings</h4>
+
+                            <div class="quick-create-publisher-settings-container">
+    
+                                <div class="row">
+                                    
+                                    <div class="quick-create-setting">
+                                        <p>Batch Size (bytes): </p>
+                                        <input type="number" name="" id="">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Enable Auto Throttle: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Enable Turbo Mode: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Execution Time (seconds): </p>
+                                        <input type="number" name="" id="" placeholder="0">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Number of Iterations: </p>
+                                        <input type="number" name="" id="" placeholder="100000000">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Latency Test: </p>
+                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                    </div><!-- End of div.quick-create-setting -->
+
+                                </div><!-- End of div.row -->
+    
+                                <div class="row">
+
+                                    <div class="quick-create-setting">
+                                        <p>Latency Count: </p>
+                                        <input type="number" name="" id="" placeholder="-1">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Number of Subscribers: </p>
+                                        <input type="number" name="" id="" placeholder="1">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Publisher ID: </p>
+                                        <input type="number" name="" id="" placeholder="0">
+                                    </div><!-- End of div.quick-create-setting -->
+
+                                    <div class="quick-create-setting">
+                                        <p>Send Queue size: </p>
+                                        <input type="number" name="" id="" placeholder="50">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Sleep Time (milliseconds): </p>
+                                        <input type="number" name="" id="" placeholder="0">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                    <div class="quick-create-setting">
+                                        <p>Instance Number: </p>
+                                        <input type="number" name="" id="">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                </div><!-- End of div.row -->
+    
+                            </div><!-- End of div.quick-create-publisher-settings-container -->
+
+                            <h4 style="margin-top: 3vh;">Quick Create Subscriber Settings</h4>
+
+                            <div class="quick-create-subscriber-settings-container">
+    
+                                <div class="row">
+                                    
+                                    <div class="quick-create-setting">
+                                        <p>Number of Publishers: </p>
+                                        <input type="number" name="" id="" placeholder="1">
+                                    </div><!-- End of div.quick-create-setting -->
+
+                                </div><!-- End of div.row -->
+    
+                                <div class="row">
+
+                                    <div class="quick-create-setting">
+                                        <p>Subscriber ID: </p>
+                                        <input type="number" name="" id="" placeholder="0">
+                                    </div><!-- End of div.quick-create-setting -->
+    
+                                </div><!-- End of div.row -->
+    
+                            </div><!-- End of div.quick-create-subscriber-settings-container -->
     
                         </div><!-- End of div.quick-create-settings-container -->
     
                     </div><!-- End of div#create-settings-container -->
 
-                </div>
+                    <hr>
+
+                    <div id="results-settings-container">  
+
+                        <h1>Test Results</h1>
+
+                        <p>Choose what data you would like to view in the results:</p>
+
+                        <div id="field-selection-container">
+
+                            <div class="row">
+
+                                <h4>Publisher</h4>
+
+                                <div class="checkbox-container">
+                                    
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Latency
+                                    </p>
+
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Average Latency
+                                    </p>
+
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Minimum Latency
+                                    </p>
+
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Maximum Latency
+                                    </p>
+
+                                </div>
+
+                            </div><!-- End of div.row -->
+
+                            <div class="row">
+
+                                <h4>Subscriber</h4>
+
+                                <div class="checkbox-container">
+                                    
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Throughput
+                                    </p>
+
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Average Throughput
+                                    </p>
+
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Minimum Throughput
+                                    </p>
+
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Maximum Throughput
+                                    </p>
+
+                                    <p>
+                                        <input type="checkbox" name="" id=""> Packets Lost
+                                    </p>
+
+                                </div>
+
+                            </div><!-- End of div.row -->
+
+                        </div><!-- End of div#field-selection-container -->
+
+                    </div><!-- End of div#results-settings-container -->
+
+                </div><!-- End of div.scroll -->
 
             </div><!-- End of div.main-content#settingsContent -->
 
