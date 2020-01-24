@@ -38,12 +38,15 @@ if(!testSettingsDOM.className.includes('empty')){
 }
 
 // HIDE ALL WINDOWS EXCEPT INDEX
-$('#createContent').hide();
+// $('#createContent').hide();
 $('#createTestContent').hide();
 $('#runContent').hide();
 $('#indexContent').hide();
 $('#analyseContent').hide();
-// $('#settingsContent').hide();
+$('#settingsContent').hide();
+
+// Hide popup view
+$('#popup').hide();
 
 // Hide analyse window on start
 // WORKING
@@ -78,6 +81,38 @@ $('#multicastAddress-setting').hide();
 // ----------------- END OF START UP ----------------
 
 // --------------- START OF EVENTS ------------------
+
+// Toggle between set event count and set event delay
+/*
+    If setEventCount is changed, disable setDelay.
+    If setDelay is changed, disable setEventCount.
+*/
+$('#waitSetDelay').keyup(() => {
+    let waitSetDelayDOM = document.querySelector('#waitSetDelay');
+    let waitSetEventCountDOM = document.querySelector('#waitSetEventCount');
+
+    if(waitSetDelayDOM.value != ''){
+        waitSetEventCountDOM.disabled = true;
+    }else{
+        waitSetEventCountDOM.disabled = false;
+    }
+});
+
+$('#waitSetEventCount').keyup(() => {
+    let waitSetDelayDOM = document.querySelector('#waitSetDelay');
+    let waitSetEventCountDOM = document.querySelector('#waitSetEventCount');
+
+    if(waitSetEventCountDOM.value != ''){
+        waitSetDelayDOM.disabled = true;
+    }else{
+        waitSetDelayDOM.disabled = false;
+    }
+});
+
+// Hide popup when you click the 'x'
+$('#popup').on('click', e => {
+    $('#popup').hide();
+});
 
 // Show add run window when pressed
 $('#addTab').on('click', e => {
@@ -708,6 +743,9 @@ function createPublisher(){
     fileNameDOM.setAttribute('placeholder', 'pub');     // Set file name placeholder to sub
 
     showContent('#createContent');                      // Show create content
+
+    $('#publisher-settings').show();
+    $('#subscriber-settings').hide();
 }
 
 function createSubscriber(){
@@ -718,6 +756,9 @@ function createSubscriber(){
     fileNameDOM.setAttribute('placeholder', 'sub');     // Set file name placeholder to sub
 
     showContent('#createContent');                      // Show create content
+
+    $('#publisher-settings').hide();
+    $('#subscriber-settings').show();
 
 }
 
@@ -769,5 +810,13 @@ function isChecked(name){
 }
 
 function createFile(output, path){
-    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log('file created successfully at ' + path));
+    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : showPopup('File Created!'));
+}
+
+function showPopup(message){
+    let popup = document.querySelector('#popup');
+    let popupMessage = document.querySelector('#popup-message');
+
+    popupMessage.textContent = message;
+    $('#popup').show();
 }

@@ -16,6 +16,30 @@ html{
     max-width: 80%;
 }
 
+#popup{
+    outline: 1px solid black;
+    display: block;
+    position: fixed;
+    top: 45vh;
+
+    background-color: white;
+    padding: 3vh 3vw;
+
+    z-index: 999;
+}
+
+#popup .topbar{
+    /* outline: 1px solid black; */
+    position: fixed;
+    margin-left: 17%;
+    margin-top: -1%;
+    font-size: 1em;
+}
+
+#popup .topbar:hover{
+    cursor: pointer;
+}
+
 .subtitle{font-size: 1.5em;}
 
 .quick-section{display: flex; justify-content: space-evenly; }

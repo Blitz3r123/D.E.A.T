@@ -66,6 +66,13 @@
     
             </div><!-- End of div.sidebar -->
             
+            <div id="popup">
+                <div class="topbar">
+                    <ion-icon name="close"></ion-icon>
+                </div>
+                <p id="popup-message"></p>
+            </div>
+
             <div class="main-content" id="indexContent">
                 
                 <p class="page-title">HOME</p>
@@ -266,7 +273,7 @@
 
                         <p class="setting" title="Use a seperate thread (instead of a callback) to read data.">
                             Use Read Thread
-                            <ion-icon name="checkmark-circle-outline" class="checkmark" id="useReadThread"></ion-icon>
+                            <ion-icon name="close-circle-outline" class="checkmark" id="useReadThread"></ion-icon>
                         </p>
 
                         <p class="setting" title="Process incoming data in groups, based on time, rather than individually.">
