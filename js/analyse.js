@@ -12,7 +12,7 @@ $('#folder-selection-input').on('change', e => {
         item.className = 'analyse-section-list-item';
 
         item.addEventListener('click', e => {
-            testFunc(path.join(pathValue, file));
+            analyseFile(path.join(pathValue, file));
         });
 
         item.textContent = file;
@@ -27,6 +27,6 @@ $('#folder-selection-input').on('change', e => {
     });
 });
 
-function testFunc(file){
-    console.log(file);
+function analyseFile(file){
+    let fileExtension = file.substr(file.indexOf('.'), file.length);
 }
