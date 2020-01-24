@@ -29,4 +29,8 @@ $('#folder-selection-input').on('change', e => {
 
 function analyseFile(file){
     let fileExtension = file.substr(file.indexOf('.'), file.length);
+    $('.analyse-selection-window').hide();
+    $('.analysis-window').show();
+
+    document.querySelector('#analyse-current-tab').textContent = path.basename(file);
 }

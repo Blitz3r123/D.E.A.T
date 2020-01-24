@@ -1,3 +1,40 @@
+.analysis-window{
+    padding: 3vh 3vw;
+    /* outline: 1px solid #444; */
+}
+
+.analysis-window .analyse-current-window{
+    border: 1px solid #444;
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+.analyse-publisher-content{
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+    padding: 3vh 3vw;
+}
+
+.analyse-publisher-content-table-container{
+    /* outline: 1px solid red; */
+}
+
+.analyse-publisher-graphs-container{
+
+}
+
+.cdf-graph-container{
+    width: 30vw;
+    height: 30vh;
+    background-color: green;
+}
+
+.analyse-summary-table{
+    margin-top: 5vh;
+}
+
 .analyse-selection-window{
     display: flex;
     justify-content: space-evenly;

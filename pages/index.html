@@ -24,6 +24,10 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <!-- End of Jquery Import -->
 
+        <!-- D3.js Import -->
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <!-- End of D3.js Import -->
+
         <title>D.E.A.T Home</title>
     </head>
     <body>
@@ -708,16 +712,144 @@
                 <div class="analysis-window">
                 
                     <div class="tab-titles">
-                        <div class="tab-title active-tab">Publisher 1</div>
-                        <div class="tab-title">Subscriber 1</div>
-                        <div class="tab-title">Subscriber 2</div>
+                        <div class="tab-title active-tab" id="analyse-current-tab">Publisher 1</div>
+                        <!-- <div class="tab-title">Subscriber 1</div>
+                        <div class="tab-title">Subscriber 2</div> -->
                         <div class="add-tab-button">
                             <ion-icon name="add"></ion-icon>
                         </div><!-- End of div.add-tab-button -->
                     </div><!-- End of div.tab-titles -->
 
-                    <div class="current-window">
+                    <div class="analyse-current-window">
                         
+                        <div class="analyse-publisher-content">
+                            
+                            <div class="analyse-publisher-content-table-container">
+
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                          <th scope="col">Avg Lat (us)</th>
+                                          <th scope="col">Min Lat (us)</th>
+                                          <th scope="col">Max Lat (us)</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>4.34</td>
+                                          <td>1.23</td>
+                                          <td>4.34</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4.34</td>
+                                            <td>1.23</td>
+                                            <td>4.34</td>
+                                          </tr>
+                                      </tbody>
+                                </table><!-- End of table.table -->
+
+                            </div><!-- End of div.analyse-publisher-content-table-container -->
+
+                            <div class="analyse-publisher-graphs-container">
+                                
+                                <div class="cdf-graph-container">
+
+                                </div><!-- End of div.cdf-graph-container -->
+
+                                <div class="analyse-summary-table">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th colspan="4">Summary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Avg: </td>
+                                                <td>2.3</td>
+                                                <td>25%:</td>
+                                                <td>2.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Min: </td>
+                                                <td>2.3</td>
+                                                <td>50%:</td>
+                                                <td>2.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Max: </td>
+                                                <td>2.3</td>
+                                                <td>75%:</td>
+                                                <td>2.5</td>
+                                            </tr>
+                                        </tbody>
+                                    </table><!-- End of table.table -->
+                                </div><!-- End of div.analyse-summary-table -->
+
+                            </div><!-- End of div.analyse-publisher-graphs-container -->
+                            
+                        </div><!-- End of div.analyse-publisher-content -->
+
                     </div><!-- End of div.current-window -->
 
                 </div><!-- End of div.analysis-window -->
