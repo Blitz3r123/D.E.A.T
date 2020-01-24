@@ -1,6 +1,6 @@
 let bestEffort = document.querySelector('#quick-create-setting-best-effort');
 
-let path = "./../data/DefaultTestValues.json";
+let pathVal = "./../data/DefaultTestValues.json";
 
 // path = __dirname + path; 
 

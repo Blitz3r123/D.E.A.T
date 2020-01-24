@@ -697,7 +697,13 @@
 
                 <div class="title-search-bar">
                     <p class="page-title">Analyse</p>
+                    
+                    <div class="folder-selection-container">
+                        <input type="file" id="folder-selection-input" multiple directory webkitdirectory>    
+                    </div><!-- End of div.folder-selection-container -->
+
                 </div>
+                
 
                 <div class="analysis-window">
                 
@@ -711,58 +717,25 @@
                     </div><!-- End of div.tab-titles -->
 
                     <div class="current-window">
-
+                        
                     </div><!-- End of div.current-window -->
 
                 </div><!-- End of div.analysis-window -->
 
                 <div class="analyse-selection-window">
 
-                    <div class="analyse-selection-list">
+
+                    <div class="analyse-selection-list" id="analyse-publisher-list">
                         <p class="selection-list-title analyse-selection-list-title">Publishers</p>
                         
-                        <p class="analyse-section-list-item">publisher.csv</p>
-                        <p class="analyse-section-list-item">publisherTwo.csv</p>
-                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
-                        <p class="analyse-section-list-item">publisher.csv</p>
-                        <p class="analyse-section-list-item">publisherTwo.csv</p>
-                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
-                        <p class="analyse-section-list-item">publisher.csv</p>
-                        <p class="analyse-section-list-item">publisherTwo.csv</p>
-                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
-                        <p class="analyse-section-list-item">publisher.csv</p>
-                        <p class="analyse-section-list-item">publisherTwo.csv</p>
-                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
-                        <p class="analyse-section-list-item">publisher.csv</p>
-                        <p class="analyse-section-list-item">publisherTwo.csv</p>
-                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
-                        <p class="analyse-section-list-item">publisher.csv</p>
-                        <p class="analyse-section-list-item">publisherTwo.csv</p>
-                        <p class="analyse-section-list-item">publisherVWQ.csv</p>
+                        <p id="publisher-empty-message" class="empty-message">Add some files by choosing a folder from the top left.</p>
 
                     </div><!-- End of div.analyse-selection-list -->
 
-                    <div class="analyse-selection-list">
+                    <div class="analyse-selection-list" id="analyse-subscriber-list">
                         <p class="selection-list-title analyse-selection-list-title">Subscribers</p>   
                         
-                        <p class="analyse-section-list-item">subscriber.csv</p>
-                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
-                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
-                        <p class="analyse-section-list-item">subscriber.csv</p>
-                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
-                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
-                        <p class="analyse-section-list-item">subscriber.csv</p>
-                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
-                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
-                        <p class="analyse-section-list-item">subscriber.csv</p>
-                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
-                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
-                        <p class="analyse-section-list-item">subscriber.csv</p>
-                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
-                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
-                        <p class="analyse-section-list-item">subscriber.csv</p>
-                        <p class="analyse-section-list-item">subscriberTwo.csv</p>
-                        <p class="analyse-section-list-item">subscriberVWQ.csv</p>
+                        <p id="subscriber-empty-message" class="empty-message">Add some files by choosing a folder from the top left.</p>
                         
                     </div><!-- End of div.analyse-selection-list -->
 
@@ -1116,6 +1089,7 @@
          <!-- JavaScript Functions -->
         <script src="./../js/global.js"></script>
         <script src="./../js/settings.js"></script>
+        <script src="./../js/analyse.js"></script>
         <!-- End of JavaScript Functions -->
 
         <!-- JavaScript Dependencies --><script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -4,6 +4,7 @@
 */
 
 const fs = require('fs');
+const path = require('path');
 
 // GLOBAL VARIABLES
 var hasError;
@@ -38,11 +39,11 @@ if(!testSettingsDOM.className.includes('empty')){
 }
 
 // HIDE ALL WINDOWS EXCEPT INDEX
-// $('#createContent').hide();
+$('#createContent').hide();
 $('#createTestContent').hide();
 $('#runContent').hide();
 $('#indexContent').hide();
-$('#analyseContent').hide();
+// $('#analyseContent').hide();
 $('#settingsContent').hide();
 
 // Hide popup view
@@ -97,7 +98,7 @@ $('#waitSetDelay').keyup(() => {
         waitSetEventCountDOM.disabled = false;
     }
 });
-
+// Look at above description
 $('#waitSetEventCount').keyup(() => {
     let waitSetDelayDOM = document.querySelector('#waitSetDelay');
     let waitSetEventCountDOM = document.querySelector('#waitSetEventCount');
@@ -819,4 +820,12 @@ function showPopup(message){
 
     popupMessage.textContent = message;
     $('#popup').show();
+}
+
+function readFolder(pathVal){
+    let theFiles = [];
+
+    fs.readdirSync(pathVal).forEach(file => theFiles.push(file));
+
+    return theFiles;
 }

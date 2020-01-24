@@ -3,6 +3,16 @@
     justify-content: space-evenly;
 }
 
+.folder-selection-container{
+    display: flex;
+    justify-content: center;
+}
+
+.folder-selection-container input{
+    margin-top: 20%;
+    margin-left: 50%;
+}
+
 .analyse-selection-list{
     outline: 1px solid #444;
     width: 30%;
@@ -14,6 +24,7 @@
     max-height: 80vh;
 }
 .analyse-selection-list::-webkit-scrollbar{width: 0px !important;}
+.analyse-selection-window .empty-message{margin-top: 100%; color: #9a9a9a; text-align: center;}
 
     .analyse-section-list-item{color: #6f80ff; text-decoration: underline;}
     .analyse-section-list-item:hover{cursor: pointer;}
