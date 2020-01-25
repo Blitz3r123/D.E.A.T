@@ -1,0 +1,7 @@
+{
+        "defPerftestLoc": "path",
+        "defScriptLoc": "path",
+        "pubResultLoc": "path",
+        "subResultLoc": "path",
+        "nddsHomeLoc": "path"
+}

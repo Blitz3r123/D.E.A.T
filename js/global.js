@@ -43,8 +43,8 @@ $('#createContent').hide();
 $('#createTestContent').hide();
 $('#runContent').hide();
 $('#indexContent').hide();
-// $('#analyseContent').hide();
-$('#settingsContent').hide();
+$('#analyseContent').hide();
+// $('#settingsContent').hide();
 
 // Hide popup view
 $('#popup').hide();
@@ -829,4 +829,10 @@ function readFolder(pathVal){
     fs.readdirSync(pathVal).forEach(file => theFiles.push(file));
 
     return theFiles;
+}
+
+function readData(path){
+    let data = fs.readFileSync(path);
+
+    return JSON.parse(data);
 }

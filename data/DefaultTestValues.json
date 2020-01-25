@@ -3,12 +3,26 @@
         {
             "title": "Best Effort",
             "scriptvalue": "-bestEffort",
-            "value": "false"
+            "value": "false",
+            "type": "boolean"
         },
         {
             "title": "Data Length (bytes)",
             "scriptvalue": "-dataLen",
-            "value": 100
+            "value": 100,
+            "type": "value"
+        },
+        {
+            "title": "Verbosity",
+            "scriptvalue": "-verbosity",
+            "value": "1",
+            "type": "dropdown",
+            "options": [
+                "0 - SILENT",
+                "1 - ERROR",
+                "2 - WARNING",
+                "3 - ALL"
+            ]
         }
     ],
     "publisher": [],

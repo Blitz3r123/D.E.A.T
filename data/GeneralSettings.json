@@ -1,0 +1,7 @@
+{
+    "defPerftestLoc":"/Users/kaleem/Documents/performance-testing/Tests/Set 13 [New Code - Best Effort VS Reliable]/100,000,000 Iteration + 100,000 Latency Count/Best Effort Multicast/10 Subscribers/Run 3/sub2.csv",
+    "defScriptLoc":"path",
+    "pubResultLoc":"path",
+    "subResultLoc":"path",
+    "nddsHomeLoc":"path"
+}
