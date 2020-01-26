@@ -24,7 +24,7 @@ $('#defPerftestLoc').on('change', e => {
             console.log(err);
         }else{
             console.log('Written to file!');
-            defPerftestLocFileNameDOM.textContent = path.join( path.dirname(newPath), path.basename(newPath) );
+            defPerftestLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
 })
@@ -40,7 +40,7 @@ $('#defScriptLoc').on('change', e => {
             console.log(err);
         }else{
             console.log('Written to file!');
-            defScriptLocFileNameDOM.textContent = newPath;
+            defScriptLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
 })
@@ -56,7 +56,7 @@ $('#pubResultLoc').on('change', e => {
             console.log(err);
         }else{
             console.log('Written to file!');
-            pubResultLocFileNameDOM.textContent = newPath;
+            pubResultLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
 })
@@ -72,7 +72,7 @@ $('#subResultLoc').on('change', e => {
             console.log(err);
         }else{
             console.log('Written to file!');
-            subResultLocFileNameDOM.textContent = newPath;
+            subResultLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
 })
@@ -88,7 +88,7 @@ $('#nddsHomeLoc').on('change', e => {
             console.log(err);
         }else{
             console.log('Written to file!');
-            nddsHomeLocFileNameDOM.textContent = newPath;
+            nddsHomeLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
 })
