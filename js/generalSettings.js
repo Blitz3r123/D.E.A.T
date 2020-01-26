@@ -17,16 +17,20 @@ $('#defPerftestLoc').on('change', e => {
     let newPath = e.target.files[0].path;
     let oldData = readData(path.join(__dirname, '../data/GeneralSettings.json'));
 
-    oldData.defPerftestLoc = newPath;
+    if(!path.basename(newPath).includes('perftest_java.bat')){
+        showPopup("That file isn't perftest_java.bat.");
+    }else{
 
-    fs.writeFile(path.join(__dirname, '../data/GeneralSettings.json'), JSON.stringify(oldData), err => {
-        if(err){
-            console.log(err);
-        }else{
-            console.log('Written to file!');
-            defPerftestLocFileNameDOM.textContent = normalisePath(newPath);
-        }
-    });
+        oldData.defPerftestLoc = newPath;
+
+        fs.writeFile(path.join(__dirname, '../data/GeneralSettings.json'), JSON.stringify(oldData), err => {
+            if(err){
+                console.log(err);
+            }else{
+                defPerftestLocFileNameDOM.textContent = normalisePath(newPath);
+            }
+        });
+    }
 })
 
 $('#defScriptLoc').on('change', e => {
@@ -39,7 +43,6 @@ $('#defScriptLoc').on('change', e => {
         if(err){
             console.log(err);
         }else{
-            console.log('Written to file!');
             defScriptLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
@@ -55,7 +58,6 @@ $('#pubResultLoc').on('change', e => {
         if(err){
             console.log(err);
         }else{
-            console.log('Written to file!');
             pubResultLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
@@ -71,7 +73,6 @@ $('#subResultLoc').on('change', e => {
         if(err){
             console.log(err);
         }else{
-            console.log('Written to file!');
             subResultLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
@@ -87,7 +88,6 @@ $('#nddsHomeLoc').on('change', e => {
         if(err){
             console.log(err);
         }else{
-            console.log('Written to file!');
             nddsHomeLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
@@ -95,4 +95,19 @@ $('#nddsHomeLoc').on('change', e => {
 
 function normalisePath(pathVal){
     return path.join( path.basename(path.dirname(pathVal)), path.basename(pathVal) );
+}
+
+function togglePathView(id, setting){
+    let textDOM = $(id)[0].textContent;
+    let classDOM = $(id)[0].className;
+
+    if(textDOM == setting || classDOM == 'file-name path-view'){
+        $(id)[0].className = 'file-name';
+        $(id)[0].textContent = normalisePath(setting);
+
+    }else{
+        $(id)[0].className = 'file-name path-view';
+        $(id)[0].textContent = setting;
+    }
+
 }

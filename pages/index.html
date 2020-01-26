@@ -898,42 +898,76 @@
                         <h1>General</h1>
     
                         <div class="general-setting-container">
-                            <p class="general-setting-text">Default perftest_java.bat location:</p>
-                            <p class="file-name" id="defPerftestLocFileName"></p>
+                            <p class="general-setting-text">
+                                Default perftest_java.bat location:
+                                <br>
+                                <span>
+                                    Where your perftest_java.bat is
+                                </span>
+                            </p>
+                            <p class="file-name" id="defPerftestLocFileName" onClick="togglePathView('#defPerftestLocFileName', genSettingVals.defPerftestLoc)"></p>
                             <input type="file" name="perftest_location" id="defPerftestLoc">
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p class="general-setting-text">Script Folder location:</p>
+                            <p class="general-setting-text">
+                                Script Folder location:
+                                <br>
+                                <span>
+                                    Where to store your test scripts
+                                </span>
+                            </p>
                             <p 
                                 class="file-name" 
+                                onClick="togglePathView('#defScriptLocFileName', genSettingVals.defScriptLoc)"
                                 id="defScriptLocFileName"
                             ></p>
                             <input type="file" name="script_location" id="defScriptLoc" multiple directory webkitdirectory>
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p class="general-setting-text">Publisher Results location:</p>
+                            <p class="general-setting-text">
+                                Publisher Results location:
+                                <br>
+                                <span>
+                                    Where to store your publisher results
+                                </span>
+                            </p>
                             <p 
                                 class="file-name" 
+                                onClick="togglePathView('#pubResultLocFileName', genSettingVals.pubResultLoc)"
                                 id="pubResultLocFileName"
                             ></p>
                             <input type="file" name="script_location" id="pubResultLoc" multiple directory webkitdirectory>
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p class="general-setting-text">Subscriber Results location:</p>
+                            <p class="general-setting-text">
+                                Subscriber Results location:
+                                <br>
+                                <span>
+                                    Where to store your subscriber results
+                                </span>
+                            </p>
                             <p 
                                 class="file-name" 
+                                onClick="togglePathView('#subResultLocFileName', genSettingVals.subResultLoc)"
                                 id="subResultLocFileName"
                             ></p>
                             <input type="file" name="script_location" id="subResultLoc" multiple directory webkitdirectory>
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p class="general-setting-text">NDDS Home location:</p>
+                            <p class="general-setting-text">
+                                NDDS Home location:
+                                <br>
+                                <span>
+                                    Where NDDS is located
+                                </span>
+                            </p>
                             <p 
                                 class="file-name" 
+                                onClick="togglePathView('#nddsHomeLocFileName', genSettingVals.nddsHomeLoc)"
                                 id="nddsHomeLocFileName"
                             ></p>
                             <input type="file" name="script_location" id="nddsHomeLoc" multiple directory webkitdirectory>
@@ -950,112 +984,104 @@
                         <div class="quick-create-settings-container">
                             <h4>Quick Create General Settings</h4>
     
-                            <div class="quick-create-general-settings-container">
-    
-                                <div class="row">
+                            <div class="quick-create-general-settings-container" id="quick-create-general-settings-container">
                                     
-                                    <div class="quick-create-setting">
-                                        <p>Best Effort: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Data Length (bytes): </p>
-                                        <input type="number" name="">
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Verbosity: </p>
-                                        <select name="verbosity" id="verbosity">
-                                            <option value="0">0 - SILENT</option>
-                                            <option value="1" selected>1 - ERROR</option>
-                                            <option value="2">2 - WARNING</option>
-                                            <option value="3">3 - ALL</option>
-                                        </select>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Dynamic Data: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Durability: </p>
-                                        <select name="durability" id="durability">
-                                            <option value="0" selected>0 - VOLATILE</option>
-                                            <option value="1">1 - TRANSIENT LOCAL</option>
-                                            <option value="2">2 - TRANSIENT</option>
-                                            <option value="3">3 - PERSISTENT</option>
-                                        </select>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Domain ID: </p>
-                                        <input type="number" name="">
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Keyed Data: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Multicast: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Direct Communication: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
+                                <div class="quick-create-setting">
+                                    <p>Best Effort: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
 
-                                </div><!-- End of div.row -->
-    
-                                <div class="row">
+                                <div class="quick-create-setting">
+                                    <p>Data Length (bytes): </p>
+                                    <input type="number" name="">
+                                </div><!-- End of div.quick-create-setting -->
 
-                                    <div class="quick-create-setting">
-                                        <p>Positive Acknowledgements: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
+                                <div class="quick-create-setting">
+                                    <p>Verbosity: </p>
+                                    <select name="verbosity" id="verbosity">
+                                        <option value="0">0 - SILENT</option>
+                                        <option value="1" selected>1 - ERROR</option>
+                                        <option value="2">2 - WARNING</option>
+                                        <option value="3">3 - ALL</option>
+                                    </select>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Dynamic Data: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Durability: </p>
+                                    <select name="durability" id="durability">
+                                        <option value="0" selected>0 - VOLATILE</option>
+                                        <option value="1">1 - TRANSIENT LOCAL</option>
+                                        <option value="2">2 - TRANSIENT</option>
+                                        <option value="3">3 - PERSISTENT</option>
+                                    </select>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Domain ID: </p>
+                                    <input type="number" name="">
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Keyed Data: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Multicast: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark" id="quick-create-setting-best-effort"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Direct Communication: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Positive Acknowledgements: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Print Intervals: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Custom QOS File: </p>
+                                    <input type="file" name="" id="">
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Use Read Thread: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Wait Set Delay (Micro Seconds): </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Wait Set Event Count: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Asynchronous: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
+
+                                <div class="quick-create-setting">
+                                    <p>Display CPU: </p>
+                                    <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
+                                </div><!-- End of div.quick-create-setting -->
     
-                                    <div class="quick-create-setting">
-                                        <p>Print Intervals: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Custom QOS File: </p>
-                                        <input type="file" name="" id="">
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Use Read Thread: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Wait Set Delay (Micro Seconds): </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Wait Set Event Count: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Asynchronous: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                    <div class="quick-create-setting">
-                                        <p>Display CPU: </p>
-                                        <ion-icon name="close-circle-outline" class="checkmark"></ion-icon>
-                                    </div><!-- End of div.quick-create-setting -->
-    
-                                </div><!-- End of div.row -->
-    
-                            </div><!-- End of div.quick-create-general-settings-container -->
+                            </div><!-- End of div.quick-create-general-settings-container#quick-create-general-settings-container -->
 
                             <h4 style="margin-top: 3vh;">Quick Create Publisher Settings</h4>
 
@@ -1237,7 +1263,8 @@
 
          <!-- JavaScript Functions -->
         <script src="./../js/global.js"></script>
-        <script src="./../js/settings.js"></script>
+        <script src="./../js/generalSettings.js"></script>
+        <script src="./../js/quickCreateGeneralSettings.js"></script>
         <script src="./../js/analyse.js"></script>
         <!-- End of JavaScript Functions -->
 

@@ -1,0 +1,50 @@
+[
+    {
+        "id": "bestEffortQuickGenSet",
+        "title": "Best Effort",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "verbosityQuickGenSet",
+        "title": "Verbosity",
+        "value": "1",
+        "type": "dropdown",
+        "options": [
+            "0 - SILENT",
+            "1 - ERROR",
+            "2 - WARNING",
+            "3 - ALL"
+        ]
+    },
+    {
+        "id": "dataLenQuickGenSet",
+        "title": "Data Length (bytes)",
+        "value": "100",
+        "type": "input"
+    },
+    {
+        "id": "dynamicDataQuickGenSet",
+        "title": "Dynamic Data",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "durabilityQuickGenSet",
+        "title": "Durability",
+        "value": "0",
+        "type": "dropdown",
+        "options": [
+            "0 - VOLATILE",
+            "1 - TRANSIENT LOCAL",
+            "2 - TRANSIENT",
+            "3 - PERSISTENT"
+        ]
+    },
+    {
+        "id": "domainIDQuickGenSet",
+        "title": "Domain ID",
+        "value": "1",
+        "type": "input"
+    }
+]
