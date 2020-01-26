@@ -79,13 +79,21 @@
     margin-top: 1vh;
 }
 
+.general-setting-text{
+    /* outline: 1px solid black; */
+    width: 30%;
+}
+
+.general-setting-container input{
+    width: 30%;
+    /* outline: 1px solid black; */
+}
+
 .file-name{
     /* outline: 1px solid black; */
-    position: absolute;
-    margin-left: 50%;
-    width: 22%;
-    height: 3%;
-    overflow-x: scroll;
+    width: 30%;
+    height: 3vh;
+    line-height: 3vh;
     overflow-wrap: break-word;
     z-index: 999;
     background-color: white;

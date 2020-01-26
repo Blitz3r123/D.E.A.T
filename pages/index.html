@@ -898,49 +898,45 @@
                         <h1>General</h1>
     
                         <div class="general-setting-container">
-                            <p>Default perftest_java.bat location:</p>
-                            <input type="file" name="perftest_location" id="defPerftestLoc">
+                            <p class="general-setting-text">Default perftest_java.bat location:</p>
                             <p class="file-name" id="defPerftestLocFileName"></p>
+                            <input type="file" name="perftest_location" id="defPerftestLoc">
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p>Script Folder location:</p>
+                            <p class="general-setting-text">Script Folder location:</p>
+                            <p 
+                                class="file-name" 
+                                id="defScriptLocFileName"
+                            ></p>
                             <input type="file" name="script_location" id="defScriptLoc" multiple directory webkitdirectory>
-                            <p 
-                                class="file-name" 
-                                id="defScriptLocFileName" 
-                                style="margin-left: 51%; width: 21%;"
-                            ></p>
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p>Publisher Results location:</p>
+                            <p class="general-setting-text">Publisher Results location:</p>
+                            <p 
+                                class="file-name" 
+                                id="pubResultLocFileName"
+                            ></p>
                             <input type="file" name="script_location" id="pubResultLoc" multiple directory webkitdirectory>
-                            <p 
-                                class="file-name" 
-                                id="pubResultLocFileName" 
-                                style="margin-left: 51%; width: 21%;"
-                            ></p>
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p>Subscriber Results location:</p>
+                            <p class="general-setting-text">Subscriber Results location:</p>
+                            <p 
+                                class="file-name" 
+                                id="subResultLocFileName"
+                            ></p>
                             <input type="file" name="script_location" id="subResultLoc" multiple directory webkitdirectory>
-                            <p 
-                                class="file-name" 
-                                id="subResultLocFileName" 
-                                style="margin-left: 51%; width: 21%;"
-                            ></p>
                         </div><!-- div.general-setting-container -->
     
                         <div class="general-setting-container">
-                            <p>NDDS Home location:</p>
-                            <input type="file" name="script_location" id="nddsHomeLoc" multiple directory webkitdirectory>
+                            <p class="general-setting-text">NDDS Home location:</p>
                             <p 
                                 class="file-name" 
-                                id="nddsHomeLocFileName" 
-                                style="margin-left: 51%; width: 21%;"
+                                id="nddsHomeLocFileName"
                             ></p>
+                            <input type="file" name="script_location" id="nddsHomeLoc" multiple directory webkitdirectory>
                         </div><!-- div.general-setting-container -->
     
                     </div><!-- End of div#general-settings-container -->

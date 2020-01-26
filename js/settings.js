@@ -7,16 +7,11 @@ let pubResultLocFileNameDOM = document.querySelector('#pubResultLocFileName');
 let subResultLocFileNameDOM = document.querySelector('#subResultLocFileName');
 let nddsHomeLocFileNameDOM = document.querySelector('#nddsHomeLocFileName');
 
-// defPerftestLocFileNameDOM.textContent = path.join( path.dirname(genSettingVals.defPerftestLoc), path.basename(genSettingVals.defPerftestLoc) );
 defPerftestLocFileNameDOM.textContent = normalisePath(genSettingVals.defPerftestLoc);
 defScriptLocFileNameDOM.textContent = normalisePath(genSettingVals.defScriptLoc);
 pubResultLocFileNameDOM.textContent = normalisePath(genSettingVals.pubResultLoc);
 subResultLocFileNameDOM.textContent = normalisePath(genSettingVals.subResultLoc);
 nddsHomeLocFileNameDOM.textContent = normalisePath(genSettingVals.nddsHomeLoc);
-
-function normalisePath(pathVal){
-    return path.join( path.basename(path.dirname(pathVal)), path.basename(pathVal) );
-}
 
 $('#defPerftestLoc').on('change', e => {
     let newPath = e.target.files[0].path;
@@ -97,3 +92,7 @@ $('#nddsHomeLoc').on('change', e => {
         }
     });
 })
+
+function normalisePath(pathVal){
+    return path.join( path.basename(path.dirname(pathVal)), path.basename(pathVal) );
+}
