@@ -1,0 +1,116 @@
+[
+    {
+        "id": "bestEffortQuickGenSet",
+        "title": "Best Effort",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "verbosityQuickGenSet",
+        "title": "Verbosity",
+        "value": "1",
+        "type": "dropdown",
+        "options": [
+            "0 - SILENT",
+            "1 - ERROR",
+            "2 - WARNING",
+            "3 - ALL"
+        ]
+    },
+    {
+        "id": "dataLenQuickGenSet",
+        "title": "Data Length (bytes)",
+        "value": "100",
+        "type": "input"
+    },
+    {
+        "id": "dynamicDataQuickGenSet",
+        "title": "Dynamic Data",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "durabilityQuickGenSet",
+        "title": "Durability",
+        "value": "0",
+        "type": "dropdown",
+        "options": [
+            "0 - VOLATILE",
+            "1 - TRANSIENT LOCAL",
+            "2 - TRANSIENT",
+            "3 - PERSISTENT"
+        ]
+    },
+    {
+        "id": "domainIDQuickGenSet",
+        "title": "Domain ID",
+        "value": "1",
+        "type": "input"
+    },
+    {
+        "id": "keyedDataQuickGenSet",
+        "title": "Keyed Data",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "multicastQuickGenSet",
+        "title": "Multicast",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "directCommunicationQuickGenSet",
+        "title": "Direct Communication",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "positiveAcknowledgementsQuickGenSet",
+        "title": "Positive Acknowledgements",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "printIntervalsQuickGenSet",
+        "title": "Print Interval",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "customQosFileQuickGenSet",
+        "title": "Custom QOS File",
+        "value": "path",
+        "type": "file"
+    },
+    {
+        "id": "useReadThreadQuickGenSet",
+        "title": "Use Read Thread",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "waitSetDelayQuickGenSet",
+        "title": "Wait Set Delay (Microseconds)",
+        "value": "100",
+        "type": "input"
+    },
+    {
+        "id": "waitSetEventCountQuickGenSet",
+        "title": "Wait Set Event Count",
+        "value": "5",
+        "type": "input"
+    },
+    {
+        "id": "asynchronousQuickGenSet",
+        "title": "Asynchronous",
+        "value": "false",
+        "type": "boolean"
+    },
+    {
+        "id": "displayCpuQuickGenSet",
+        "title": "Display CPU",
+        "value": "false",
+        "type": "boolean"
+    }
+]
