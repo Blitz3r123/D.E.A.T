@@ -1,78 +1,190 @@
-.title-search-bar{display: flex; justify-content: space-between;}
-    #pub-sub-search{height: 6vh; margin-top: 6vh; margin-right: 4vw; padding-left: 1vw;}
-
-.run-window{
-    /* outline: 1px solid #444; */
-    margin-top: -3vh;
-    margin-left: 1%;
-    width: 98%;
-    height: 83%;
+#runContent h1{
+    /* outline: 1px solid black; */
+    padding-left: 2vw;
+    margin-top: 3vh;
 }
 
-    .tab-titles{display: flex; justify-content: flex-start;}
-        .active-tab {color: white; background-color: #444;}
-        .tab-title, .add-tab-button{
-            /* outline: 1px solid black; */
-            padding: 0vh 1vw;
-            border-top-right-radius: 15px;
-            border: 1px solid #444;
-            transition-duration: 0.2s;
-            -webkit-transition-duration: 0.2s;
-            -moz-transition-duration: 0.2s;
-        }
-        .tab-title:hover{cursor: pointer; color: white; background-color: #444;}
+.file-selection-window-container{
+    /* outline: 1px solid black; */
+    position: fixed;
+    width: 20vw;
+    height: 50vh;
+    left: 40%;
+    top: 25%;
+    z-index: 3;
+    background-color: white;
+    box-shadow: 0.5vh 0.5vw 1vw #ddd;
+}
 
-        .add-tab-button{
-            padding: 0 0.5vw;
-            font-size: 1.2em;
-            font-weight: 1000;
-        }
-        .add-tab-button:hover{cursor: pointer;}
+.file-selection-window-container .close-button-container{
+    /* outline: 1px solid black; */
+    width: 100%;
+}
 
-    .current-window{
-        outline: 1px solid #444;
-        background-color: #444;
-        width: 100%;
-        height: 95%;
-        margin-left: 1px;
-    }
+.file-selection-window-container .close-button-container ion-icon:hover{cursor: pointer;}
+.file-selection-window-container .close-button-container ion-icon{
+    width: 10%;
+    margin-left: 90%;
+}
 
-    .selection-window{
-        position: fixed;
-        outline: 1px solid #444;
-        background-color: #fff;
-        width: 50vw;
-        height: 80vh;
-        top: 10vh;
-        left: 25vw;
+.file-selection-window{
+    /* outline: 1px solid black; */
+    height: 95%;
+    padding: 1vh 1vw;
+}
 
-        padding: 1vh 1vw;
-    }
+.file-selection-window p.path-view{
+    /* outline: 1px solid black; */
+    border: 1px solid #aaa;
+    padding: 0.5vw 1vh;
+    margin-bottom: 0;
+}
 
-        .selection-close-button{
-            /* outline: 1px solid black; */
-            font-size: 2em;
-            width: 5%;
-            margin-left: 97%;
-        }
-        .selection-close-button:hover{cursor: pointer;}
+.file-selection-window .folder-selection-input{
+    /* outline: 1px solid black; */
+    width: 100%;
+    font-size: 0.7em;
+}
 
-        .select-title{font-size: 1.5em; font-weight: 600; text-align: center;}
+.file-selection-window .file-list-container{
+    outline: 1px solid black;
+    height: 65%;
+    /* padding: 0.5vh 0.5vw; */
+    margin-top: 3%;
+    overflow-y: scroll;
+}
 
-        .selection-lists{
-            /* outline: 1px solid black; */
-            width: 100%;
-            height: 75%;
-            display: flex;
-            justify-content: space-evenly;
-        }
+.file-list-container .file{
+    /* outline: 1px solid black; */
+    width: 100%;
+    margin: 0;
+    margin-top: 1%;
+    border-bottom: 1px solid black;
+    padding: 0.5vh 0.5vw;
+}
 
-            .selection-list{outline: 1px solid black; height: 100%; width: 30%; overflow-y: scroll; padding: 1vh 1vw; text-align: center;}
-            .selection-list::-webkit-scrollbar{width: 0px !important;}
+.file-selection-window .add-button:hover{color: white; background-color: #444; cursor: pointer;}
+.file-selection-window .add-button{
+    outline: 1px solid #444;
+    height: 8%;
+    color: #444;
+    width: 100%;
+    margin-top: 7%;
+    text-align: center;
+    line-height: 200%;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
 
-            .selection-list-title{font-weight: 600;}
+.run-selection-window{
+    /* outline: 1px solid black; */
+    width: 95%;
+    margin-left: 2.5%;
+    height: 89%;
+    overflow-y: scroll;
+}
+.run-selection-window::-webkit-scrollbar{width: 0px !important;}
 
-                .selection-item{color: #28828a; text-align: left; padding: 1vh 1vw; border-bottom: 1px solid #28828a;}
-                .selection-item:hover{cursor: pointer;}
+.process-list{
+    /* outline: 1px solid black; */
+    background-color: #efefef;
+    height: 90%;
+    padding: 2vh 2vw;
+}
 
-        #testFileSelection{margin-top: 1%; width: 50%; margin-left: 35%;}
+#runContent .process{
+    /* outline: 1px solid black; */
+    /* background-color: red; */
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    height: auto;
+    min-height: 10%;
+    padding: 2% 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#runContent .process .file-container{
+    /* border: 1px solid #444; */
+    padding-top: 1%;
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+#runContent .process .file-name{
+    outline: 1px solid #aaa;
+    padding-left: 1%;
+    line-height: 3vh;
+    background-color: #efefef;
+}
+
+#runContent .process .reset-button-container:hover{cursor: pointer; color: white; background-color: #444;}
+#runContent .process .add-file-container:hover{cursor: pointer; color: white; background-color: #444;}
+#runContent .process .reset-button-container, #runContent .process .add-file-container{
+    /* outline: 1px solid black; */
+    border: 1px solid #444;
+    border-radius: 2px;
+    width: 10%;
+    text-align: center;
+    max-height: 100%;
+    margin-left: 1vw;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+#runContent .process .reset-button-container ion-icon, .add-file-container ion-icon{
+    font-size: 2em;
+    /* outline: 1px solid black; */
+    height: 100%;
+}
+
+.add-process-container:hover{cursor: pointer; color: #efefef; background-color: #666;}
+.add-process-container{
+    outline: 1px solid #666;
+    margin-top: 2vh;
+    font-size: 3em;
+    width: 10%;
+    text-align: center;
+    height: 10vh;
+    color: #666;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+.add-process-container ion-icon{
+    /* outline: 1px solid black; */
+    height: 100%;
+}
+
+#runContent .start-button-container{
+    /* outline: 1px solid red; */
+    padding: 1vh 2vw 1vh 0;
+    background-color: #efefef;
+}
+
+#runContent .start-button:hover{cursor: pointer; color: #28a745; background-color: white; border: 1px solid #28a745;}
+#runContent .start-button{
+    /* outline: 1px solid red; */
+    width: 20%;
+    margin-left: 80%;
+    text-align: center;
+    font-size: 2em;
+    border-radius: 2px;
+    background-color: #28a745;
+    color: white;
+
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+}
+
+.start-button.disabled{
+    background-color: #ddd !important;
+}
+
+.start-button.disabled:hover{
+    cursor: not-allowed !important;
+}

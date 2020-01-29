@@ -637,63 +637,81 @@
 
             <div class="main-content" id="runContent">
                 
-                <div class="title-search-bar">
-                    <p class="page-title">RUN</p>
-                </div>
+                <h1>Run</h1>
 
-                <div class="run-window">
-                    
-                    <div class="tab-titles">
-                        <div class="tab-title active-tab">Publisher 1</div>
-                        <div class="tab-title">Subscriber 1</div>
-                        <div class="tab-title">Subscriber 2</div>
-                        <div class="add-tab-button" id="addTab">
-                            <ion-icon name="add"></ion-icon>
-                        </div><!-- End of div.add-tab-button -->
-                    </div><!-- End of div.tab-titles -->
+                <div class="file-selection-window-container">
 
-                    <div class="current-window">
+                    <div class="close-button-container">
+                        <ion-icon name="close"></ion-icon>
+                    </div><!-- End of div.close-button-container -->
 
-                    </div><!-- End of div.current-window -->
+                    <div class="file-selection-window">
 
-                </div><!-- End of div.run-window -->
+                        <p class="path-view">path/to/location.idk</p>
 
-                <div class="selection-window">
-                    <ion-icon name="close" class="selection-close-button"></ion-icon>
+                        <input type="file" class="folder-selection-input">
 
-                    <p class="select-title">What would you like to run?</p>
+                        <div class="file-list-container">
 
-                    <div class="selection-lists">
+                            <p class="file">pub.bat</p>
+                            <p class="file">pub1.bat</p>
+                            <p class="file">pub2.bat</p>
+                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p>
 
-                        <div class="pub-selection-list selection-list">
-                            <p class="selection-list-title">Publishers</p>
-                            <div class="selection-item">Publisher 1</div>
-                            <div class="selection-item">Publisher 2</div>
-                            <div class="selection-item">Publisher 3</div>
-                            <div class="selection-item">Publisher 4</div>
-                        </div><!-- End of div.pub-selection-list-->
+                        </div><!-- End of div.file-list-container-->
 
-                        <div class="sub-selection-list selection-list">
-                            <p class="selection-list-title">Subscribers</p>    
-                            <div class="selection-item">Subscriber 1</div>
-                            <div class="selection-item">Subscriber 2</div>
-                            <div class="selection-item">Subscriber 3</div>
-                            <div class="selection-item">Subscriber 4</div>
-                        </div><!-- End of div.sub-selection-list-->
+                        <p class="add-button">Add</p>
 
-                        <div class="test-selection-list selection-list">
-                            <p class="selection-list-title">Tests</p>
-                            <div class="selection-item">Test 1</div>
-                            <div class="selection-item">Test 2</div>
-                            <div class="selection-item">Test 3</div>
-                            <div class="selection-item">Test 4</div>
-                        </div><!-- End of div.test-selection-list-->
+                    </div><!-- End of div.file-selection-window -->
 
-                    </div><!-- End of div.selection-lists -->
+                </div><!-- End of div.file-selection-window-container -->
 
-                    <input type="file" name="test-select" id="testFileSelection">
+                <div class="run-selection-window">
 
-                </div><!-- End of div.selection-window -->
+                    <div class="process-list">
+                        
+                        <div class="process">
+                            
+                            <div class="file-container">
+                                
+                                <p class="file-name">pub.bat</p>
+
+                                <p class="file-name">pub1.bat</p>
+
+                                <p class="file-name">pub2.bat</p>
+
+                                <p class="file-name">pub3.bat</p>
+
+                            </div><!-- End of div.file-container -->
+
+                            <div class="reset-button-container">
+                                <ion-icon name="trash"></ion-icon>
+                            </div><!-- End of div.reset-button-container -->
+
+                            <div class="add-file-container">
+                                <ion-icon name='add'></ion-icon>
+                            </div><!-- End of div.add-file-container -->
+
+                        </div><!-- End of div.process -->
+
+                        <div class="add-process-container">
+                            <ion-icon name='add'></ion-icon>
+                        </div><!-- End of div.add-process-container -->
+
+                    </div><!-- End of div.process-list -->
+
+                    <div class="start-button-container">
+                        <p class="start-button">Start</p>
+                    </div><!-- End of div.start-button-container -->
+
+                </div><!-- End of div.run-selection-window -->
 
             </div><!-- End of div.main-content#runContent -->
             

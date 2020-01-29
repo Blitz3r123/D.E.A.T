@@ -67,6 +67,19 @@
     margin-right: 0;
 }
 
+.quick-create-setting p{
+    /* outline: 1px solid black; */
+    max-width: 50%;
+    font-size: 1em;
+}
+
+.quick-create-setting-description{
+    /* outline: 1px solid black; */
+    font-size: 0.8em;
+    color: #888;
+    overflow-wrap: break-word;
+}
+
 #field-selection-container{
     display: flex;
     justify-content: space-evenly;

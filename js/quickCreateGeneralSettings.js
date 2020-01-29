@@ -10,6 +10,10 @@ quickCreateGenSettingVals.forEach(item => {
     let pDOM = document.createElement('p');
     pDOM.textContent = item.title;
 
+    let spanDOM = document.createElement('span');
+    spanDOM.className = 'quick-create-setting-description';
+    spanDOM.textContent = item.description;
+
     let inputDOM;
 
     if(item.type == 'boolean'){
@@ -64,6 +68,8 @@ quickCreateGenSettingVals.forEach(item => {
         inputDOM.addEventListener('change', updateSetting);
     }
 
+    pDOM.appendChild(document.createElement('br'));
+    pDOM.appendChild(spanDOM);
     divDOM.appendChild(pDOM);
     divDOM.appendChild(inputDOM);
 
