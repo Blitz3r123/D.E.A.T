@@ -1,3 +1,15 @@
+#analyseContent .title-search-bar{
+    /* outline: 1px solid black; */
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+#analyseContent .title-search-bar input{
+    /* outline: 1px solid black; */
+    padding-top: 8vh;
+}
+
 .analysis-window{
     padding: 3vh 3vw;
     /* outline: 1px solid #444; */
@@ -17,14 +29,6 @@
     padding: 3vh 3vw;
 }
 
-.analyse-publisher-content-table-container{
-    /* outline: 1px solid red; */
-}
-
-.analyse-publisher-graphs-container{
-
-}
-
 .cdf-graph-container{
     width: 30vw;
     height: 30vh;
@@ -38,11 +42,6 @@
 .analyse-selection-window{
     display: flex;
     justify-content: space-evenly;
-}
-
-.folder-selection-container{
-    display: flex;
-    justify-content: center;
 }
 
 .folder-selection-container input{

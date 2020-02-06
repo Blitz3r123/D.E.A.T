@@ -651,9 +651,9 @@
 
                         <input type="file" class="folder-selection-input">
 
-                        <div class="file-list-container">
+                        <div class="file-list-container" id="file-selection-list-container">
 
-                            <p class="file">pub.bat</p>
+                            <!-- <p class="file">pub.bat</p>
                             <p class="file">pub1.bat</p>
                             <p class="file">pub2.bat</p>
                             <p class="file">pub3.bat</p>
@@ -663,7 +663,7 @@
                             <p class="file">pub3.bat</p>
                             <p class="file">pub3.bat</p>
                             <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p>
+                            <p class="file">pub3.bat</p> -->
 
                         </div><!-- End of div.file-list-container-->
 
@@ -718,15 +718,13 @@
             <div id="analyseContent" class="main-content">
 
                 <div class="title-search-bar">
-                    <p class="page-title">Analyse</p>
                     
-                    <div class="folder-selection-container">
-                        <input type="file" id="folder-selection-input" multiple directory webkitdirectory>    
-                    </div><!-- End of div.folder-selection-container -->
+                    <p class="page-title">Analyse</p>                    
+                    
+                    <input type="file" id="folder-selection-input" multiple directory webkitdirectory>
 
                 </div>
                 
-
                 <div class="analysis-window">
                 
                     <div class="tab-titles">
@@ -744,15 +742,15 @@
                             
                             <div class="analyse-publisher-content-table-container">
 
-                                <table class="table table-bordered">
-                                    <thead class="thead-dark">
+                                <table class="table table-bordered" id="analysis-data-table">
+                                    <!-- <thead class="thead-dark">
                                         <tr>
                                           <th scope="col">Avg Lat (us)</th>
                                           <th scope="col">Min Lat (us)</th>
                                           <th scope="col">Max Lat (us)</th>
                                         </tr>
-                                      </thead>
-                                      <tbody>
+                                    </thead>
+                                    <tbody>
                                         <tr>
                                           <td>4.34</td>
                                           <td>1.23</td>
@@ -823,7 +821,7 @@
                                             <td>1.23</td>
                                             <td>4.34</td>
                                           </tr>
-                                      </tbody>
+                                    </tbody> -->
                                 </table><!-- End of table.table -->
 
                             </div><!-- End of div.analyse-publisher-content-table-container -->
@@ -868,7 +866,7 @@
                             
                         </div><!-- End of div.analyse-publisher-content -->
 
-                    </div><!-- End of div.current-window -->
+                    </div><!-- End of div.analyse-current-window -->
 
                 </div><!-- End of div.analysis-window -->
 
@@ -878,14 +876,14 @@
                     <div class="analyse-selection-list" id="analyse-publisher-list">
                         <p class="selection-list-title analyse-selection-list-title">Publishers</p>
                         
-                        <p id="publisher-empty-message" class="empty-message">Add some files by choosing a folder from the top left.</p>
+                        <p id="publisher-empty-message" class="empty-message">Add some files by choosing a folder from the top right.</p>
 
                     </div><!-- End of div.analyse-selection-list -->
 
                     <div class="analyse-selection-list" id="analyse-subscriber-list">
                         <p class="selection-list-title analyse-selection-list-title">Subscribers</p>   
                         
-                        <p id="subscriber-empty-message" class="empty-message">Add some files by choosing a folder from the top left.</p>
+                        <p id="subscriber-empty-message" class="empty-message">Add some files by choosing a folder from the top right.</p>
                         
                     </div><!-- End of div.analyse-selection-list -->
 
@@ -1281,6 +1279,7 @@
 
          <!-- JavaScript Functions -->
         <script src="./../js/global.js"></script>
+        <script src="./../js/runTest.js"></script>
         <script src="./../js/generalSettings.js"></script>
         <script src="./../js/quickCreateGeneralSettings.js"></script>
         <script src="./../js/analyse.js"></script>

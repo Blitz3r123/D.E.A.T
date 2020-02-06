@@ -41,9 +41,9 @@ if(!testSettingsDOM.className.includes('empty')){
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
 $('#createTestContent').hide();
-// $('#runContent').hide();
+$('#runContent').hide();
 $('#indexContent').hide();
-$('#analyseContent').hide();
+// $('#analyseContent').hide();
 $('#settingsContent').hide();
 
 // Hide popup view
@@ -51,8 +51,8 @@ $('#popup').hide();
 
 // Hide analyse window on start
 // WORKING
-// $('.analysis-window').hide();
-$('.analyse-selection-window').hide();
+$('.analysis-window').hide();
+// $('.analyse-selection-window').hide();
 
 // Hide perftest location setting on start
 $('#perftestLocationSetting').hide();
