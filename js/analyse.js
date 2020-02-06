@@ -57,17 +57,32 @@ function analyseFile(file){
                 if(file.toLowerCase().includes('pub')){
                     dataArray = dataArray.slice(1, dataArray.length - 4);
 
+                    // <thead class='thead-dark'></thead>
                     let theadDOM = document.createElement('thead');
                     theadDOM.className = 'thead-dark';
                     
+                    // <tr></tr>
                     let trDOM = document.createElement('tr');
 
+                    // <th scope='col'>One-Way Latency (us)</th>
                     let latencyThDOM = document.createElement('th');
                     latencyThDOM.scope = 'col';
                     latencyThDOM.textContent = 'One-Way Latency (us)';
 
+                    /*
+                        <tr>
+                            <th scope='col'>One-Way Latency (us)</th>
+                        </tr>
+                    */
                     trDOM.appendChild(latencyThDOM);
 
+                    /*
+                        <thead class='thead-dark'>
+                            <tr>
+                                <th scope='col'>One-Way Latency (us)</th>
+                            </tr>
+                        </thead>
+                    */
                     theadDOM.appendChild(trDOM);
 
                     analysisTableDOM.appendChild(theadDOM);
@@ -147,7 +162,7 @@ function analyseFile(file){
 
                         totalPacketsTdDOM.textContent = totalPacketsArray[i];
                         packetsPerSecTdDOM.textContent = packetsPerSecArray[i];
-                        throughputTdDOM.textContent = throughputArray[i];
+                        throughputTdDOM.textContent = parseInt(throughputArray[i]);
                         packetsLostTdDOM.textContent = packetsLostArray[i];
 
                         dataTrDOM.appendChild(totalPacketsTdDOM);
@@ -160,10 +175,85 @@ function analyseFile(file){
 
                     analysisTableDOM.appendChild(tbodyDOM);
 
+                    let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
+
+                    let throughputSummaryTableDOM = document.createElement('table');
+                    throughputSummaryTableDOM.className = 'table table-bordered';
+                    
+                    let throughputSummaryTheadDOM = document.createElement('thead');
+                    throughputSummaryTheadDOM.className = 'thead-dark';
+
+                    let throughputSummaryTrDOM = document.createElement('tr');
+                    
+                    let throughputTableTitle = document.createElement('th');
+                    throughputTableTitle.colSpan = '4';
+                    throughputTableTitle.textContent = 'Throughput Summary';
+
+                    throughputSummaryTrDOM.appendChild(throughputTableTitle);
+                    throughputSummaryTheadDOM.appendChild(throughputSummaryTrDOM);
+                    
+                    
+                    // Calculate throughput average
+                    let totalThroughput = 0;
+                    throughputArray.forEach(item => {
+                        totalThroughput += parseInt(item);
+                    });
+
+                    let throughputAverage = parseInt((totalThroughput / throughputArray.length)).toFixed(2);
+                    let throughputLowerQuartile = parseInt(throughputArray[ (throughputArray.length / 4) - 1 ]).toFixed(2);
+                    let throughputMedian = parseInt(throughputArray[ (throughputArray.length / 2) - 1 ]).toFixed(2);
+                    let throughputUpperQuartile = parseInt(throughputArray[ ( 3 * (throughputArray.length) / 4) - 1 ]).toFixed(2);
+
+                    let tableBodyDOM = document.createElement('tbody');
+
+                    let throughputAverageRowDOM = document.createElement('tr');
+                    let throughputLowerQuartileRowDOM = document.createElement('tr');
+                    let throughputMedianRowDOM = document.createElement('tr');
+                    let throughputUpperQuartileRowDOM = document.createElement('tr');
+                    
+                    let averageTdDOM = document.createElement('td');
+                    averageTdDOM.textContent = 'Average';
+                    let averageValueTdDOM = document.createElement('td');
+                    averageValueTdDOM.textContent = throughputAverage;
+
+                    throughputAverageRowDOM.appendChild(averageTdDOM);
+                    throughputAverageRowDOM.appendChild(averageValueTdDOM);
+
+                    let LowerQuartileTdDOM = document.createElement('td');
+                    LowerQuartileTdDOM.textContent = 'Lower Quartile';
+                    let LowerQuartileValueTdDOM = document.createElement('td');
+                    LowerQuartileValueTdDOM.textContent = throughputLowerQuartile;
+
+                    throughputLowerQuartileRowDOM.appendChild(LowerQuartileTdDOM);
+                    throughputLowerQuartileRowDOM.appendChild(LowerQuartileValueTdDOM);
+
+                    let MedianTdDOM = document.createElement('td');
+                    MedianTdDOM.textContent = 'Median';
+                    let MedianValueTdDOM = document.createElement('td');
+                    MedianValueTdDOM.textContent = throughputMedian;
+
+                    throughputMedianRowDOM.appendChild(MedianTdDOM);
+                    throughputMedianRowDOM.appendChild(MedianValueTdDOM);
+
+                    let UpperQuartileTdDOM = document.createElement('td');
+                    UpperQuartileTdDOM.textContent = 'Upper Quartile';
+                    let UpperQuartileValueTdDOM = document.createElement('td');
+                    UpperQuartileValueTdDOM.textContent = throughputUpperQuartile;
+
+                    throughputUpperQuartileRowDOM.appendChild(UpperQuartileTdDOM);
+                    throughputUpperQuartileRowDOM.appendChild(UpperQuartileValueTdDOM);
+
+                    tableBodyDOM.appendChild(throughputAverageRowDOM);
+                    tableBodyDOM.appendChild(throughputLowerQuartileRowDOM);
+                    tableBodyDOM.appendChild(throughputMedianRowDOM);
+                    tableBodyDOM.appendChild(throughputUpperQuartileRowDOM);
+                    
+                    throughputSummaryTableDOM.appendChild(tableBodyDOM);
+                    throughputSummaryTableDOM.appendChild(throughputSummaryTheadDOM);
+                    summaryTableContainerDOM.appendChild(throughputSummaryTableDOM);
+
                 }
                 
-                // console.log(dataArray);
-    
             }
         });
 
