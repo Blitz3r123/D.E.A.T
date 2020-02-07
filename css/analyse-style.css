@@ -15,9 +15,18 @@
     /* outline: 1px solid #444; */
 }
 
+.analysis-window .analysis-back-button:hover{cursor: pointer;}
+.analysis-window .analysis-back-button{
+    outline: 1px solid #444;
+    position: fixed;
+    top: 12vh;
+    font-size: 1.2em;
+    padding: 1vh 2vw;
+}
+
 .analysis-window .analyse-current-window{
     border: 1px solid #444;
-    height: 75vh;
+    height: 77vh;
     overflow-y: scroll;
 }
 

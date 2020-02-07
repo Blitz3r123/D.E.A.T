@@ -1,3 +1,22 @@
+// Reset the analysis window and hide it and show the analysis selection window
+$('#analysis-back-button').on('click', e => {
+    // Reset analysis window:
+    /*
+        Clear #analysis-data-table
+        Clear #analyse-summary-table-container
+        Hide .analysis-window
+        Show .analyse-selection-window
+    */
+
+    clearChildren(document.querySelector('#analysis-data-table'));
+    clearChildren(document.querySelector('#analyse-summary-table-container'));
+
+    clearChildren(document.querySelector('#analysis-data-table'));
+    $('.analysis-window').hide();
+    $('.analyse-selection-window').show();
+
+})
+
 // Get files for analysis
 $('#folder-selection-input').on('change', e => {
     let pathValue = document.querySelector('#folder-selection-input').files[0].path;
@@ -293,4 +312,10 @@ function addTableRow(tableBody, title, value){
 
 function commaFormatNumber(number){
     return String(number).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+}
+
+function clearChildren(element){
+    while(element.firstChild){
+        element.removeChild(element.firstChild);
+    }
 }
