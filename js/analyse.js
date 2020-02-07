@@ -55,7 +55,39 @@ function analyseFile(file){
                 let dataArray = data.split('\n');
     
                 if(file.toLowerCase().includes('pub')){
+                    let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
+
                     dataArray = dataArray.slice(1, dataArray.length - 4);
+
+                    // Calculate average:
+                    let totalLatency = 0;
+                    let nonZeroCount = 0;
+                    let zeroCount = 0;
+
+                    dataArray.forEach(item => {
+                        totalLatency += parseInt(item);
+                        if(parseInt(item) != 0){
+                            nonZeroCount ++;
+                        }else{
+                            zeroCount ++;
+                        }
+                    });
+
+                    let zeroAverage = totalLatency / zeroCount;
+                    let nonZeroAverage = totalLatency / nonZeroCount;
+
+                    let summaryTableDOM = createTable('Summary');
+
+                    let summaryTbodyDOM = document.createElement('tbody');
+
+                    addTableRow(summaryTbodyDOM, 'Average with Zero', commaFormatNumber(zeroAverage.toFixed(2)));
+                    addTableRow(summaryTbodyDOM, 'Average', commaFormatNumber(nonZeroAverage.toFixed(2)));
+                    addTableRow(summaryTbodyDOM, 'No. of Zeros', commaFormatNumber(zeroCount.toFixed(2)));
+                    addTableRow(summaryTbodyDOM, 'Zero %', commaFormatNumber((( zeroCount / ( nonZeroCount + zeroCount ) ) * 100).toFixed(2)));
+
+                    summaryTableDOM.appendChild(summaryTbodyDOM);
+
+                    summaryTableContainerDOM.appendChild(summaryTableDOM);
 
                     // <thead class='thead-dark'></thead>
                     let theadDOM = document.createElement('thead');
@@ -160,10 +192,10 @@ function analyseFile(file){
                         let throughputTdDOM = document.createElement('td');
                         let packetsLostTdDOM = document.createElement('td');
 
-                        totalPacketsTdDOM.textContent = totalPacketsArray[i];
-                        packetsPerSecTdDOM.textContent = packetsPerSecArray[i];
+                        totalPacketsTdDOM.textContent = parseInt(totalPacketsArray[i]);
+                        packetsPerSecTdDOM.textContent = parseInt(packetsPerSecArray[i]);
                         throughputTdDOM.textContent = parseInt(throughputArray[i]);
-                        packetsLostTdDOM.textContent = packetsLostArray[i];
+                        packetsLostTdDOM.textContent = parseInt(packetsLostArray[i]);
 
                         dataTrDOM.appendChild(totalPacketsTdDOM);
                         dataTrDOM.appendChild(packetsPerSecTdDOM);
@@ -175,81 +207,46 @@ function analyseFile(file){
 
                     analysisTableDOM.appendChild(tbodyDOM);
 
+                    // -------------------------------------------------------------------------------------------------
+
                     let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
 
-                    let throughputSummaryTableDOM = document.createElement('table');
-                    throughputSummaryTableDOM.className = 'table table-bordered';
-                    
-                    let throughputSummaryTheadDOM = document.createElement('thead');
-                    throughputSummaryTheadDOM.className = 'thead-dark';
+                    let throughputSummaryTableDOM = createTable('Throughput Summary');
 
-                    let throughputSummaryTrDOM = document.createElement('tr');
-                    
-                    let throughputTableTitle = document.createElement('th');
-                    throughputTableTitle.colSpan = '4';
-                    throughputTableTitle.textContent = 'Throughput Summary';
-
-                    throughputSummaryTrDOM.appendChild(throughputTableTitle);
-                    throughputSummaryTheadDOM.appendChild(throughputSummaryTrDOM);
-                    
-                    
                     // Calculate throughput average
                     let totalThroughput = 0;
                     throughputArray.forEach(item => {
                         totalThroughput += parseInt(item);
                     });
-
+                    
                     let throughputAverage = parseInt((totalThroughput / throughputArray.length)).toFixed(2);
                     let throughputLowerQuartile = parseInt(throughputArray[ (throughputArray.length / 4) - 1 ]).toFixed(2);
                     let throughputMedian = parseInt(throughputArray[ (throughputArray.length / 2) - 1 ]).toFixed(2);
                     let throughputUpperQuartile = parseInt(throughputArray[ ( 3 * (throughputArray.length) / 4) - 1 ]).toFixed(2);
-
-                    let tableBodyDOM = document.createElement('tbody');
-
-                    let throughputAverageRowDOM = document.createElement('tr');
-                    let throughputLowerQuartileRowDOM = document.createElement('tr');
-                    let throughputMedianRowDOM = document.createElement('tr');
-                    let throughputUpperQuartileRowDOM = document.createElement('tr');
                     
-                    let averageTdDOM = document.createElement('td');
-                    averageTdDOM.textContent = 'Average';
-                    let averageValueTdDOM = document.createElement('td');
-                    averageValueTdDOM.textContent = throughputAverage;
-
-                    throughputAverageRowDOM.appendChild(averageTdDOM);
-                    throughputAverageRowDOM.appendChild(averageValueTdDOM);
-
-                    let LowerQuartileTdDOM = document.createElement('td');
-                    LowerQuartileTdDOM.textContent = 'Lower Quartile';
-                    let LowerQuartileValueTdDOM = document.createElement('td');
-                    LowerQuartileValueTdDOM.textContent = throughputLowerQuartile;
-
-                    throughputLowerQuartileRowDOM.appendChild(LowerQuartileTdDOM);
-                    throughputLowerQuartileRowDOM.appendChild(LowerQuartileValueTdDOM);
-
-                    let MedianTdDOM = document.createElement('td');
-                    MedianTdDOM.textContent = 'Median';
-                    let MedianValueTdDOM = document.createElement('td');
-                    MedianValueTdDOM.textContent = throughputMedian;
-
-                    throughputMedianRowDOM.appendChild(MedianTdDOM);
-                    throughputMedianRowDOM.appendChild(MedianValueTdDOM);
-
-                    let UpperQuartileTdDOM = document.createElement('td');
-                    UpperQuartileTdDOM.textContent = 'Upper Quartile';
-                    let UpperQuartileValueTdDOM = document.createElement('td');
-                    UpperQuartileValueTdDOM.textContent = throughputUpperQuartile;
-
-                    throughputUpperQuartileRowDOM.appendChild(UpperQuartileTdDOM);
-                    throughputUpperQuartileRowDOM.appendChild(UpperQuartileValueTdDOM);
-
-                    tableBodyDOM.appendChild(throughputAverageRowDOM);
-                    tableBodyDOM.appendChild(throughputLowerQuartileRowDOM);
-                    tableBodyDOM.appendChild(throughputMedianRowDOM);
-                    tableBodyDOM.appendChild(throughputUpperQuartileRowDOM);
+                    let totalPacketsValue = parseInt(totalPacketsArray[totalPacketsArray.length - 1]);
+                    let packetsLostValue = parseInt(packetsLostArray[packetsLostArray.length - 1]);
+                    let packetsLostPercentage = (( packetsLostValue / (totalPacketsValue + packetsLostValue) ) * 100).toFixed(2);
                     
-                    throughputSummaryTableDOM.appendChild(tableBodyDOM);
-                    throughputSummaryTableDOM.appendChild(throughputSummaryTheadDOM);
+                    let generalSummaryTableDOM = createTable('General Summary');
+                    let generalTbodyDOM = document.createElement('tbody');
+                    addTableRow(generalTbodyDOM, 'No. of packets sent', commaFormatNumber(totalPacketsValue + packetsLostValue));
+                    addTableRow(generalTbodyDOM, 'No. of packets received', commaFormatNumber(totalPacketsValue));
+                    addTableRow(generalTbodyDOM, 'No. of packets lost', commaFormatNumber(packetsLostValue));
+                    addTableRow(generalTbodyDOM, 'Lost %', commaFormatNumber(packetsLostPercentage) + '%');
+
+                    generalSummaryTableDOM.appendChild(generalTbodyDOM);
+
+                    let tBodyDOM = document.createElement('tbody');
+                    
+                    addTableRow(tBodyDOM, 'Average', throughputAverage);
+                    addTableRow(tBodyDOM, 'Lower Quartile', throughputLowerQuartile);
+                    addTableRow(tBodyDOM, 'Median', throughputMedian);
+                    addTableRow(tBodyDOM, 'Upper Quartile', throughputUpperQuartile);
+                    
+                    throughputSummaryTableDOM.appendChild(tBodyDOM);
+
+                    summaryTableContainerDOM.appendChild(generalSummaryTableDOM);
                     summaryTableContainerDOM.appendChild(throughputSummaryTableDOM);
 
                 }
@@ -259,4 +256,41 @@ function analyseFile(file){
 
     }
 
+}
+
+function createTable(headTitle){
+    let tableDOM = document.createElement('table');
+    tableDOM.className = 'table table-bordered';
+
+    let theadDOM = document.createElement('thead');
+    theadDOM.className = 'thead-dark';
+
+    let trDOM = document.createElement('tr');
+    let thDOM = document.createElement('th');
+    thDOM.colSpan = '4';
+    thDOM.textContent = headTitle;
+
+    trDOM.appendChild(thDOM);
+    theadDOM.appendChild(trDOM);
+    tableDOM.appendChild(theadDOM);
+
+    return tableDOM;
+}
+
+function addTableRow(tableBody, title, value){
+    let trDOM = document.createElement('tr');
+    let titleTd = document.createElement('td');
+    let valueTd = document.createElement('td');
+
+    titleTd.textContent = title;
+    valueTd.textContent = value;
+
+    trDOM.appendChild(titleTd);
+    trDOM.appendChild(valueTd);
+
+    tableBody.appendChild(trDOM);
+}
+
+function commaFormatNumber(number){
+    return String(number).replace(/(.)(?=(\d{3})+$)/g,'$1,');
 }
