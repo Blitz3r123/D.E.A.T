@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const mathjs = require('mathjs');
 
 // GLOBAL VARIABLES
 var hasError;

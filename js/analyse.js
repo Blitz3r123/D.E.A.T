@@ -1,3 +1,12 @@
+// cdf function code: https://stackoverflow.com/questions/5259421/cumulative-distribution-function-in-javascript
+
+// Hide graphs titles on start
+$('#general-graph-title').hide();
+$('#non-zero-graph-title').hide();
+$('#cdf-graph-title').hide();
+$('#throughput-graph-title').hide();
+$('#packets-per-sec-graph-title').hide();
+
 // Reset the analysis window and hide it and show the analysis selection window
 $('#analysis-back-button').on('click', e => {
     // Reset analysis window:
@@ -6,12 +15,33 @@ $('#analysis-back-button').on('click', e => {
         Clear #analyse-summary-table-container
         Hide .analysis-window
         Show .analyse-selection-window
+        Empty graph containers
+        Hide graph titles
     */
 
     clearChildren(document.querySelector('#analysis-data-table'));
     clearChildren(document.querySelector('#analyse-summary-table-container'));
 
     clearChildren(document.querySelector('#analysis-data-table'));
+    
+    clearChildren(document.querySelector('#general-graph-container'));
+    clearChildren(document.querySelector('#nonzero-graph-container'));
+    clearChildren(document.querySelector('#cdf-graph-container'));
+    clearChildren(document.querySelector('#throughput-graph-container'));
+    clearChildren(document.querySelector('#packets-per-sec-graph-container'));
+    
+    $('#general-graph-title').hide();
+    $('#non-zero-graph-title').hide();
+    $('#cdf-graph-title').hide();
+    $('#throughput-graph-title').hide();
+    $('#packets-per-sec-graph-title').hide();
+    
+    $('#general-graph-container').hide();
+    $('#non-zero-graph-container').hide();
+    $('#cdf-graph-container').hide();
+    $('#throughput-graph-container').hide();
+    $('#packets-per-sec-graph-container').hide();
+    
     $('.analysis-window').hide();
     $('.analyse-selection-window').show();
 
@@ -30,11 +60,13 @@ $('#folder-selection-input').on('change', e => {
         let item = document.createElement('p');
         item.className = 'analyse-section-list-item';
 
+        // console.log(path.join(path.basename(pathValue), file));
+
         item.addEventListener('click', e => {
             analyseFile(path.join(pathValue, file));
         });
 
-        item.textContent = file;
+        item.textContent = path.join(path.basename(pathValue), file);
 
         if(file.toLowerCase().includes('pub')){
             $('#publisher-empty-message').hide();
@@ -72,6 +104,9 @@ function analyseFile(file){
                 console.log(err);
             }else{
                 let dataArray = data.split('\n');
+                dataArray.forEach(item => {
+                    item = parseInt(item);
+                });
     
                 if(file.toLowerCase().includes('pub')){
                     let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
@@ -138,8 +173,6 @@ function analyseFile(file){
 
                     analysisTableDOM.appendChild(theadDOM);
 
-                    let latencyArray = [];
-
                     let tbodyDOM = document.createElement('tbody');
 
                     dataArray.forEach(row => {
@@ -154,6 +187,113 @@ function analyseFile(file){
                     });
 
                     analysisTableDOM.appendChild(tbodyDOM);
+
+                    let nonZeroArray = [];
+
+                    dataArray.forEach(item => {
+                        if(parseInt(item) != 0){
+                            nonZeroArray.push(parseInt(item));
+                        }
+                    });
+
+                    nonZeroArray.unshift('Latency');
+
+                    // Create graph:
+                    var chart = c3.generate({
+                        bindto: '#nonzero-graph-container',
+                        data: {
+                          columns: [
+                            nonZeroArray
+                          ]
+                        }
+                    });
+                    
+                    /*
+                        CDF ALGORITHM:
+                        1. Sort array from smallest to largest
+                        2. Count how many times each item appears
+                        3. Set count as fraction (count / length)
+                        4. Plot count / length on y axis
+                        5. Plot each unique value on x axis
+                    */
+                    
+                    let cdfArray = [];
+                    let cdfXValues = [];
+                    let cdfYValues = [];
+
+                    nonZeroArray = nonZeroArray.slice(1, nonZeroArray.length - 1 );
+
+                    cdfArray = nonZeroArray.sort((a, b) => parseInt(a) - parseInt(b));
+
+                    cdfArray.forEach((item, index) => {
+                        if(item !== cdfArray[index - 1]){
+                            cdfXValues.push(item);
+                            cdfYValues.push(1);
+                        }else{
+                            cdfYValues[cdfYValues.length-1]++;
+                        }
+                    });
+
+                    for(var i = 0; i < cdfYValues.length; i++){
+                        cdfYValues[i] = parseInt(cdfYValues[i]) / parseInt(cdfYValues.length);
+                    }
+
+                    for(var j = 1; j < cdfYValues.length; j++){
+                        cdfYValues[j] += cdfYValues[j - 1];
+                    }
+
+                    dataArray.unshift('Latency');
+                    var chartTwo = c3.generate({
+                        bindto: '#general-graph-container',
+                        data: {
+                          columns: [
+                            dataArray
+                          ]
+                        }
+                    });
+
+                    let tickArray = [];
+
+                    for(var k = 0; k < cdfXValues.length; k ++){
+                        tickArray[k] = (cdfXValues[length] / k);
+                    }
+
+                    cdfXValues.unshift('x');
+                    cdfYValues.unshift('CDF');
+
+                    var chartTwo = c3.generate({
+                        bindto: '#cdf-graph-container',
+                        data: {
+                            x: 'x',
+                            y: 'CDF',
+                            columns: [
+                                cdfXValues,
+                                cdfYValues
+                            ]
+                        },
+                        axis: {
+                            x: {
+                                type: 'category',
+                                tick: {
+                                    count: 1
+                                }
+                            }
+                        }
+                    });
+
+                    $('#general-graph-title').show();
+                    $('#non-zero-graph-title').show();
+                    $('#cdf-graph-title').show();
+
+                    $('#general-graph-container').show();
+                    $('#nonzero-graph-container').show();
+                    $('#cdf-graph-container').show();
+
+                    $('#throughput-graph-container').hide();
+                    $('#throughput-graph-title').hide();
+
+                    $('#packets-per-sec-graph-container').hide();
+                    $('#packets-per-sec-graph-title').hide();
 
                 }else{
                     let totalPacketsArray = [];
@@ -267,6 +407,39 @@ function analyseFile(file){
 
                     summaryTableContainerDOM.appendChild(generalSummaryTableDOM);
                     summaryTableContainerDOM.appendChild(throughputSummaryTableDOM);
+
+                    throughputArray.unshift('Throughput');
+                    var chart = c3.generate({
+                        bindto: '#throughput-graph-container',
+                        data: {
+                            columns: [
+                                throughputArray
+                            ]
+                        }
+                    });
+
+                    packetsPerSecArray.unshift('Packets/s');
+                    var chart = c3.generate({
+                        bindto: '#packets-per-sec-graph-container',
+                        data: {
+                            columns: [
+                                packetsPerSecArray
+                            ]
+                        }
+                    });
+
+                    $('#throughput-graph-title').show();
+                    $('#throughput-graph-container').show();
+                    $('#packets-per-sec-graph-title').show();
+                    $('#packets-per-sec-graph-container').show();
+
+                    $('#general-graph-title').hide();
+                    $('#non-zero-graph-title').hide();
+                    $('#cdf-graph-title').hide();
+
+                    $('#general-graph-container').hide();
+                    $('#nonzero-graph-container').hide();
+                    $('#cdf-graph-container').hide();
 
                 }
                 

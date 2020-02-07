@@ -747,7 +747,28 @@
 
                             <div class="analyse-publisher-graphs-container">
                                 
-                                <div class="cdf-graph-container">
+                                <p id="throughput-graph-title">Throughput Graph</p>
+                                <div class="cdf-graph-container" id='throughput-graph-container'>
+
+                                </div><!-- End of div.cdf-graph-container -->
+
+                                <p id="packets-per-sec-graph-title">Packets/s Graph</p>
+                                <div class="cdf-graph-container" id='packets-per-sec-graph-container'>
+
+                                </div><!-- End of div.cdf-graph-container -->
+                                
+                                <p id="general-graph-title">General Graph</p>
+                                <div class="cdf-graph-container" id='general-graph-container'>
+
+                                </div><!-- End of div.cdf-graph-container -->
+
+                                <p id="non-zero-graph-title">Non-Zero Graph</p>
+                                <div class="cdf-graph-container" id='nonzero-graph-container'>
+
+                                </div><!-- End of div.cdf-graph-container -->
+                                
+                                <p id="cdf-graph-title">Cumulative Distribution Function Graph</p>
+                                <div class="cdf-graph-container" id='cdf-graph-container'>
 
                                 </div><!-- End of div.cdf-graph-container -->
 
@@ -778,20 +799,6 @@
                         
                         <p id="subscriber-empty-message" class="empty-message">Add some files by choosing a folder from the top right.</p>
                         
-                    </div><!-- End of div.analyse-selection-list -->
-
-                    <div class="analyse-selection-list">
-                        <p class="selection-list-title analyse-selection-list-title">Tests</p>    
-
-                        <p class="analyse-section-list-primary-item"><ion-icon name="remove"></ion-icon>TestOne</p>
-                        <p class="analyse-section-list-secondary-item"><ion-icon name="return-right"></ion-icon>publisher.csv</p>
-                        <p class="analyse-section-list-secondary-item"><ion-icon name="return-right"></ion-icon>subscriber.csv</p>
-
-                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
-                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
-                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
-                        <p class="analyse-section-list-primary-item"><ion-icon name="add"></ion-icon>TestTwo</p>
-
                     </div><!-- End of div.analyse-selection-list -->
 
                 </div><!-- End of div.analyse-selection-window -->
@@ -1184,6 +1191,9 @@
         <!-- <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script> -->
         <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
+        <script src="https://unpkg.com/d3@5.12.0/dist/d3.min.js"></script>
+        <link href="https://unpkg.com/c3@0.7.11/c3.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/c3@0.7.11/c3.min.js"></script>
         <!-- End of JavaScript Dependencies -->
     </body>
 </html>

@@ -15,6 +15,10 @@
     /* outline: 1px solid #444; */
 }
 
+.analyse-publisher-graphs-container{
+    margin-left: 2vw;
+}
+
 .analysis-window .analysis-back-button:hover{cursor: pointer;}
 .analysis-window .analysis-back-button{
     outline: 1px solid #444;
@@ -39,9 +43,11 @@
 }
 
 .cdf-graph-container{
-    width: 30vw;
-    height: 30vh;
-    background-color: green;
+    /* outline: 1px solid black; */
+    width: 40vw;
+    height: 40vh;
+    margin-bottom: 1vh;
+    /* background-color: green; */
 }
 
 .analyse-summary-table{
@@ -60,7 +66,7 @@
 
 .analyse-selection-list{
     outline: 1px solid #444;
-    width: 30%;
+    width: 45%;
     overflow-y: scroll;
     padding: 1vh 1vw;
 
@@ -69,7 +75,7 @@
     max-height: 80vh;
 }
 .analyse-selection-list::-webkit-scrollbar{width: 0px !important;}
-.analyse-selection-window .empty-message{margin-top: 100%; color: #9a9a9a; text-align: center;}
+.analyse-selection-window .empty-message{margin-top: 50%; color: #9a9a9a; text-align: center;}
 
     .analyse-section-list-item{color: #6f80ff; text-decoration: underline;}
     .analyse-section-list-item:hover{cursor: pointer;}
