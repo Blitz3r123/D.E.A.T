@@ -1,4 +1,10 @@
-// cdf function code: https://stackoverflow.com/questions/5259421/cumulative-distribution-function-in-javascript
+// $('.analyse-selection-window').hide();
+// $('.analyse-summary-window').show();
+
+let summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/pub.csv"];
+
+// Hide analysis summary window on start
+$('.analyse-summary-window').hide();
 
 // Hide graphs titles on start
 $('#general-graph-title').hide();
@@ -46,6 +52,35 @@ $('#analysis-back-button').on('click', e => {
     $('.analyse-selection-window').show();
 
 })
+
+// Create summary
+$('#summarise-button').on('click', e => {
+    if(summaryFilePaths.length == 0){
+        showPopup("At least one file has to be added.");
+    }else{
+        $('.analyse-selection-window').hide();
+        $('.analyse-summary-window').show();
+        console.log(summaryFilePaths);
+    }
+});
+
+// Add files to summariser array
+$('#summary-file-selection-input').on('change', e => {
+    summaryFilePaths.push(e.target.files[0].path);
+    let summaryListDOM = document.querySelector('#summary-file-list');
+    
+    let filePath = e.target.files[0].path;
+    let fileName = path.basename(filePath);
+    let folderName = path.basename(path.dirname(filePath));
+
+    let pdom = document.createElement('p');
+    pdom.title = 'Click to Remove';
+    pdom.id = e.target.files[0].path;
+    pdom.textContent = path.join(folderName, fileName);
+
+    summaryListDOM.appendChild(pdom);
+
+});
 
 // Get files for analysis
 $('#folder-selection-input').on('change', e => {

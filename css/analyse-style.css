@@ -59,6 +59,25 @@
     justify-content: space-evenly;
 }
 
+.summarise-button:hover{color: green; background-color: white; border: 1px solid green; cursor: pointer;}
+.summarise-button{
+    /* outline: 1px solid green; */
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+    width: 100%;
+    padding: 1vh 1vw;
+    margin-top: 2vh;
+    text-align: center;
+    color: white;
+    background-color: green;
+}
+
+#summary-file-selection-input{
+    /* outline: 1px solid black; */
+    width: 80%;
+    margin-left: 10%;
+}
+
 .folder-selection-container input{
     margin-top: 20%;
     margin-left: 50%;
@@ -66,7 +85,7 @@
 
 .analyse-selection-list{
     outline: 1px solid #444;
-    width: 45%;
+    width: 30%;
     overflow-y: scroll;
     padding: 1vh 1vw;
 
@@ -76,6 +95,7 @@
 }
 .analyse-selection-list::-webkit-scrollbar{width: 0px !important;}
 .analyse-selection-window .empty-message{margin-top: 50%; color: #9a9a9a; text-align: center;}
+#summary-empty-message{margin-top: 0;}
 
     .analyse-section-list-item{color: #6f80ff; text-decoration: underline;}
     .analyse-section-list-item:hover{cursor: pointer;}
@@ -88,3 +108,39 @@
         .analyse-section-list-secondary-item {color: #6f80ff; text-decoration: underline;}
         .analyse-section-list-secondary-item:hover{cursor: pointer;}
         .analyse-section-list-secondary-item ion-icon{margin-right: 1vw; display: inline-block; color: #444;}
+
+
+.analyse-summary-window{
+    outline: 1px solid black;
+    width: 95%;
+    margin-left: 2.5%;
+    height: 83%;
+}
+
+.analyse-summary-tabs{
+    outline: 1px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    height: 6%;
+}
+
+.analyse-summary-tab:hover{cursor: pointer;}
+.analyse-summary-tab{
+    outline: 1px solid black;
+    width: 50%;
+    height: 100%;
+    padding: 1vh 1vw;
+}
+
+.active-tab{
+    background-color: black;
+    color: white;
+}
+
+.summary-file-list{
+    outline: 1px solid #444;
+    overflow-y: scroll;
+    padding: 1vh 1vw;
+    margin-top: 2vh;
+    height: 67%;
+}
