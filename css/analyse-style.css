@@ -72,10 +72,11 @@
     background-color: green;
 }
 
-#summary-file-selection-input{
-    /* outline: 1px solid black; */
+#summary-file-selection-input, #summary-folder-selection-input{
+/* outline: 1px solid black; */
     width: 80%;
     margin-left: 10%;
+    margin-bottom: 1vh;
 }
 
 .folder-selection-container input{
@@ -142,5 +143,5 @@
     overflow-y: scroll;
     padding: 1vh 1vw;
     margin-top: 2vh;
-    height: 67%;
+    height: 60%;
 }

@@ -824,6 +824,7 @@ function showPopup(message){
     $('#popup').show();
 }
 
+// Takes in the folder path and returns its files (not as paths - just its names)
 function readFolder(pathVal){
     let theFiles = [];
 
@@ -836,4 +837,21 @@ function readData(path){
     let data = fs.readFileSync(path);
 
     return JSON.parse(data);
+}
+
+function removeWhiteSpaces(string){
+    return string.replace(/\s/g, "");
+}
+
+function removePeriods(string){
+    return string.replace(/\./g, "");;
+}
+
+function removeForwardSlashes(string){
+    return string.replace(/\//g, "");
+}
+
+// Removes white spaces, periods and forward slashes
+function stringate(string){
+    return removeWhiteSpaces( removePeriods( removeForwardSlashes(string) ) );
 }

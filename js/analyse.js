@@ -1,7 +1,8 @@
 // $('.analyse-selection-window').hide();
 // $('.analyse-summary-window').show();
 
-let summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/pub.csv"];
+// var summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/pub.csv"];
+var summaryFilePaths = [];
 
 // Hide analysis summary window on start
 $('.analyse-summary-window').hide();
@@ -64,6 +65,40 @@ $('#summarise-button').on('click', e => {
     }
 });
 
+// Add files in folder to summariser array
+$('#summary-folder-selection-input').on('change', e => {
+    let summaryListDOM = document.querySelector('#summary-file-list');
+    let folderPath = e.target.files[0].path;
+
+    let folderFiles = readFolder(folderPath);
+    let folderFilePaths = [];
+
+    for(var i = 0; i < folderFiles.length; i ++){
+        folderFilePaths[i] = path.join( folderPath, folderFiles[i] );
+    }
+
+    folderFilePaths.forEach(file => {
+        let filePath = file;
+        let fileName = path.basename(filePath);
+        let folderName = path.basename(path.dirname(filePath));
+    
+        let pdom = document.createElement('p');
+        pdom.title = 'Click to Remove';
+        pdom.id = stringate(filePath);
+        pdom.textContent = path.join(folderName, fileName);
+        pdom.name = filePath;
+
+        pdom.addEventListener('click', e => {
+            removeFile(e.target);
+        });
+
+        summaryFilePaths.push(file);
+        summaryListDOM.appendChild(pdom);
+    });
+    
+
+});
+
 // Add files to summariser array
 $('#summary-file-selection-input').on('change', e => {
     summaryFilePaths.push(e.target.files[0].path);
@@ -75,8 +110,13 @@ $('#summary-file-selection-input').on('change', e => {
 
     let pdom = document.createElement('p');
     pdom.title = 'Click to Remove';
-    pdom.id = e.target.files[0].path;
+    pdom.id = stringate(filePath);
     pdom.textContent = path.join(folderName, fileName);
+    pdom.name = filePath;
+
+    pdom.addEventListener('click', e => {
+        removeFile(e.target);
+    });
 
     summaryListDOM.appendChild(pdom);
 
@@ -525,5 +565,15 @@ function commaFormatNumber(number){
 function clearChildren(element){
     while(element.firstChild){
         element.removeChild(element.firstChild);
+    }
+}
+
+function removeFile(element){
+    element.parentElement.removeChild(element);
+
+    let index = summaryFilePaths.indexOf(element.name);
+
+    if(index > -1){
+        summaryFilePaths.splice(index, 1);
     }
 }
