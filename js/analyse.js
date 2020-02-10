@@ -1,11 +1,16 @@
-// $('.analyse-selection-window').hide();
-// $('.analyse-summary-window').show();
+// Delete these after development of this component
+$('.analyse-selection-window').hide();
+$('.analyse-summary-window').show();
+$('.analyse-summary-publisher-content').hide();
+$('.analyse-summary-subscriber-content').hide();
+document.getElementById('analyse-summary-subscriber-tab').className = 'analyse-summary-tab active-tab';
+document.getElementById('analyse-summary-publisher-tab').className = 'analyse-summary-tab';
 
-// var summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/pub.csv"];
-var summaryFilePaths = [];
+var summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/pub.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 2/pub.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 3/pub.csv"];
+// var summaryFilePaths = [];
 
 // Hide analysis summary window on start
-$('.analyse-summary-window').hide();
+// $('.analyse-summary-window').hide();
 
 // Hide graphs titles on start
 $('#general-graph-title').hide();
@@ -13,6 +18,9 @@ $('#non-zero-graph-title').hide();
 $('#cdf-graph-title').hide();
 $('#throughput-graph-title').hide();
 $('#packets-per-sec-graph-title').hide();
+
+displayPubTable();
+displayPubGraphs();
 
 // Reset the analysis window and hide it and show the analysis selection window
 $('#analysis-back-button').on('click', e => {
@@ -82,18 +90,20 @@ $('#summary-folder-selection-input').on('change', e => {
         let fileName = path.basename(filePath);
         let folderName = path.basename(path.dirname(filePath));
     
-        let pdom = document.createElement('p');
-        pdom.title = 'Click to Remove';
-        pdom.id = stringate(filePath);
-        pdom.textContent = path.join(folderName, fileName);
-        pdom.name = filePath;
-
-        pdom.addEventListener('click', e => {
-            removeFile(e.target);
-        });
-
-        summaryFilePaths.push(file);
-        summaryListDOM.appendChild(pdom);
+        if(!fileExists(filePath) && isCsv(filePath)){
+            let pdom = document.createElement('p');
+            pdom.title = 'Click to Remove';
+            pdom.id = stringate(filePath);
+            pdom.textContent = path.join(folderName, fileName);
+            pdom.name = filePath;
+    
+            pdom.addEventListener('click', e => {
+                removeFile(e.target);
+            });
+    
+            summaryFilePaths.push(file);
+            summaryListDOM.appendChild(pdom);
+        }
     });
     
 
@@ -101,24 +111,29 @@ $('#summary-folder-selection-input').on('change', e => {
 
 // Add files to summariser array
 $('#summary-file-selection-input').on('change', e => {
-    summaryFilePaths.push(e.target.files[0].path);
     let summaryListDOM = document.querySelector('#summary-file-list');
     
     let filePath = e.target.files[0].path;
     let fileName = path.basename(filePath);
     let folderName = path.basename(path.dirname(filePath));
+    
+    if(!fileExists(filePath) && isCsv(filePath)){
+        summaryFilePaths.push(e.target.files[0].path);
+        let pdom = document.createElement('p');
+        pdom.title = 'Click to Remove';
+        pdom.id = stringate(filePath);
+        pdom.textContent = path.join(folderName, fileName);
+        pdom.name = filePath;
+    
+        pdom.addEventListener('click', e => {
+            removeFile(e.target);
+        });
+    
+        summaryListDOM.appendChild(pdom);
+    }else{
+        showPopup("That file has already been added.");
+    }
 
-    let pdom = document.createElement('p');
-    pdom.title = 'Click to Remove';
-    pdom.id = stringate(filePath);
-    pdom.textContent = path.join(folderName, fileName);
-    pdom.name = filePath;
-
-    pdom.addEventListener('click', e => {
-        removeFile(e.target);
-    });
-
-    summaryListDOM.appendChild(pdom);
 
 });
 
@@ -576,4 +591,214 @@ function removeFile(element){
     if(index > -1){
         summaryFilePaths.splice(index, 1);
     }
+}
+
+function fileExists(pathValue){
+    return summaryFilePaths.indexOf(pathValue) !== -1;
+}
+
+function isCsv(pathValue){
+    return path.extname(pathValue) == '.csv';
+}
+
+function showSubscriberTab(){
+    let pubTab = document.querySelector('#analyse-summary-publisher-tab');
+
+    pubTab.className = 'analyse-summary-tab';
+
+    let subTab = document.querySelector('#analyse-summary-subscriber-tab');
+
+    subTab.className = 'analyse-summary-tab active-tab';
+
+    $('.analyse-summary-publisher-content').hide();
+    $('.analyse-summary-subscriber-content').show();
+
+}
+
+function showPublisherTab(){
+    let pubTab = document.querySelector('#analyse-summary-publisher-tab');
+
+    pubTab.className = 'analyse-summary-tab active-tab';
+
+    let subTab = document.querySelector('#analyse-summary-subscriber-tab');
+
+    subTab.className = 'analyse-summary-tab';
+
+    $('.analyse-summary-publisher-content').show();
+    $('.analyse-summary-subscriber-content').hide();
+
+}
+
+function displayPubTable(){
+    summaryFilePaths.forEach(file => {
+        
+        let fileName = path.basename(file);
+        
+        if(fileName.toLowerCase().includes('pub')){
+            fs.readFile(file, 'utf8', (err, data) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    let dataArray = data.split('\n');
+                    dataArray = dataArray.slice(1, dataArray.length - 4);
+                    let total = 0;
+
+                    dataArray.forEach(item => {
+                        total += parseInt(item);
+                    });
+
+                    let average = (total / dataArray.length).toFixed(2);
+                    
+                    let folderName = path.basename(path.dirname(file));
+
+                    let summaryTableTr = document.querySelector('#publisher-summary-table thead tr');
+                    
+                    let title = path.join(folderName, fileName);
+
+                    let thdom = document.createElement('th');
+                    thdom.textContent = title;
+
+                    summaryTableTr.appendChild(thdom);
+
+                    let summaryTableTbodyTr = document.querySelector('#publisher-summary-table tbody tr');
+                    let tdDom = document.createElement('td');
+                    tdDom.textContent = average;
+
+                    summaryTableTbodyTr.appendChild(tdDom);
+
+
+                }
+            });
+        }
+
+    });
+}
+
+function displayPubGraphs(){
+    summaryFilePaths.forEach(file => {
+        
+        let fileName = path.basename(file);
+        
+        if(fileName.toLowerCase().includes('pub')){
+            fs.readFile(file, 'utf8', (err, data) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    let dataArray = data.split('\n');
+                    dataArray = dataArray.slice(1, dataArray.length - 4);
+                    let total = 0;
+                    
+                    let folderName = path.basename(path.dirname(file));
+                    
+                    let title = path.join(folderName, fileName);
+
+                    let nonZeroArray = [];
+
+                    dataArray.forEach(item => {
+                        if(parseInt(item) != 0){
+                            nonZeroArray.push(parseInt(item));
+                        }
+                    });
+
+                    let cdfArray = [];
+                    let cdfXValues = [];
+                    let cdfYValues = [];
+
+                    let newnonZeroArray = nonZeroArray.slice(1, nonZeroArray.length - 1 );
+
+                    cdfArray = newnonZeroArray.sort((a, b) => parseInt(a) - parseInt(b));
+
+                    cdfArray.forEach((item, index) => {
+                        if(item !== cdfArray[index - 1]){
+                            cdfXValues.push(item);
+                            cdfYValues.push(1);
+                        }else{
+                            cdfYValues[cdfYValues.length-1]++;
+                        }
+                    });
+
+                    for(var i = 0; i < cdfYValues.length; i++){
+                        cdfYValues[i] = parseInt(cdfYValues[i]) / parseInt(cdfYValues.length);
+                    }
+
+                    for(var j = 1; j < cdfYValues.length; j++){
+                        cdfYValues[j] += cdfYValues[j - 1];
+                    }
+
+                    let tickArray = [];
+
+                    for(var k = 0; k < cdfXValues.length; k ++){
+                        tickArray[k] = (cdfXValues[length] / k);
+                    }
+
+                    cdfXValues.unshift('x');
+                    cdfYValues.unshift('CDF');
+
+                    let latencyGraphContainerDom = document.querySelector('.analyse-summary-publisher-content #latency-graph-container');
+                    let nonZeroLatencyGraphContainerDom = document.querySelector('.analyse-summary-publisher-content #non-zero-graph-container');
+                    let cdfGraphContainerDom = document.querySelector('.analyse-summary-publisher-content #cdf-graph-container');
+                    
+                    let newLatencyGraphDiv = document.createElement('div');
+                    newLatencyGraphDiv.className = 'graph';
+                    newLatencyGraphDiv.id = 'latency' + stringate(title);
+
+                    let newNonZeroGraphDiv = document.createElement('div');
+                    newNonZeroGraphDiv.className = 'graph';
+                    newNonZeroGraphDiv.id = 'nonzero' + stringate(title);
+
+                    let newCdfGraphDiv = document.createElement('div');
+                    newCdfGraphDiv.className = 'graph';
+                    newCdfGraphDiv.id = 'cdf' + stringate(title);
+
+                    nonZeroArray.unshift(title);
+                    dataArray.unshift(title);
+                    cdfYValues.unshift(title);
+
+                    latencyGraphContainerDom.appendChild(newLatencyGraphDiv);
+                    nonZeroLatencyGraphContainerDom.appendChild(newNonZeroGraphDiv);
+                    cdfGraphContainerDom.appendChild(newCdfGraphDiv);
+
+                    let latencyChart = c3.generate({
+                        bindto: '#latency' + stringate(title),
+                        data: {
+                          columns: [
+                            dataArray
+                          ]
+                        }
+                    });
+
+                    let nonZeroChart = c3.generate({
+                        bindto: '#nonzero' + stringate(title),
+                        data: {
+                          columns: [
+                            nonZeroArray
+                          ]
+                        }
+                    });
+
+                    var cdfChart = c3.generate({
+                        bindto: '#cdf' + stringate(title),
+                        data: {
+                            x: 'x',
+                            y: title,
+                            columns: [
+                                cdfXValues,
+                                cdfYValues
+                            ]
+                        },
+                        axis: {
+                            x: {
+                                type: 'category',
+                                tick: {
+                                    count: 1
+                                }
+                            }
+                        }
+                    });
+
+                }
+            });
+        }
+
+    });
 }

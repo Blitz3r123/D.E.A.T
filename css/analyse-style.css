@@ -113,16 +113,22 @@
 
 .analyse-summary-window{
     outline: 1px solid black;
+    /* background-color: yellow; */
     width: 95%;
     margin-left: 2.5%;
-    height: 83%;
+    min-height: 80vh;
+    max-height: 80vh;
+    overflow-y: scroll;
 }
 
 .analyse-summary-tabs{
-    outline: 1px solid black;
+    /* outline: 1px solid black; */
+    /* background-color: grey; */
     display: flex;
     justify-content: space-evenly;
-    height: 6%;
+    max-height: 2.5%;
+    min-height: 2.5%;
+    width: 100%;
 }
 
 .analyse-summary-tab:hover{cursor: pointer;}
@@ -144,4 +150,43 @@
     padding: 1vh 1vw;
     margin-top: 2vh;
     height: 60%;
+}
+
+.analyse-summary-active-window{
+    /* outline: 1px solid red; */
+    /* background-color: yellow; */
+    /* margin-top: 2vh; */
+    padding: 2vh 2vw;
+    padding-top: 0;
+    min-height: 95% !important;
+    max-height: 95% !important;
+    overflow-y: scroll;
+}
+
+.analyse-summary-publisher-content, .analyse-summary-subscriber-content{
+    /* background-color: yellow; */
+    /* height: 190vh; */
+}
+
+.analyse-summary-publisher-content p, .analyse-summary-subscriber-content p{
+    margin-top: 2vh;
+    font-weight: 700;
+}
+
+.graph-container{
+    /* outline: 1px solid black; */
+    height: auto;
+    display: flex;
+    justify-content: space-evenly;
+    height: auto;
+    min-height: 20vh;
+    padding: 2vh 2vw;
+    flex-wrap: wrap;
+}
+
+.graph-container .graph{
+    /* outline: 1px solid black; */
+    width: auto;
+    height: 30vh;
+    margin: 2vh 1vw;
 }
