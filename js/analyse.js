@@ -1,16 +1,16 @@
 // Delete these after development of this component
-$('.analyse-selection-window').hide();
-$('.analyse-summary-window').show();
-$('.analyse-summary-publisher-content').hide();
-$('.analyse-summary-subscriber-content').hide();
-document.getElementById('analyse-summary-subscriber-tab').className = 'analyse-summary-tab active-tab';
-document.getElementById('analyse-summary-publisher-tab').className = 'analyse-summary-tab';
+// $('.analyse-selection-window').hide();
+// $('.analyse-summary-window').show();
+// $('.analyse-summary-publisher-content').hide();
+// $('.analyse-summary-subscriber-content').hide();
+// document.getElementById('analyse-summary-subscriber-tab').className = 'analyse-summary-tab active-tab';
+// document.getElementById('analyse-summary-publisher-tab').className = 'analyse-summary-tab';
 
-var summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/pub.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 2/pub.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 3/pub.csv"];
-// var summaryFilePaths = [];
+// var summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/sub1.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 2/sub1.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 3/sub1.csv"];
+var summaryFilePaths = [];
 
 // Hide analysis summary window on start
-// $('.analyse-summary-window').hide();
+$('.analyse-summary-window').hide();
 
 // Hide graphs titles on start
 $('#general-graph-title').hide();
@@ -18,9 +18,6 @@ $('#non-zero-graph-title').hide();
 $('#cdf-graph-title').hide();
 $('#throughput-graph-title').hide();
 $('#packets-per-sec-graph-title').hide();
-
-displayPubTable();
-displayPubGraphs();
 
 // Reset the analysis window and hide it and show the analysis selection window
 $('#analysis-back-button').on('click', e => {
@@ -69,7 +66,11 @@ $('#summarise-button').on('click', e => {
     }else{
         $('.analyse-selection-window').hide();
         $('.analyse-summary-window').show();
-        console.log(summaryFilePaths);
+        // console.log(summaryFilePaths);
+        displayPubTable();
+        displayPubGraphs();
+        displaySubTable();
+        displaySubGraphs();
     }
 });
 
@@ -674,6 +675,99 @@ function displayPubTable(){
     });
 }
 
+function displaySubTable(){
+    summaryFilePaths.forEach(file => {
+        
+        let fileName = path.basename(file);
+        let folderName = path.basename(path.dirname(file));
+        
+        if(fileName.toLowerCase().includes('sub')){
+            fs.readFile(file, 'utf8', (err, data) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    let dataArray = data.split('\n');
+
+                    dataArray.forEach(item => {
+                        item = parseInt(item);
+                    });
+
+                    let totalPacketsArray = [];
+                    let packetsPerSecArray = [];
+                    let throughputArray = [];
+                    let packetsLostArray = [];
+
+                    dataArray = dataArray.slice(1, dataArray.length - 2);  
+
+                    dataArray.forEach(row => {
+                        let rowData = row.split(',');
+
+                        totalPacketsArray.push(rowData[1]);
+                        packetsPerSecArray.push(rowData[2]);
+                        throughputArray.push(rowData[3]);
+                        packetsLostArray.push(rowData[4]);
+                    });
+
+                    let totalPackets = parseInt(totalPacketsArray[totalPacketsArray.length - 1]);
+                    let packetsLost = parseInt(packetsLostArray[packetsLostArray.length - 1]);
+                    let percentLost = ((packetsLost / (totalPackets + packetsLost)) * 100).toFixed(2);
+
+                    let throughputTotal = 0;
+
+                    throughputArray.forEach(item => {
+                        throughputTotal += parseInt(item);
+                    });
+
+                    let throughputAverage = (throughputTotal / throughputArray.length).toFixed(2);
+
+                    let packetsPerSecTotal = 0;
+
+                    packetsPerSecArray.forEach(item => {
+                        packetsPerSecTotal += parseInt(item);
+                    });
+
+                    let packetsPerSecAverage = (packetsPerSecTotal / packetsPerSecArray.length).toFixed(0);
+
+                    let summaryTableTr = document.querySelector('#subscriber-summary-table thead tr');
+                    
+                    let title = path.join(folderName, fileName);
+
+                    let thdom = document.createElement('th');
+                    thdom.textContent = title;
+
+                    summaryTableTr.appendChild(thdom); 
+                    
+                    let totalPacketsRowDom = document.querySelector('#total-packets-row');
+                    let totalPacketstdDom = document.createElement('td');
+                    totalPacketstdDom.textContent = commaFormatNumber(totalPackets);
+
+                    totalPacketsRowDom.appendChild(totalPacketstdDom);
+
+                    let percentLostRowDom = document.querySelector('#percent-lost-row');
+                    let percentLosttdDom = document.createElement('td');
+                    percentLosttdDom.textContent = commaFormatNumber(percentLost) + '%';
+
+                    percentLostRowDom.appendChild(percentLosttdDom);
+
+                    let throughputRow = document.querySelector('#throughput-row');
+                    let throughputtdDom = document.createElement('td');
+                    throughputtdDom.textContent = commaFormatNumber(throughputAverage);
+
+                    throughputRow.appendChild(throughputtdDom);
+
+                    let packetsPerSecRow = document.querySelector('#packets-per-sec-row');
+                    let packetsPerRowtdDom = document.createElement('td');
+                    packetsPerRowtdDom.textContent = commaFormatNumber(packetsPerSecAverage);
+
+                    packetsPerSecRow.appendChild(packetsPerRowtdDom);
+
+                }
+            });
+        }
+
+    });
+}
+
 function displayPubGraphs(){
     summaryFilePaths.forEach(file => {
         
@@ -793,6 +887,83 @@ function displayPubGraphs(){
                                     count: 1
                                 }
                             }
+                        }
+                    });
+
+                }
+            });
+        }
+
+    });
+}
+
+function displaySubGraphs(){
+    summaryFilePaths.forEach(file => {
+        
+        let fileName = path.basename(file);
+        let folderName = path.basename(path.dirname(file));
+
+        if(fileName.toLowerCase().includes('sub')){
+            fs.readFile(file, 'utf8', (err, data) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    let totalPacketsArray = [];
+                    let packetsPerSecArray = [];
+                    let throughputArray = [];
+                    let packetsLostArray = [];
+
+                    let dataArray = data.split('\n');
+
+                    let title = path.join(folderName, fileName);
+
+                    dataArray.forEach(item => {
+                        item = parseInt(item);
+                    });
+
+                    dataArray = dataArray.slice(1, dataArray.length - 2);  
+
+                    dataArray.forEach(row => {
+                        let rowData = row.split(',');
+
+                        totalPacketsArray.push(rowData[1]);
+                        packetsPerSecArray.push(rowData[2]);
+                        throughputArray.push(rowData[3]);
+                        packetsLostArray.push(rowData[4]);
+                    });
+
+                    let throughputGraphContainerDom = document.querySelector('.analyse-summary-subscriber-content #throughput-graph-container');
+                    let packetsPerSecGraphContainerDom = document.querySelector('.analyse-summary-subscriber-content #packets-per-sec-graph-container');
+                    
+                    let newThroughputGraphDiv = document.createElement('div');
+                    newThroughputGraphDiv.className = 'graph';
+                    newThroughputGraphDiv.id = 'throughput' + stringate(title);
+
+                    let newPacketsPerSecGraphDiv = document.createElement('div');
+                    newPacketsPerSecGraphDiv.className = 'graph';
+                    newPacketsPerSecGraphDiv.id = 'packetspersec' + stringate(title);
+
+                    throughputArray.unshift(title);
+                    packetsPerSecArray.unshift(title);
+
+                    throughputGraphContainerDom.appendChild(newThroughputGraphDiv);
+                    packetsPerSecGraphContainerDom.appendChild(newPacketsPerSecGraphDiv);
+
+                    let throughputChart = c3.generate({
+                        bindto: '#throughput' + stringate(title),
+                        data: {
+                          columns: [
+                            throughputArray
+                          ]
+                        }
+                    });
+
+                    let packetsPerSecChart = c3.generate({
+                        bindto: '#packetspersec' + stringate(title),
+                        data: {
+                          columns: [
+                            packetsPerSecArray
+                          ]
                         }
                     });
 
