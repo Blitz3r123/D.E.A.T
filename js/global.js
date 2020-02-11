@@ -53,7 +53,6 @@ $('#popup').hide();
 // Hide analyse window on start
 // WORKING
 $('.analysis-window').hide();
-$('.analyse-selection-window').hide();
 
 // Hide perftest location setting on start
 $('#perftestLocationSetting').hide();
