@@ -19,6 +19,56 @@ $('#cdf-graph-title').hide();
 $('#throughput-graph-title').hide();
 $('#packets-per-sec-graph-title').hide();
 
+$('#summary-back-button').on('click', e => {
+    // Reset summary window
+    /*
+        Clear all pub graph containers
+        Clear all pub tables
+        Clear all sub graphs container
+        Clear all sub tables
+    */
+
+    // Clear all pub graph containers
+    clearChildren(document.querySelector('#latency-graph-container'));
+    clearChildren(document.querySelector('#non-zero-graph-container'));
+    clearChildren(document.querySelector('#cdf-graph-container'));
+    
+    // Clear all pub tables
+    clearChildren(document.querySelector('#publisher-summary-table thead tr'));
+    clearChildren(document.querySelector('#publisher-summary-table tbody tr'));
+
+    // Clear all sub graph containers
+    clearChildren(document.querySelector('#throughput-graph-container'));
+    clearChildren(document.querySelector('#packets-per-sec-graph-container'));
+
+    // Clear all sub tables
+    clearChildren(document.querySelector('#subscriber-summary-table thead tr'));
+    document.querySelector('#subscriber-summary-table thead tr').appendChild(document.createElement('th'));
+    
+    clearChildren(document.querySelector('#subscriber-summary-table #total-packets-row'));
+    let totalPacketsRowdom = document.createElement('td');
+    totalPacketsRowdom.textContent = 'Total Packets';
+    document.querySelector('#subscriber-summary-table #total-packets-row').appendChild(totalPacketsRowdom);
+
+    clearChildren(document.querySelector('#subscriber-summary-table #percent-lost-row'));
+    let percentLostRowDom = document.createElement('td');
+    percentLostRowDom.textContent = '% Lost';
+    document.querySelector('#subscriber-summary-table #percent-lost-row').appendChild(percentLostRowDom);
+
+    clearChildren(document.querySelector('#subscriber-summary-table #throughput-row'));
+    let throughputRowDom = document.createElement('td');
+    throughputRowDom.textContent = 'Throughput';
+    document.querySelector('#subscriber-summary-table #throughput-row').appendChild(throughputRowDom);
+
+    clearChildren(document.querySelector('#subscriber-summary-table #packets-per-sec-row'));
+    let packetsPerSecRowDom = document.createElement('td');
+    packetsPerSecRowDom.textContent = 'Packets/s';
+    document.querySelector('#subscriber-summary-table #packets-per-sec-row').appendChild(packetsPerSecRowDom);
+
+    $('.analyse-summary-window').hide();
+    $('.analyse-selection-window').show();
+});
+
 // Reset the analysis window and hide it and show the analysis selection window
 $('#analysis-back-button').on('click', e => {
     // Reset analysis window:
@@ -66,6 +116,7 @@ $('#summarise-button').on('click', e => {
     }else{
         $('.analyse-selection-window').hide();
         $('.analyse-summary-window').show();
+        $('#folder-selection-input').hide();
         // console.log(summaryFilePaths);
         displayPubTable();
         displayPubGraphs();

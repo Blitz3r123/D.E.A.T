@@ -121,6 +121,14 @@
     overflow-y: scroll;
 }
 
+#summary-back-button:hover{cursor: pointer;}
+#summary-back-button{
+    /* outline: 1px solid red; */
+    width: 10vw;
+    padding: 1vh 1vw;
+    margin: 0;
+}
+
 .analyse-summary-tabs{
     /* outline: 1px solid black; */
     /* background-color: grey; */
