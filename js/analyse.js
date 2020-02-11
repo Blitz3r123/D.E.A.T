@@ -12,6 +12,9 @@ var summaryFilePaths = [];
 // Hide analysis summary window on start
 $('.analyse-summary-window').hide();
 
+// Hide summary tabs on start
+$('#analyse-current-tab').hide();
+
 // Hide graphs titles on start
 $('#general-graph-title').hide();
 $('#non-zero-graph-title').hide();
@@ -144,7 +147,7 @@ $('#summary-folder-selection-input').on('change', e => {
     
         if(!fileExists(filePath) && isCsv(filePath)){
             let pdom = document.createElement('p');
-            pdom.title = 'Click to Remove';
+            pdom.title = 'Click to Remove \n' + filePath;
             pdom.id = stringate(filePath);
             pdom.textContent = path.join(folderName, fileName);
             pdom.name = filePath;
@@ -172,7 +175,7 @@ $('#summary-file-selection-input').on('change', e => {
     if(!fileExists(filePath) && isCsv(filePath)){
         summaryFilePaths.push(e.target.files[0].path);
         let pdom = document.createElement('p');
-        pdom.title = 'Click to Remove';
+        pdom.title = 'Click to Remove \n' + filePath;
         pdom.id = stringate(filePath);
         pdom.textContent = path.join(folderName, fileName);
         pdom.name = filePath;
@@ -209,6 +212,7 @@ $('#folder-selection-input').on('change', e => {
         });
 
         item.textContent = path.join(path.basename(pathValue), file);
+        item.title = pathValue;
 
         if(file.toLowerCase().includes('pub') && isCsv(file)){
             $('#publisher-empty-message').hide();
@@ -296,8 +300,8 @@ function analyseFile(file){
                         }
                     });
 
-                    let zeroAverage = totalLatency / latencyArray.length;
-                    let nonZeroAverage = totalLatency / latencyArray.length - nonZeroCount;
+                    let zeroAverage = totalLatency / (latencyArray.length - zeroCount);
+                    let nonZeroAverage = totalLatency / latencyArray.length;
 
                     let summaryTableDOM = createTable('Summary');
 
