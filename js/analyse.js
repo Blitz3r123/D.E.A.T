@@ -159,10 +159,10 @@ $('#folder-selection-input').on('change', e => {
 
         item.textContent = path.join(path.basename(pathValue), file);
 
-        if(file.toLowerCase().includes('pub')){
+        if(file.toLowerCase().includes('pub') && isCsv(file)){
             $('#publisher-empty-message').hide();
             analysePublisherListDOM.appendChild(item);
-        }else if(file.toLowerCase().includes('sub')){
+        }else if(file.toLowerCase().includes('sub') && isCsv(file)){
             $('#subscriber-empty-message').hide();
             analyseSubscriberListDOM.appendChild(item);
         }
@@ -195,31 +195,58 @@ function analyseFile(file){
                 console.log(err);
             }else{
                 let dataArray = data.split('\n');
-                dataArray.forEach(item => {
-                    item = parseInt(item);
-                });
-    
+                
                 if(file.toLowerCase().includes('pub')){
                     let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
+                    
+                    let latencyArray = [];
+    
+                    console.log(dataArray);
+    
+                    let latencyIndex;
 
-                    dataArray = dataArray.slice(1, dataArray.length - 4);
+                    // Check if array has multiple values per row
+                    if(dataArray[1].includes(',')){
+                        dataArray[0].split(',').forEach((item, index) => {
+                        
+                            if(item.toLowerCase().includes('latency')){
+                                latencyIndex = index;
+                            }
+        
+                        });
+        
+                        for(i = 1; i < dataArray.length; i++){
+                            latencyArray.push( parseInt(dataArray[i].split(',')[latencyIndex]) );
+                        }
+
+                    }else{
+                        latencyArray = dataArray;
+                        
+                        latencyArray.forEach(item => {
+                            item = parseInt(item);
+                        });
+
+                        latencyArray = latencyArray.slice(1, latencyArray.length - 4);
+                    }
 
                     // Calculate average:
                     let totalLatency = 0;
                     let nonZeroCount = 0;
                     let zeroCount = 0;
 
-                    dataArray.forEach(item => {
-                        totalLatency += parseInt(item);
-                        if(parseInt(item) != 0){
-                            nonZeroCount ++;
-                        }else{
-                            zeroCount ++;
+                    latencyArray.forEach(item => {
+                        if(! (isNaN(parseInt(item))) ){
+                            totalLatency += parseInt(item);
+                            if(parseInt(item) != 0){
+                                nonZeroCount ++;
+                            }else{
+                                zeroCount ++;
+                            }
                         }
                     });
 
-                    let zeroAverage = totalLatency / zeroCount;
-                    let nonZeroAverage = totalLatency / nonZeroCount;
+                    let zeroAverage = totalLatency / latencyArray.length;
+                    let nonZeroAverage = totalLatency / latencyArray.length - nonZeroCount;
 
                     let summaryTableDOM = createTable('Summary');
 
@@ -266,7 +293,7 @@ function analyseFile(file){
 
                     let tbodyDOM = document.createElement('tbody');
 
-                    dataArray.forEach(row => {
+                    latencyArray.forEach(row => {
                         let dataTrDOM = document.createElement('tr');
                         let latencyTdDOM = document.createElement('td');
 
@@ -281,7 +308,7 @@ function analyseFile(file){
 
                     let nonZeroArray = [];
 
-                    dataArray.forEach(item => {
+                    latencyArray.forEach(item => {
                         if(parseInt(item) != 0){
                             nonZeroArray.push(parseInt(item));
                         }
@@ -333,12 +360,12 @@ function analyseFile(file){
                         cdfYValues[j] += cdfYValues[j - 1];
                     }
 
-                    dataArray.unshift('Latency');
+                    latencyArray.unshift('Latency');
                     var chartTwo = c3.generate({
                         bindto: '#general-graph-container',
                         data: {
                           columns: [
-                            dataArray
+                            latencyArray
                           ]
                         }
                     });
@@ -386,7 +413,7 @@ function analyseFile(file){
                     $('#packets-per-sec-graph-container').hide();
                     $('#packets-per-sec-graph-title').hide();
 
-                }else{
+                }else if(file.toLowerCase().includes('sub')){
                     let totalPacketsArray = [];
                     let packetsPerSecArray = [];
                     let throughputArray = [];
