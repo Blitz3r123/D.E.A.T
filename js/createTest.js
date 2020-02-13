@@ -40,11 +40,14 @@ function createNewTest(){
                 let newFolder = path.join( saveLocation, testName );
 
                 for(var i = 1; i < fileAmount + 1; i++){
-                    let fileLocation = path.join( newFolder, 'File ' + i + '.bat');
-                    createFile('', fileLocation);
+                    let batFileLocation = path.join( newFolder, 'File ' + i + '.bat');
+                    let jsonFileLocation = path.join( newFolder, 'File ' + i + '.json');
+                    createFile('', batFileLocation);
+                    createFile('', jsonFileLocation);
 
                     // Redirect to file settings page here
                     $('#create-test-index').hide();
+                    document.querySelector('#create-test-settings').setAttribute('path', '');
                     $('#create-test-settings').show();
 
                 }
@@ -118,6 +121,9 @@ function createTestListItem(title, pathValue){
 
 function openTestSettings(element){
     $('#create-test-index').hide();
+
+    console.log(element);
+
     $('#create-test-settings').show();
 }
 
