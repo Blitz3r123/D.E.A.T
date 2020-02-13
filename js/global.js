@@ -635,6 +635,7 @@ $('#createButton').on('click', () => {
     }else{
         let saveLocationPath = document.querySelector('#saveLocation').files[0].path;
         createFile(finalOutput, `${saveLocationPath}/${fileName}.bat`);
+        showPopup('File created!');
     }
 
 });
@@ -812,7 +813,7 @@ function isChecked(name){
 }
 
 function createFile(output, path){
-    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : showPopup('File Created!'));
+    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log('File Created at ' + path));
 }
 
 function showPopup(message){
@@ -826,7 +827,7 @@ function showPopup(message){
 // Takes in the folder path and returns its files (not as paths - just its names)
 function readFolder(pathVal){
     let theFiles = [];
-    
+
     if(fs.lstatSync(pathVal).isDirectory()){
         fs.readdirSync(pathVal).forEach(file => theFiles.push(file));
     }

@@ -473,16 +473,19 @@
                             <div class="test-input-list">
 
                                 <p class="input-label">Test Name</p>
-                                <input type="text" class="test-list-input">
+                                <input type="text" class="test-list-input" id="create-new-test-name">
 
                                 <p class="input-label">Number of Files</p>
-                                <input type="number" class="test-list-input">
+                                <input type="number" class="test-list-input" id="create-new-test-file-amount">
+
+                                <p class="input-label">Save Location</p>
+                                <input type="file" class="test-list-input" id="create-new-test-file-location" multiple directory webkitdirectory>
 
                             </div>
 
                             <div class="create-test-button-container">
 
-                                <p class="create-test-button">Create</p>
+                                <p class="create-test-button" onClick="createNewTest()">Create</p>
 
                             </div>
 
@@ -513,9 +516,11 @@
 
                             </div>
 
-                            <p class="create-test-start-button">
-                                Start
-                            </p>
+                            <div class="buttons-container">
+                                <p class="create-test-back-button" onClick="showTestSettingsPage()">Back</p>
+                                <p class="create-test-start-button">Start</p>
+                            </div>
+
 
                         </div>
 

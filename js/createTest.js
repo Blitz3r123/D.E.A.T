@@ -8,6 +8,55 @@ $('#test-list-folder-selection-input').on('change', e => {
     populateTestList(e.target.files[0].path);
 });
 
+function createNewTest(){
+    let nameInput = document.querySelector('#create-new-test-name');
+    let fileAmountInput = document.querySelector('#create-new-test-file-amount');
+    let fileLocationInput = document.querySelector('#create-new-test-file-location');
+
+    let saveLocation;
+
+    if(nameInput.value == ''){
+        showPopup("Test Name is empty!");
+    }else if(fileAmountInput.value == ''){
+        showPopup("Number of Files empty.");
+    }else{
+        if(fileAmountInput.value <= 0){
+            showPopup("Need to have at least 1 file!");
+        }else{
+
+            if(fileLocationInput.files.length == 0){
+                saveLocation = readData( path.join( __dirname, '../data/GeneralSettings.json' ) ).testFolderLoc;
+            }else{
+                saveLocation = fileLocationInput.files[0].path;
+            }
+
+            let testName = nameInput.value;
+            let fileAmount = parseInt(fileAmountInput.value);
+
+            // Check test folder doesn't already exist
+            if(!fs.existsSync( path.join( saveLocation, testName ) )){
+                fs.mkdirSync( path.join( saveLocation, testName ) );
+
+                let newFolder = path.join( saveLocation, testName );
+
+                for(var i = 1; i < fileAmount + 1; i++){
+                    let fileLocation = path.join( newFolder, 'File ' + i + '.bat');
+                    createFile('', fileLocation);
+
+                    // Redirect to file settings page here
+                    $('#create-test-index').hide();
+                    $('#create-test-settings').show();
+
+                }
+
+            }else{
+                showPopup("Test already exists with that name in that location!");
+            }
+
+        }
+    }
+}
+
 function populateTestList(pathValue){
     /*
         - Read GeneralSettings.json
@@ -68,5 +117,11 @@ function createTestListItem(title, pathValue){
 }
 
 function openTestSettings(element){
-    console.log(element);
+    $('#create-test-index').hide();
+    $('#create-test-settings').show();
+}
+
+function showTestSettingsPage(){
+    $('#create-test-index').show();
+    $('#create-test-settings').hide();
 }
