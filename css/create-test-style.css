@@ -26,6 +26,10 @@
     height: 95%;
 }
 
+.test-list-item:hover{
+    cursor: pointer;
+}
+
 .test-list-content{
     /* background-color: yellow; */
     height: 90%;

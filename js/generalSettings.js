@@ -3,12 +3,14 @@ let genSettingVals = readData( path.join(__dirname, '../data/GeneralSettings.jso
 
 let defPerftestLocFileNameDOM = document.querySelector('#defPerftestLocFileName');
 let defScriptLocFileNameDOM = document.querySelector('#defScriptLocFileName');
+let testFolderLocFileNameDOM = document.querySelector('#testFolderLocFileName');
 let pubResultLocFileNameDOM = document.querySelector('#pubResultLocFileName');
 let subResultLocFileNameDOM = document.querySelector('#subResultLocFileName');
 let nddsHomeLocFileNameDOM = document.querySelector('#nddsHomeLocFileName');
 
 defPerftestLocFileNameDOM.textContent = normalisePath(genSettingVals.defPerftestLoc);
 defScriptLocFileNameDOM.textContent = normalisePath(genSettingVals.defScriptLoc);
+testFolderLocFileNameDOM.textContent = normalisePath(genSettingVals.testFolderLoc);
 pubResultLocFileNameDOM.textContent = normalisePath(genSettingVals.pubResultLoc);
 subResultLocFileNameDOM.textContent = normalisePath(genSettingVals.subResultLoc);
 nddsHomeLocFileNameDOM.textContent = normalisePath(genSettingVals.nddsHomeLoc);
@@ -44,6 +46,21 @@ $('#defScriptLoc').on('change', e => {
             console.log(err);
         }else{
             defScriptLocFileNameDOM.textContent = normalisePath(newPath);
+        }
+    });
+})
+
+$('#testFolderLoc').on('change', e => {
+    let newPath = e.target.files[0].path;
+    let oldData = readData(path.join(__dirname, '../data/GeneralSettings.json'));
+
+    oldData.testFolderLoc = newPath;
+
+    fs.writeFile(path.join(__dirname, '../data/GeneralSettings.json'), JSON.stringify(oldData), err => {
+        if(err){
+            console.log(err);
+        }else{
+            testFolderLocFileNameDOM.textContent = normalisePath(newPath);
         }
     });
 })

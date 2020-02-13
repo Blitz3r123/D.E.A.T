@@ -826,8 +826,10 @@ function showPopup(message){
 // Takes in the folder path and returns its files (not as paths - just its names)
 function readFolder(pathVal){
     let theFiles = [];
-
-    fs.readdirSync(pathVal).forEach(file => theFiles.push(file));
+    
+    if(fs.lstatSync(pathVal).isDirectory()){
+        fs.readdirSync(pathVal).forEach(file => theFiles.push(file));
+    }
 
     return theFiles;
 }
