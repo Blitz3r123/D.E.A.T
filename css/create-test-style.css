@@ -96,7 +96,7 @@
 }
 
 .file-tab-container{
-    /* outline: 1px solid #aaa; */
+    outline: 1px solid #aaa;
     height: 100%;
     width: 70%;
     display: flex;
@@ -108,6 +108,7 @@
 .active-file-tab-item{
     background-color: #aaa;
     color: white;
+    white-space: nowrap;
 }
 
 .file-tab-item:hover{cursor: pointer;}
@@ -116,12 +117,9 @@
     display: block;
     padding: 1vh 1vw;
     /* outline: 1px solid #aaa; */
-    border-top: 1px solid #aaa;
-    border-left: 1px solid #aaa;
-}
-
-.last-file-tab-item{
+    /* border-top: 1px solid #aaa; */
     border-right: 1px solid #aaa;
+    white-space: nowrap;
 }
 
 .buttons-container{
@@ -315,4 +313,14 @@ input.pub-sub-list-item-title{
     background-color: #eee;
     padding: 1vh 1vw;
     margin-top: 2vh;
+}
+
+.repetition-count-container{
+    text-align: center;
+}
+
+.repetition-count-container input{
+    width: auto;
+    margin: 0 1vw;
+    max-width: 30%;
 }

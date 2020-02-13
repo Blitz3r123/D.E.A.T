@@ -4,9 +4,58 @@ $('.test-list-content .empty-message').hide();
 
 populateTestList();
 
+// Update publisher list when user enters in value
+$('#pub-list-input').on('keyup', e => {
+    let listdom = document.querySelector('.pub-sub-list');
+    let amount = parseInt(e.target.value);
+
+    if(amount == 0 || amount == '' || isNaN(amount)){
+        while(listdom.firstChild){
+            listdom.removeChild(listdom.firstChild);
+        }
+    }
+
+
+    for(var i = 1; i < amount + 1; i++){
+        let item = createPubListItem(i);
+        listdom.appendChild(item);
+    }
+});
+
 $('#test-list-folder-selection-input').on('change', e => {
     populateTestList(e.target.files[0].path);
 });
+
+function editPubListItem(event){
+    let inputdom = document.createElement('input');
+    inputdom.type = 'text';
+    inputdom.value = event.target.textContent;
+    inputdom.className = 'pub-sub-list-item-title';
+
+    event.target.parentElement.replaceChild(inputdom, event.target.parentElement.firstChild);
+}
+
+function createPubListItem(count){
+    let divdom = document.createElement('div');
+    divdom.className = 'pub-sub-list-item';
+
+    
+
+    let spandom = document.createElement('span');
+    spandom.className = 'pub-sub-list-item-title';
+    spandom.textContent = 'Publisher ' + count;
+    spandom.id = 'Publisher ' + count;
+    spandom.addEventListener('click', e => editPubListItem(e));
+
+    let icondom = document.createElement('ion-icon');
+    icondom.name = 'trash';
+
+    divdom.appendChild(spandom);
+    divdom.appendChild(icondom);
+
+    return divdom;
+
+}
 
 function createNewTest(){
     let nameInput = document.querySelector('#create-new-test-name');
@@ -47,7 +96,7 @@ function createNewTest(){
 
                     // Redirect to file settings page here
                     $('#create-test-index').hide();
-                    document.querySelector('#create-test-settings').setAttribute('path', '');
+                    document.querySelector('#create-test-settings').setAttribute('path', newFolder);
                     $('#create-test-settings').show();
 
                 }
@@ -114,7 +163,7 @@ function createTestListItem(title, pathValue){
 
     pdom.textContent = title;
 
-    pdom.addEventListener('click', e => {openTestSettings(e.target)});
+    pdom.addEventListener('click', e => {openTestSettings(e)});
 
     return pdom;
 }
@@ -122,7 +171,7 @@ function createTestListItem(title, pathValue){
 function openTestSettings(element){
     $('#create-test-index').hide();
 
-    console.log(element);
+    let testFolderPath = element.target.attributes.path.value;
 
     $('#create-test-settings').show();
 }
