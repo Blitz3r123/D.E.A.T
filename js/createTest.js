@@ -141,13 +141,16 @@ function createNewTest(){
                     let jsonFileLocation = path.join( newFolder, 'File ' + i + '.json');
                     createFile('', batFileLocation);
                     createFile('', jsonFileLocation);
-
-                    // Redirect to file settings page here
-                    $('#create-test-index').hide();
-                    document.querySelector('#create-test-settings').setAttribute('path', newFolder);
-                    $('#create-test-settings').show();
-
                 }
+                
+                // Redirect to file settings page here
+                $('#create-test-index').hide();
+                document.querySelector('#create-test-settings').setAttribute('path', newFolder);
+                document.querySelector('#create-test-settings').setAttribute('fileAmount', fileAmountInput.value);
+
+                createNewFileList(fileAmountInput.value);
+
+                $('#create-test-settings').show();
 
             }else{
                 showPopup("Test already exists with that name in that location!");
@@ -155,6 +158,28 @@ function createNewTest(){
 
         }
     }
+}
+
+function createNewFileList(amount){
+    let fileListDom = document.querySelector('.file-tab-container');
+
+    for(var i = 1; i < parseInt(amount) + 1; i++){
+        let pdom = document.createElement('p');
+        
+        console.log(i);
+
+        if(i == 1){
+            pdom.className = 'file-tab-item active-file-tab-item';
+        }else{
+            pdom.className = 'file-tab-item';
+        }
+
+        pdom.textContent = 'File ' + i;
+
+        fileListDom.appendChild(pdom);
+
+    }
+
 }
 
 function populateTestList(pathValue){
@@ -244,9 +269,14 @@ function openTestSettings(element){
 
     let testFolderPath = element.attributes.path.value;
 
-    document.querySelector('#create-test-settings').setAttribute('path', testFolderPath);
+    let pubListAmountDom = document.querySelector('#pub-list-input');
+    let subListAmountDom = document.querySelector('#sub-list-input');
+
+    if(pubListAmountDom.value == '' && subListAmountDom.value == ''){
+        $('.settings-list-container').hide();
+    }
     
-    $('.settings-list-container').hide();
+    document.querySelector('#create-test-settings').setAttribute('path', testFolderPath);
 
     $('#create-test-settings').show();
 }
