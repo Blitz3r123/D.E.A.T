@@ -4,6 +4,54 @@ $('.test-list-content .empty-message').hide();
 
 populateTestList();
 
+function changeFileTab(event){
+    let fileName = event.target.textContent;
+
+    // Reset classnames of all file tabs
+    let fileTabList = document.querySelector('.file-tab-container');
+    fileTabList.childNodes.forEach(child => {
+        child.className = 'file-tab-item';
+    });
+
+    let index = parseInt(fileName.replace(/File/g, ''));
+
+    document.querySelector('#create-test-settings').setAttribute('fileIndex', index);
+
+    event.target.className = 'file-tab-item active-file-tab-item';
+
+    // Update view of pub/sub list here
+    /*
+        Read config file
+        Look at current file with current fileIndex
+        See how many publishers there are 
+        See how many subscribers there are
+    */
+    let testConfigFolder = document.querySelector('#create-test-settings').attributes.path.value;
+    let testConfigPath = path.join( testConfigFolder, path.basename(testConfigFolder) + '.json' );
+
+    let testConfig = readData(testConfigPath);
+    let fileConfig = testConfig.files[index - 1];
+    
+    let listdom = document.querySelector('#pub-list');
+    while(listdom.firstChild){
+        listdom.removeChild(listdom.firstChild);
+    }
+    for(var i = 1; i < parseInt(fileConfig.publisherAmount) + 1; i++){
+        let item = createPubListItem(i);
+        listdom.appendChild(item);
+    }
+    
+    listdom = document.querySelector('#sub-list');
+    while(listdom.firstChild){
+        listdom.removeChild(listdom.firstChild);
+    }
+    for(var i = 1; i < parseInt(fileConfig.subscriberAmount) + 1; i++){
+        let item = createSubListItem(i);
+        listdom.appendChild(item);
+    }
+
+}
+
 // Update repetition count when changes
 $('#test-rep-input').on('keyup', e => {
     let data = document.querySelector('#create-test-settings').attributes;
@@ -58,6 +106,8 @@ function updateSubConfigObj(testFolderPath, amount, fileIndex){
         amount = 0;
     }
     amount = parseInt(amount);
+    fileIndex -= 1;
+
     let testConfigFile = path.join(testFolderPath, path.basename(testFolderPath) + '.json');
 
     let testConfig = readData(testConfigFile);
@@ -100,6 +150,7 @@ function updatePubConfigObj(testFolderPath, amount, fileIndex){
         amount = 0;
     }
     amount = parseInt(amount);
+    fileIndex -= 1;
     let testConfigFile = path.join(testFolderPath, path.basename(testFolderPath) + '.json');
 
     let testConfig = readData(testConfigFile);
@@ -139,8 +190,6 @@ function deleteListItem(event){
 function createSubListItem(count){
     let divdom = document.createElement('div');
     divdom.className = 'pub-sub-list-item';
-
-    
 
     let spandom = document.createElement('span');
     spandom.className = 'pub-sub-list-item-title';
@@ -215,7 +264,6 @@ function createNewTest(){
 
                 for(var i = 1; i < fileAmount + 1; i++){
                     let batFileLocation = path.join( newFolder, 'File ' + i + '.bat');
-                    let jsonFileLocation = path.join( newFolder, 'File ' + i + '.json');
                     createFile('', batFileLocation);
                 }
                 
@@ -392,6 +440,7 @@ function populateFileTabs(testFolderPath){
                 }
         
                 pdom.textContent = 'File ' + i;
+                pdom.addEventListener('click', e => changeFileTab(e));
         
                 fileListDom.appendChild(pdom);
             }
@@ -407,8 +456,8 @@ function openTestSettings(element){
     let testFolderPath = element.attributes.path.value;
 
     populateFileTabs(testFolderPath);
-    updateSubPubList(testFolderPath, 1, 'pub');
-    updateSubPubList(testFolderPath, 1, 'sub');
+    updateSubPubList(testFolderPath, 0, 'pub');
+    updateSubPubList(testFolderPath, 0, 'sub');
 
     let pubListAmountDom = document.querySelector('#pub-list-input');
     let subListAmountDom = document.querySelector('#sub-list-input');
