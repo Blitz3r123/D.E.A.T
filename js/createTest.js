@@ -5,8 +5,26 @@ $('.test-list-content .empty-message').hide();
 populateTestList();
 
 // Update publisher list when user enters in value
+$('#sub-list-input').on('keyup', e => {
+    let listdom = document.querySelector('#sub-list');
+    let amount = parseInt(e.target.value);
+
+    if(amount == 0 || amount == '' || isNaN(amount)){
+        while(listdom.firstChild){
+            listdom.removeChild(listdom.firstChild);
+        }
+    }
+
+
+    for(var i = 1; i < amount + 1; i++){
+        let item = createSubListItem(i);
+        listdom.appendChild(item);
+    }
+});
+
+// Update publisher list when user enters in value
 $('#pub-list-input').on('keyup', e => {
-    let listdom = document.querySelector('.pub-sub-list');
+    let listdom = document.querySelector('#pub-list');
     let amount = parseInt(e.target.value);
 
     if(amount == 0 || amount == '' || isNaN(amount)){
@@ -26,13 +44,42 @@ $('#test-list-folder-selection-input').on('change', e => {
     populateTestList(e.target.files[0].path);
 });
 
-function editPubListItem(event){
+function editListItem(event){
     let inputdom = document.createElement('input');
     inputdom.type = 'text';
     inputdom.value = event.target.textContent;
     inputdom.className = 'pub-sub-list-item-title';
 
     event.target.parentElement.replaceChild(inputdom, event.target.parentElement.firstChild);
+}
+
+function deleteListItem(event){
+    let listdom = event.target.parentElement.parentElement;
+    let listitemdom = event.target.parentElement;
+    listdom.removeChild(listitemdom);
+}
+
+function createSubListItem(count){
+    let divdom = document.createElement('div');
+    divdom.className = 'pub-sub-list-item';
+
+    
+
+    let spandom = document.createElement('span');
+    spandom.className = 'pub-sub-list-item-title';
+    spandom.textContent = 'Subscriber ' + count;
+    spandom.id = 'Subscriber ' + count;
+    spandom.addEventListener('click', e => editListItem(e));
+
+    let icondom = document.createElement('ion-icon');
+    icondom.name = 'trash';
+    icondom.addEventListener('click', e => deleteListItem(e));
+
+    divdom.appendChild(spandom);
+    divdom.appendChild(icondom);
+
+    return divdom;
+
 }
 
 function createPubListItem(count){
@@ -45,10 +92,11 @@ function createPubListItem(count){
     spandom.className = 'pub-sub-list-item-title';
     spandom.textContent = 'Publisher ' + count;
     spandom.id = 'Publisher ' + count;
-    spandom.addEventListener('click', e => editPubListItem(e));
+    spandom.addEventListener('click', e => editListItem(e));
 
     let icondom = document.createElement('ion-icon');
     icondom.name = 'trash';
+    icondom.addEventListener('click', e => deleteListItem(e));
 
     divdom.appendChild(spandom);
     divdom.appendChild(icondom);
