@@ -169,6 +169,11 @@ function populateTestList(pathValue){
     let listOutput = [];
 
     let listDom = document.querySelector('.test-list-content');
+
+    while(listDom.firstChild){
+        listDom.removeChild(listDom.firstChild);
+    }
+
     let genSetting = readData( path.join(__dirname, '../data/GeneralSettings.json') );
     let testFolderLocPath = genSetting.testFolderLoc;
 
@@ -202,6 +207,16 @@ function populateTestList(pathValue){
 
 }
 
+function deleteTest(event){
+    let testFolderPath = event.target.parentElement.attributes.path.value;
+
+    deleteFolder(testFolderPath);
+
+    console.log(testFolderPath + ' removed!');
+
+    populateTestList();
+}
+
 function createTestListItem(title, pathValue){
     let pdom = document.createElement('p');
     
@@ -209,9 +224,17 @@ function createTestListItem(title, pathValue){
 
     pdom.setAttribute('path', pathValue);
 
-    pdom.textContent = title;
+    let spandom = document.createElement('span');
+    spandom.textContent = title;
+    spandom.addEventListener('click', e => {openTestSettings(e.target.parentElement)});
 
-    pdom.addEventListener('click', e => {openTestSettings(e)});
+    pdom.appendChild(spandom);
+
+    let ionicondom = document.createElement('ion-icon');
+    ionicondom.name = 'trash';
+    ionicondom.addEventListener('click', e => {deleteTest(e)});
+
+    pdom.appendChild(ionicondom);
 
     return pdom;
 }
@@ -219,12 +242,19 @@ function createTestListItem(title, pathValue){
 function openTestSettings(element){
     $('#create-test-index').hide();
 
-    let testFolderPath = element.target.attributes.path.value;
+    let testFolderPath = element.attributes.path.value;
+
+    document.querySelector('#create-test-settings').setAttribute('path', testFolderPath);
+    
+    $('.settings-list-container').hide();
 
     $('#create-test-settings').show();
 }
 
+// Called when back button is pressed
 function showTestSettingsPage(){
     $('#create-test-index').show();
+    document.querySelector('#create-test-settings').setAttribute('path', '');
+    populateTestList();
     $('#create-test-settings').hide();
 }

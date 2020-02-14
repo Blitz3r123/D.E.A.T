@@ -30,6 +30,19 @@
     cursor: pointer;
 }
 
+.test-list-item{
+    display: flex;
+    justify-content: space-between;
+}
+
+.test-list-item span{
+    width: 90%;
+}
+
+.test-list-item ion-icon{
+    font-size: 1.4em;
+}
+
 .test-list-content{
     /* background-color: yellow; */
     height: 90%;

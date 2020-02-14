@@ -857,3 +857,20 @@ function removeForwardSlashes(string){
 function stringate(string){
     return removeWhiteSpaces( removePeriods( removeForwardSlashes(string) ) );
 }
+
+function deleteFolder(pathVal){
+    if(fs.existsSync(pathVal)){
+        fs.readdirSync(pathVal).forEach( (file, index) => {
+            var currentPath = path.join(pathVal, file);
+
+            if(fs.lstatSync(currentPath).isDirectory()){
+                deleteFolder(currentPath);
+            }else{
+                fs.unlinkSync(currentPath);
+            }
+
+        } );
+    }
+
+    fs.rmdirSync(pathVal);
+}
