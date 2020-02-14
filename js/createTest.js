@@ -4,28 +4,81 @@ $('.test-list-content .empty-message').hide();
 
 populateTestList();
 
+// Update repetition count when changes
+$('#test-rep-input').on('keyup', e => {
+    let data = document.querySelector('#create-test-settings').attributes;
+    let testFolderPath = data.path.value;
+    let fileIndex = data.fileIndex.value;
+
+    updateRepCount(e.target.value, testFolderPath, fileIndex);
+});
+
+function updateRepCount(value, pathval, fileIndex){
+    /*
+        Get config of file
+        Update config values
+        Rewrite config values of file
+    */
+    let testFilePath = path.join( pathval, 'File ' + fileIndex + '.json' );
+
+    let config = readData(testFilePath);
+
+    if(value == '' || value ==  0){
+        value = 1;
+    }
+
+    config.repetitionAmount = parseInt(value);
+
+    fs.writeFile(testFilePath, JSON.stringify(config), err => err ? console.log(err) : console.log('Written to ' + testFilePath));
+
+}
+
 // Update publisher list when user enters in value
 $('#sub-list-input').on('keyup', e => {
     let listdom = document.querySelector('#sub-list');
     let amount = parseInt(e.target.value);
+    let data = document.querySelector('#create-test-settings').attributes;
 
     if(amount == 0 || amount == '' || isNaN(amount)){
         while(listdom.firstChild){
             listdom.removeChild(listdom.firstChild);
         }
     }
-
 
     for(var i = 1; i < amount + 1; i++){
         let item = createSubListItem(i);
         listdom.appendChild(item);
     }
+
+    updateSubConfigObj(data.path.value, amount, data.fileIndex.value);
 });
+
+function updateSubConfigObj(testFolderPath, amount, fileIndex){
+    if(isNaN(amount)){
+        amount = 0;
+    }
+    amount = parseInt(amount);
+    let testConfigFile = path.join(testFolderPath, path.basename(testFolderPath) + '.json');
+
+    let testConfig = readData(testConfigFile);
+
+    testConfig.files[fileIndex].subscriberAmount = amount;
+
+    // Reset list
+    testConfig.files[fileIndex].subscribers = [];
+
+    for(i = 1; i < amount + 1; i++){
+        testConfig.files[fileIndex].subscribers.push(createSubSettingsObj());
+    }
+
+    fs.writeFile(testConfigFile, JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
+};
 
 // Update publisher list when user enters in value
 $('#pub-list-input').on('keyup', e => {
     let listdom = document.querySelector('#pub-list');
     let amount = parseInt(e.target.value);
+    let data = document.querySelector('#create-test-settings').attributes;
 
     if(amount == 0 || amount == '' || isNaN(amount)){
         while(listdom.firstChild){
@@ -33,12 +86,36 @@ $('#pub-list-input').on('keyup', e => {
         }
     }
 
-
     for(var i = 1; i < amount + 1; i++){
+        // Create pub list item dom
         let item = createPubListItem(i);
         listdom.appendChild(item);
     }
+
+    updatePubConfigObj(data.path.value, amount, data.fileIndex.value);
 });
+
+function updatePubConfigObj(testFolderPath, amount, fileIndex){
+    if(isNaN(amount)){
+        amount = 0;
+    }
+    amount = parseInt(amount);
+    let testConfigFile = path.join(testFolderPath, path.basename(testFolderPath) + '.json');
+
+    let testConfig = readData(testConfigFile);
+
+    testConfig.files[fileIndex].publisherAmount = amount;
+
+    // Reset list
+    testConfig.files[fileIndex].publishers = [];
+
+    for(i = 1; i < amount + 1; i++){
+        testConfig.files[fileIndex].publishers.push(createPubSettingsObj());
+    }
+
+    fs.writeFile(testConfigFile, JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
+
+};
 
 $('#test-list-folder-selection-input').on('change', e => {
     populateTestList(e.target.files[0].path);
@@ -86,8 +163,6 @@ function createPubListItem(count){
     let divdom = document.createElement('div');
     divdom.className = 'pub-sub-list-item';
 
-    
-
     let spandom = document.createElement('span');
     spandom.className = 'pub-sub-list-item-title';
     spandom.textContent = 'Publisher ' + count;
@@ -129,26 +204,30 @@ function createNewTest(){
 
             let testName = nameInput.value;
             let fileAmount = parseInt(fileAmountInput.value);
-
+            
             // Check test folder doesn't already exist
             if(!fs.existsSync( path.join( saveLocation, testName ) )){
                 fs.mkdirSync( path.join( saveLocation, testName ) );
-
+                
                 let newFolder = path.join( saveLocation, testName );
+                
+                let config = createTestConfigObj(testName, fileAmount);
 
                 for(var i = 1; i < fileAmount + 1; i++){
                     let batFileLocation = path.join( newFolder, 'File ' + i + '.bat');
                     let jsonFileLocation = path.join( newFolder, 'File ' + i + '.json');
                     createFile('', batFileLocation);
-                    createFile('', jsonFileLocation);
                 }
+                
+                createFile(JSON.stringify(config), path.join( newFolder, testName + '.json' ));
                 
                 // Redirect to file settings page here
                 $('#create-test-index').hide();
                 document.querySelector('#create-test-settings').setAttribute('path', newFolder);
                 document.querySelector('#create-test-settings').setAttribute('fileAmount', fileAmountInput.value);
+                document.querySelector('#create-test-settings').setAttribute('fileIndex', 1);
 
-                createNewFileList(fileAmountInput.value);
+                createNewFileList(fileAmount);
 
                 $('#create-test-settings').show();
 
@@ -160,14 +239,38 @@ function createNewTest(){
     }
 }
 
+function createTestConfigObj(name, amount){
+    let mainConfig = {
+        "title": name,
+        "repetitionAmount": 1,
+        "fileAmount": parseInt(amount),
+        "files": []
+    };
+
+    for(var i = 1; i < parseInt(amount) + 1; i++){
+        let fileObj = {
+            "publisherAmount": 0,
+            "subscriberAmount": 0,
+            "publishers": [],
+            "subscribers": []
+        };
+        mainConfig.files.push(fileObj);
+    }
+
+    return mainConfig;
+}
+
 function createNewFileList(amount){
     let fileListDom = document.querySelector('.file-tab-container');
+
+    // Clear list first
+    while(fileListDom.firstChild){
+        fileListDom.removeChild(fileListDom.firstChild);
+    }
 
     for(var i = 1; i < parseInt(amount) + 1; i++){
         let pdom = document.createElement('p');
         
-        console.log(i);
-
         if(i == 1){
             pdom.className = 'file-tab-item active-file-tab-item';
         }else{
@@ -237,7 +340,7 @@ function deleteTest(event){
 
     deleteFolder(testFolderPath);
 
-    console.log(testFolderPath + ' removed!');
+    // console.log(testFolderPath + ' removed!');
 
     populateTestList();
 }
@@ -264,10 +367,48 @@ function createTestListItem(title, pathValue){
     return pdom;
 }
 
+function populateFileTabs(testFolderPath){
+    let files = readFolder(testFolderPath);
+    let fileListDom = document.querySelector('.file-tab-container');
+
+    // Clear list first
+    while(fileListDom.firstChild){
+        fileListDom.removeChild(fileListDom.firstChild);
+    }
+
+    files.forEach(file => {
+        if(path.extname(file) == '.json'){
+            let data = readData( path.join( testFolderPath, file ) );
+
+            let count = parseInt(data.fileAmount);
+
+            for(var i = 1; i < count + 1; i++){
+                let pdom = document.createElement('p');
+                
+                if(i == 1){
+                    pdom.className = 'file-tab-item active-file-tab-item';
+                }else{
+                    pdom.className = 'file-tab-item';
+                }
+        
+                pdom.textContent = 'File ' + i;
+        
+                fileListDom.appendChild(pdom);
+            }
+
+        }
+    });
+
+}
+
 function openTestSettings(element){
     $('#create-test-index').hide();
 
     let testFolderPath = element.attributes.path.value;
+
+    populateFileTabs(testFolderPath);
+    updateSubPubList(testFolderPath, 1, 'pub');
+    updateSubPubList(testFolderPath, 1, 'sub');
 
     let pubListAmountDom = document.querySelector('#pub-list-input');
     let subListAmountDom = document.querySelector('#sub-list-input');
@@ -277,14 +418,423 @@ function openTestSettings(element){
     }
     
     document.querySelector('#create-test-settings').setAttribute('path', testFolderPath);
+    document.querySelector('#create-test-settings').setAttribute('fileIndex', 1);
 
     $('#create-test-settings').show();
+}
+
+function updateSubPubList(testFolderPath, fileIndex, option){
+    let testConfig = readData( path.join( testFolderPath, path.basename(testFolderPath) + '.json' ) );
+
+    if(option == 'pub'){
+        let count = parseInt(testConfig.files[fileIndex].publisherAmount);
+    
+        let pubListDom = document.querySelector('#pub-list');
+    
+        for(var i = 1; i < count + 1; i++){
+            let pubListItem = createPubListItem(i);
+            pubListDom.appendChild(pubListItem);
+        }
+    }else if(option == 'sub'){
+        let count = parseInt(testConfig.files[fileIndex].subscriberAmount);
+    
+        let subListDom = document.querySelector('#sub-list');
+    
+        for(var i = 1; i < count + 1; i++){
+            let subListItem = createSubListItem(i);
+            subListDom.appendChild(subListItem);
+        }
+    }else{
+        console.log("I don't know what the option is!");
+    }
+
+
+    // console.log(testConfig.files[fileIndex].publisherAmount);
 }
 
 // Called when back button is pressed
 function showTestSettingsPage(){
     $('#create-test-index').show();
     document.querySelector('#create-test-settings').setAttribute('path', '');
+    document.querySelector('#create-test-settings').setAttribute('fileAmount', 1);
     populateTestList();
     $('#create-test-settings').hide();
+}
+
+function createSubSettingsObj(){
+    return {
+        "generalSettings": [
+            {
+                "id": "bestEffortQuickGenSet",
+                "title": "Best Effort",
+                "value": "false",
+                "description": "Use best-effort communication.",
+                "type": "boolean"
+            },
+            {
+                "id": "dataLenQuickGenSet",
+                "title": "Data Length (bytes)",
+                "value": "100",
+                "description": "Length of payloads in bytes for each send.",
+                "type": "input"
+            },
+            {
+                "id": "verbosityQuickGenSet",
+                "title": "Verbosity",
+                "value": "1",
+                "description": "Run with different levels of verbosity for RTI Connext DDS.",
+                "type": "dropdown",
+                "options": [
+                    "0 - SILENT",
+                    "1 - ERROR",
+                    "2 - WARNING",
+                    "3 - ALL"
+                ]
+            },
+            {
+                "id": "dynamicDataQuickGenSet",
+                "title": "Dynamic Data",
+                "value": "false",
+                "description": "Run using the Dynamic Data API functions instead of the rtiddsgen generated calls.",
+                "type": "boolean"
+            },
+            {
+                "id": "durabilityQuickGenSet",
+                "title": "Durability",
+                "value": "0",
+                "description": "Sets the Durability kind.",
+                "type": "dropdown",
+                "options": [
+                    "0 - VOLATILE",
+                    "1 - TRANSIENT LOCAL",
+                    "2 - TRANSIENT",
+                    "3 - PERSISTENT"
+                ]
+            },
+            {
+                "id": "domainIDQuickGenSet",
+                "title": "Domain ID",
+                "value": "1",
+                "description": "The publisher and subscriber applications must use the same domain ID in order to communicate.",
+                "type": "input"
+            },
+            {
+                "id": "keyedDataQuickGenSet",
+                "title": "Keyed Data",
+                "value": "false",
+                "description": "Specify the use of a keyed type.",
+                "type": "boolean"
+            },
+            {
+                "id": "multicastQuickGenSet",
+                "title": "Multicast",
+                "value": "false",
+                "description": "Use multicast to receive data. In addition, the Datawriter heartbeats will be sent using multicast instead of unicast.",
+                "type": "boolean"
+            },
+            {
+                "id": "directCommunicationQuickGenSet",
+                "title": "Direct Communication",
+                "value": "false",
+                "description": "Indicates if the subscribing application will receive samples from the publishing application when RTI Persistence Service is used.",
+                "type": "boolean"
+            },
+            {
+                "id": "positiveAcknowledgementsQuickGenSet",
+                "title": "Positive Acknowledgements",
+                "value": "false",
+                "description": "Enable use of positive ACKs in the reliable protocol.",
+                "type": "boolean"
+            },
+            {
+                "id": "printIntervalsQuickGenSet",
+                "title": "Print Interval",
+                "value": "false",
+                "description": "Enable printing of statistics at intervals during the test.",
+                "type": "boolean"
+            },
+            {
+                "id": "customQosFileQuickGenSet",
+                "title": "Custom QOS File",
+                "value": "path",
+                "description": "Path to the XML file containing DDS QoS profiles.",
+                "type": "file"
+            },
+            {
+                "id": "useReadThreadQuickGenSet",
+                "title": "Use Read Thread",
+                "value": "false",
+                "description": "Use a separate thread (instead of a callback) to read data.",
+                "type": "boolean"
+            },
+            {
+                "id": "waitSetDelayQuickGenSet",
+                "title": "Wait Set Delay (Microseconds)",
+                "value": "100",
+                "description": "Process incoming data in groups, based on time, rather than individually.",
+                "type": "input"
+            },
+            {
+                "id": "waitSetEventCountQuickGenSet",
+                "title": "Wait Set Event Count",
+                "value": "5",
+                "description": "Process incoming data in groups, based on the number of samples, rather than individually.",
+                "type": "input"
+            },
+            {
+                "id": "asynchronousQuickGenSet",
+                "title": "Asynchronous",
+                "value": "false",
+                "description": "Enable asynchronous publishing in the DataWriter QoS.",
+                "type": "boolean"
+            },
+            {
+                "id": "displayCpuQuickGenSet",
+                "title": "Display CPU",
+                "value": "false",
+                "description": "Display the cpu used by the RTI Perftest process.",
+                "type": "boolean"
+            }
+        ],
+        "subscriberSettings": [
+            {
+                "id": "publisherAmountSet",
+                "title": "Number of Publishers",
+                "value": "1",
+                "description": "The subscribing application will wait for this number of publishing applications to start.",
+                "type": "input"
+            },
+            {
+                "id": "subIdSet",
+                "title": "Subscriber ID",
+                "value": "0",
+                "description": "ID of the subscriber in a multi-subscriber test.",
+                "type": "input"
+            }
+        ]
+    };
+}
+
+function createPubSettingsObj(){
+    return {
+        "generalSettings": [
+            {
+                "id": "bestEffortQuickGenSet",
+                "title": "Best Effort",
+                "value": "false",
+                "description": "Use best-effort communication.",
+                "type": "boolean"
+            },
+            {
+                "id": "dataLenQuickGenSet",
+                "title": "Data Length (bytes)",
+                "value": "100",
+                "description": "Length of payloads in bytes for each send.",
+                "type": "input"
+            },
+            {
+                "id": "verbosityQuickGenSet",
+                "title": "Verbosity",
+                "value": "1",
+                "description": "Run with different levels of verbosity for RTI Connext DDS.",
+                "type": "dropdown",
+                "options": [
+                    "0 - SILENT",
+                    "1 - ERROR",
+                    "2 - WARNING",
+                    "3 - ALL"
+                ]
+            },
+            {
+                "id": "dynamicDataQuickGenSet",
+                "title": "Dynamic Data",
+                "value": "false",
+                "description": "Run using the Dynamic Data API functions instead of the rtiddsgen generated calls.",
+                "type": "boolean"
+            },
+            {
+                "id": "durabilityQuickGenSet",
+                "title": "Durability",
+                "value": "0",
+                "description": "Sets the Durability kind.",
+                "type": "dropdown",
+                "options": [
+                    "0 - VOLATILE",
+                    "1 - TRANSIENT LOCAL",
+                    "2 - TRANSIENT",
+                    "3 - PERSISTENT"
+                ]
+            },
+            {
+                "id": "domainIDQuickGenSet",
+                "title": "Domain ID",
+                "value": "1",
+                "description": "The publisher and subscriber applications must use the same domain ID in order to communicate.",
+                "type": "input"
+            },
+            {
+                "id": "keyedDataQuickGenSet",
+                "title": "Keyed Data",
+                "value": "false",
+                "description": "Specify the use of a keyed type.",
+                "type": "boolean"
+            },
+            {
+                "id": "multicastQuickGenSet",
+                "title": "Multicast",
+                "value": "false",
+                "description": "Use multicast to receive data. In addition, the Datawriter heartbeats will be sent using multicast instead of unicast.",
+                "type": "boolean"
+            },
+            {
+                "id": "directCommunicationQuickGenSet",
+                "title": "Direct Communication",
+                "value": "false",
+                "description": "Indicates if the subscribing application will receive samples from the publishing application when RTI Persistence Service is used.",
+                "type": "boolean"
+            },
+            {
+                "id": "positiveAcknowledgementsQuickGenSet",
+                "title": "Positive Acknowledgements",
+                "value": "false",
+                "description": "Enable use of positive ACKs in the reliable protocol.",
+                "type": "boolean"
+            },
+            {
+                "id": "printIntervalsQuickGenSet",
+                "title": "Print Interval",
+                "value": "false",
+                "description": "Enable printing of statistics at intervals during the test.",
+                "type": "boolean"
+            },
+            {
+                "id": "customQosFileQuickGenSet",
+                "title": "Custom QOS File",
+                "value": "path",
+                "description": "Path to the XML file containing DDS QoS profiles.",
+                "type": "file"
+            },
+            {
+                "id": "useReadThreadQuickGenSet",
+                "title": "Use Read Thread",
+                "value": "false",
+                "description": "Use a separate thread (instead of a callback) to read data.",
+                "type": "boolean"
+            },
+            {
+                "id": "waitSetDelayQuickGenSet",
+                "title": "Wait Set Delay (Microseconds)",
+                "value": "100",
+                "description": "Process incoming data in groups, based on time, rather than individually.",
+                "type": "input"
+            },
+            {
+                "id": "waitSetEventCountQuickGenSet",
+                "title": "Wait Set Event Count",
+                "value": "5",
+                "description": "Process incoming data in groups, based on the number of samples, rather than individually.",
+                "type": "input"
+            },
+            {
+                "id": "asynchronousQuickGenSet",
+                "title": "Asynchronous",
+                "value": "false",
+                "description": "Enable asynchronous publishing in the DataWriter QoS.",
+                "type": "boolean"
+            },
+            {
+                "id": "displayCpuQuickGenSet",
+                "title": "Display CPU",
+                "value": "false",
+                "description": "Display the cpu used by the RTI Perftest process.",
+                "type": "boolean"
+            }
+        ],
+        "publisherSettings": [
+            {
+                "id": "batchSizeSet",
+                "title": "Batch Size",
+                "value": "100",
+                "description": "Enable batching and set the maximum batched message size.",
+                "type": "input"
+            },
+            {
+                "id": "enableAutoThrottleSet",
+                "title": "Enable Auto Throttle",
+                "value": "false",
+                "description": "Enable the Auto Throttling feature.",
+                "type": "boolean"
+            },
+            {
+                "id": "enableTurboModeSet",
+                "title": "Enable Turbo Mode",
+                "value": "false",
+                "description": "Enables the Turbo Mode feature.",
+                "type": "boolean"
+            },
+            {
+                "id": "executionTimeSet",
+                "title": "Execution Time (s)",
+                "value": "0",
+                "description": "Allows you to limit the test duration by specifying the number of seconds to run the test.",
+                "type": "input"
+            },
+            {
+                "id": "iterationCountSet",
+                "title": "Number of Iterations",
+                "value": "100000000",
+                "description": "Number of samples to send.",
+                "type": "input"
+            },
+            {
+                "id": "latencyTestSet",
+                "title": "Latency Test",
+                "value": "false",
+                "description": "Run a latency test consisting of a ping-pong. The publisher sends a ping, then blocks until it receives a pong from the subscriber.",
+                "type": "boolean"
+            },
+            {
+                "id": "latencyCountSet",
+                "title": "Latency Count",
+                "value": "-1",
+                "description": "Number samples to send before a latency ping packet is sent.",
+                "type": "input"
+            },
+            {
+                "id": "subscriberAmountSet",
+                "title": "Number of Subscribers",
+                "value": "1",
+                "description": "Have the publishing application wait for this number of subscribing applications to start.",
+                "type": "input"
+            },
+            {
+                "id": "pubIdSet",
+                "title": "Publisher ID",
+                "value": "0",
+                "description": "Set the ID of the publisher in a multi-publisher test.",
+                "type": "input"
+            },
+            {
+                "id": "sendQueueSizeSet",
+                "title": "Send-queue Size",
+                "value": "50",
+                "description": "Size of the send queue.",
+                "type": "input"
+            },
+            {
+                "id": "sleepTimeSet",
+                "title": "Sleep Time (Milliseconds)",
+                "value": "0",
+                "description": "Time to sleep between each send.",
+                "type": "input"
+            },
+            {
+                "id": "instanceNumberSet",
+                "title": "Instance Number",
+                "value": "",
+                "description": "Set the instance number to be sent.",
+                "type": "input"
+            }
+        ]
+    };
 }

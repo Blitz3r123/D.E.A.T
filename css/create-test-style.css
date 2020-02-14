@@ -112,10 +112,10 @@
     outline: 1px solid #aaa;
     height: 100%;
     width: 70%;
+    max-width: 70%;
     display: flex;
-    /* overflow-x: scroll; */
+    overflow-x: scroll;
     justify-content: flex-start;
-    /* flex-wrap: wrap; */
 }
 
 .active-file-tab-item{
