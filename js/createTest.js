@@ -474,9 +474,38 @@ function editListItemSetting(event){
 }
 
 function deleteListItem(event){
-    let listdom = event.target.parentElement.parentElement;
-    let listitemdom = event.target.parentElement;
-    listdom.removeChild(listitemdom);
+    let data = document.querySelector('#create-test-settings').attributes;
+    // let testConfig = readData(path.join( data.path.value, path.basename(data.path.value) + '.json' ));
+
+    fs.readFile(path.join( data.path.value, path.basename(data.path.value) + '.json' ), (err, testConfig) => {
+        if(err){
+            console.log(`%c ${err}`, 'color: red;');
+        }
+        testConfig = JSON.parse(testConfig);
+        let fileConfig = testConfig.files[data.fileIndex.value - 1];
+    
+        let type = event.target.parentElement.parentElement.id.replace('-list', '');
+    
+        let listdom = event.target.parentElement.parentElement;
+        let listitemdom = event.target.parentElement;
+        listdom.removeChild(listitemdom);
+    
+        let index = event.target.parentElement.firstChild.id;
+    
+        if(type == 'pub'){
+            fileConfig.publishers.splice(index, 1);
+        }else if(type == 'sub'){
+            fileConfig.subscribers.splice(index, 1);
+        }
+    
+        fs.writeFile(
+            path.join( data.path.value, path.basename(data.path.value) + '.json' ),
+            JSON.stringify(testConfig),
+            err => err ? console.log(err) : console.log()
+        );
+    });
+
+
 }
 
 function createSubListItem(index, title){
@@ -603,8 +632,6 @@ function createTestConfigObj(name, amount){
 
     for(var i = 1; i < parseInt(amount) + 1; i++){
         let fileObj = {
-            "publisherAmount": 0,
-            "subscriberAmount": 0,
             "publishers": [],
             "subscribers": []
         };
