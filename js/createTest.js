@@ -219,11 +219,11 @@ function editListItemSetting(event){
 
     if(itemId.includes('Publisher ')){
         itemId = itemId.replace('Publisher ', '');
+        fileConfig.publishers[itemId].title = newValue;
     }else{
         itemId = itemId.replace('Subscriber ', '');
+        fileConfig.subscribers[itemId].title = newValue;
     }
-
-    fileConfig.publishers[itemId].title = newValue;
 
     fs.writeFile(path.join( data.path.value, path.basename( data.path.value ) + '.json' ), JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
 
@@ -474,24 +474,23 @@ function createTestListItem(title, pathValue){
 }
 
 function populateFileTabs(testFolderPath, count){
-    let files = readFolder(testFolderPath);
     let fileListDom = document.querySelector('.file-tab-container');
 
     fs.readdir(testFolderPath, (err, files) => {
         if(err){
             console.log(err);
         }else{
+            // Clear list first
+            while(fileListDom.firstChild){
+                fileListDom.removeChild(fileListDom.firstChild);
+            }
+
             files.forEach(file => {
                 if(path.extname(file) == '.json'){
-                    // Clear list first
-                    while(fileListDom.firstChild){
-                        fileListDom.removeChild(fileListDom.firstChild);
-                    }
-
                     let data = readData( path.join( testFolderPath, file ) );
         
                     if(count == undefined){
-                        let count = parseInt(data.fileAmount);
+                        count = parseInt(data.fileAmount);
                     }
         
                     for(var i = 1; i < count + 1; i++){
@@ -513,11 +512,7 @@ function populateFileTabs(testFolderPath, count){
             });
         }
     });
-
-    
-
-
-}
+ }
 
 function openTestSettings(element){
     $('#create-test-index').hide();
