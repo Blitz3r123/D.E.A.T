@@ -17,6 +17,8 @@ function updatePubTitle(testConfigPath, fileIndex, pubIndex, value){
             }
         
             testConfig.files[fileIndex].publishers[pubIndex].title = value;
+            // console.log(testConfig.files[fileIndex].publishers);
+            // console.log(pubIndex);
         
             fs.writeFile(testConfigPath, JSON.stringify(testConfig), err => err ? console.log(err) : console.log());
         
@@ -309,11 +311,6 @@ function changeFileTab(event){
         let item = createSubListItem(index, sub.title);
         listdom.appendChild(item);
     });
-
-    // for(var i = 1; i < parseInt(fileConfig.subscriberAmount) + 1; i++){
-    //     let item = createSubListItem(i);
-    //     listdom.appendChild(item);
-    // }
 
 }
 
@@ -815,6 +812,10 @@ function updateSubPubList(testFolderPath, fileIndex, option){
     let testConfigPath = path.join( testFolderPath, path.basename(testFolderPath) + '.json' );
 
     fs.readFile(testConfigPath, (err, filedata) => {
+        if(err){
+            console.log(`%c ${err}`, 'color: red;');
+        }
+
         let testConfig = JSON.parse(filedata);
         let fileConfig = testConfig.files[fileIndex];
     
