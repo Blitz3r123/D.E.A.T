@@ -813,7 +813,7 @@ function isChecked(name){
 }
 
 function createFile(output, path){
-    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log('File Created at ' + path));
+    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log(''));
 }
 
 function showPopup(message){
@@ -837,8 +837,6 @@ function readFolder(pathVal){
 
 function readData(path){
     let data = fs.readFileSync(path);
-
-    // console.log(JSON.parse(data));
 
     return JSON.parse(data);
 }

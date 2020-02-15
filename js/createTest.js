@@ -8,7 +8,16 @@ function viewSettings(event){
     console.log(event.target.parentElement.firstChild);
 }
 
+function resetPubSubInput(){
+    let pubInput = document.querySelector('#pub-list-input');
+    let subInput = document.querySelector('#sub-list-input');
+    
+    pubInput.value = '';
+    subInput.value = '';
+}
+
 function changeFileTab(event){
+    resetPubSubInput();
     let fileName = event.target.textContent;
 
     // Reset classnames of all file tabs
@@ -314,6 +323,10 @@ function createNewTest(){
                 
                 createFile(JSON.stringify(config), path.join( newFolder, testName + '.json' ));
                 
+                populateFileTabs(newFolder, fileAmount);
+
+                // console.log(newFolder);
+
                 // Redirect to file settings page here
                 $('#create-test-index').hide();
                 document.querySelector('#create-test-settings').setAttribute('path', newFolder);
@@ -460,38 +473,49 @@ function createTestListItem(title, pathValue){
     return pdom;
 }
 
-function populateFileTabs(testFolderPath){
+function populateFileTabs(testFolderPath, count){
     let files = readFolder(testFolderPath);
     let fileListDom = document.querySelector('.file-tab-container');
 
-    // Clear list first
-    while(fileListDom.firstChild){
-        fileListDom.removeChild(fileListDom.firstChild);
-    }
+    fs.readdir(testFolderPath, (err, files) => {
+        if(err){
+            console.log(err);
+        }else{
+            files.forEach(file => {
+                if(path.extname(file) == '.json'){
+                    // Clear list first
+                    while(fileListDom.firstChild){
+                        fileListDom.removeChild(fileListDom.firstChild);
+                    }
 
-    files.forEach(file => {
-        if(path.extname(file) == '.json'){
-            let data = readData( path.join( testFolderPath, file ) );
-
-            let count = parseInt(data.fileAmount);
-
-            for(var i = 1; i < count + 1; i++){
-                let pdom = document.createElement('p');
+                    let data = readData( path.join( testFolderPath, file ) );
+        
+                    if(count == undefined){
+                        let count = parseInt(data.fileAmount);
+                    }
+        
+                    for(var i = 1; i < count + 1; i++){
+                        let pdom = document.createElement('p');
+                        
+                        if(i == 1){
+                            pdom.className = 'file-tab-item active-file-tab-item';
+                        }else{
+                            pdom.className = 'file-tab-item';
+                        }
                 
-                if(i == 1){
-                    pdom.className = 'file-tab-item active-file-tab-item';
-                }else{
-                    pdom.className = 'file-tab-item';
+                        pdom.textContent = 'File ' + i;
+                        pdom.addEventListener('click', e => changeFileTab(e));
+                
+                        fileListDom.appendChild(pdom);
+                    }
+        
                 }
-        
-                pdom.textContent = 'File ' + i;
-                pdom.addEventListener('click', e => changeFileTab(e));
-        
-                fileListDom.appendChild(pdom);
-            }
-
+            });
         }
     });
+
+    
+
 
 }
 
@@ -546,6 +570,7 @@ function updateSubPubList(testFolderPath, fileIndex, option){
 
 // Called when back button is pressed
 function showTestSettingsPage(){
+    resetPubSubInput();
     $('#create-test-index').show();
     document.querySelector('#create-test-settings').setAttribute('path', '');
     document.querySelector('#create-test-settings').setAttribute('fileAmount', 1);
