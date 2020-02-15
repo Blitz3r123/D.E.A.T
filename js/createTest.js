@@ -4,6 +4,10 @@ $('.test-list-content .empty-message').hide();
 
 populateTestList();
 
+function viewSettings(event){
+    console.log(event.target.parentElement.firstChild);
+}
+
 function changeFileTab(event){
     let fileName = event.target.textContent;
 
@@ -36,19 +40,26 @@ function changeFileTab(event){
     while(listdom.firstChild){
         listdom.removeChild(listdom.firstChild);
     }
-    for(var i = 1; i < parseInt(fileConfig.publisherAmount) + 1; i++){
-        let item = createPubListItem(i);
+
+    fileConfig.publishers.forEach((pub, index) => {
+        let item = createPubListItem(index, pub.title);
         listdom.appendChild(item);
-    }
+    });
     
     listdom = document.querySelector('#sub-list');
     while(listdom.firstChild){
         listdom.removeChild(listdom.firstChild);
     }
-    for(var i = 1; i < parseInt(fileConfig.subscriberAmount) + 1; i++){
-        let item = createSubListItem(i);
+
+    fileConfig.subscribers.forEach((sub, index) => {
+        let item = createSubListItem(index, sub.title);
         listdom.appendChild(item);
-    }
+    });
+
+    // for(var i = 1; i < parseInt(fileConfig.subscriberAmount) + 1; i++){
+    //     let item = createSubListItem(i);
+    //     listdom.appendChild(item);
+    // }
 
 }
 
@@ -67,7 +78,7 @@ function updateRepCount(value, pathval, fileIndex){
         Update config values
         Rewrite config values of file
     */
-    let testFilePath = path.join( pathval, 'File ' + fileIndex + '.json' );
+    let testFilePath = path.join( pathval, path.basename(pathval) + '.json' );
 
     let config = readData(testFilePath);
 
@@ -87,6 +98,12 @@ $('#sub-list-input').on('keyup', e => {
     let amount = parseInt(e.target.value);
     let data = document.querySelector('#create-test-settings').attributes;
 
+    let fileConfig = readData( path.join( data.path.value, path.basename(data.path.value) + '.json' ) ).files[data.fileIndex.value - 1];
+
+    while(listdom.firstChild){
+        listdom.removeChild(listdom.firstChild);
+    }
+
     if(amount == 0 || amount == '' || isNaN(amount)){
         while(listdom.firstChild){
             listdom.removeChild(listdom.firstChild);
@@ -94,7 +111,7 @@ $('#sub-list-input').on('keyup', e => {
     }
 
     for(var i = 1; i < amount + 1; i++){
-        let item = createSubListItem(i);
+        let item = createSubListItem(i, 'Subscriber ' + i);
         listdom.appendChild(item);
     }
 
@@ -118,7 +135,7 @@ function updateSubConfigObj(testFolderPath, amount, fileIndex){
     testConfig.files[fileIndex].subscribers = [];
 
     for(i = 1; i < amount + 1; i++){
-        testConfig.files[fileIndex].subscribers.push(createSubSettingsObj());
+        testConfig.files[fileIndex].subscribers.push(createSubSettingsObj( 'Subscriber ' + i ));
     }
 
     fs.writeFile(testConfigFile, JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
@@ -138,7 +155,7 @@ $('#pub-list-input').on('keyup', e => {
 
     for(var i = 1; i < amount + 1; i++){
         // Create pub list item dom
-        let item = createPubListItem(i);
+        let item = createPubListItem(i, 'Publisher ' + i);
         listdom.appendChild(item);
     }
 
@@ -161,7 +178,7 @@ function updatePubConfigObj(testFolderPath, amount, fileIndex){
     testConfig.files[fileIndex].publishers = [];
 
     for(i = 1; i < amount + 1; i++){
-        testConfig.files[fileIndex].publishers.push(createPubSettingsObj());
+        testConfig.files[fileIndex].publishers.push(createPubSettingsObj( 'Publisher ' + i ));
     }
 
     fs.writeFile(testConfigFile, JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
@@ -177,8 +194,31 @@ function editListItem(event){
     inputdom.type = 'text';
     inputdom.value = event.target.textContent;
     inputdom.className = 'pub-sub-list-item-title';
+    inputdom.addEventListener('keyup', e => editListItemSetting(e));
+    inputdom.id = event.target.id;
 
     event.target.parentElement.replaceChild(inputdom, event.target.parentElement.firstChild);
+}
+
+function editListItemSetting(event){
+    let newValue = event.target.value;
+    let itemId = event.target.id;
+    let data = document.querySelector('#create-test-settings').attributes;
+
+    let testConfig = readData( path.join( data.path.value, path.basename(data.path.value) + '.json' ) );
+    let fileConfig = testConfig.files[data.fileIndex.value - 1];
+
+    if(itemId.includes('Publisher ')){
+        itemId = itemId.replace('Publisher ', '');
+    }else{
+        itemId = itemId.replace('Subscriber ', '');
+    }
+
+    fileConfig.publishers[itemId].title = newValue;
+
+    fs.writeFile(path.join( data.path.value, path.basename( data.path.value ) + '.json' ), JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
+
+    // console.log(fileConfig.publishers[itemId].title);
 }
 
 function deleteListItem(event){
@@ -187,14 +227,14 @@ function deleteListItem(event){
     listdom.removeChild(listitemdom);
 }
 
-function createSubListItem(count){
+function createSubListItem(index, title){
     let divdom = document.createElement('div');
     divdom.className = 'pub-sub-list-item';
 
     let spandom = document.createElement('span');
     spandom.className = 'pub-sub-list-item-title';
-    spandom.textContent = 'Subscriber ' + count;
-    spandom.id = 'Subscriber ' + count;
+    spandom.textContent = title;
+    spandom.id = index;
     spandom.addEventListener('click', e => editListItem(e));
 
     let icondom = document.createElement('ion-icon');
@@ -208,21 +248,26 @@ function createSubListItem(count){
 
 }
 
-function createPubListItem(count){
+function createPubListItem(index, title){
     let divdom = document.createElement('div');
     divdom.className = 'pub-sub-list-item';
 
     let spandom = document.createElement('span');
     spandom.className = 'pub-sub-list-item-title';
-    spandom.textContent = 'Publisher ' + count;
-    spandom.id = 'Publisher ' + count;
+    spandom.textContent = title;
+    spandom.id = index;
     spandom.addEventListener('click', e => editListItem(e));
+
+    let viewIconDom = document.createElement('ion-icon');
+    viewIconDom.name = 'eye';
+    viewIconDom.addEventListener('click', e => viewSettings(e));
 
     let icondom = document.createElement('ion-icon');
     icondom.name = 'trash';
     icondom.addEventListener('click', e => deleteListItem(e));
 
     divdom.appendChild(spandom);
+    divdom.appendChild(viewIconDom);
     divdom.appendChild(icondom);
 
     return divdom;
@@ -474,31 +519,29 @@ function openTestSettings(element){
 
 function updateSubPubList(testFolderPath, fileIndex, option){
     let testConfig = readData( path.join( testFolderPath, path.basename(testFolderPath) + '.json' ) );
+    let fileConfig = testConfig.files[fileIndex];
 
     if(option == 'pub'){
         let count = parseInt(testConfig.files[fileIndex].publisherAmount);
     
         let pubListDom = document.querySelector('#pub-list');
-    
-        for(var i = 1; i < count + 1; i++){
-            let pubListItem = createPubListItem(i);
+
+        fileConfig.publishers.forEach((pub, index) => {
+            let pubListItem = createPubListItem(index, pub.title);
             pubListDom.appendChild(pubListItem);
-        }
+        });
     }else if(option == 'sub'){
         let count = parseInt(testConfig.files[fileIndex].subscriberAmount);
     
         let subListDom = document.querySelector('#sub-list');
     
-        for(var i = 1; i < count + 1; i++){
-            let subListItem = createSubListItem(i);
-            subListDom.appendChild(subListItem);
-        }
+        fileConfig.subscribers.forEach((sub, index) => {
+            let subListItem = createSubListItem(index, sub.title);
+            subListDom.appendChild(subListItem);    
+        });
     }else{
         console.log("I don't know what the option is!");
     }
-
-
-    // console.log(testConfig.files[fileIndex].publisherAmount);
 }
 
 // Called when back button is pressed
@@ -510,8 +553,9 @@ function showTestSettingsPage(){
     $('#create-test-settings').hide();
 }
 
-function createSubSettingsObj(){
+function createSubSettingsObj(title){
     return {
+        "title": title,
         "generalSettings": [
             {
                 "id": "bestEffortQuickGenSet",
@@ -664,8 +708,9 @@ function createSubSettingsObj(){
     };
 }
 
-function createPubSettingsObj(){
+function createPubSettingsObj(title){
     return {
+        "title": title,
         "generalSettings": [
             {
                 "id": "bestEffortQuickGenSet",
