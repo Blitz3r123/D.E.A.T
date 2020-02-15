@@ -295,6 +295,7 @@ input.pub-sub-list-item-title{
     width: 50%;
 }
 
+.setting-list-item input[type=file]{width: 50%;}
 .setting-list-item{
     display: flex;
     justify-content: space-between;

@@ -874,3 +874,9 @@ function deleteFolder(pathVal){
 
     fs.rmdirSync(pathVal);
 }
+
+function clearList(element){
+    while(element.firstChild){
+        element.removeChild(element.firstChild);
+    }
+}

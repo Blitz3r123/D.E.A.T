@@ -4,8 +4,253 @@ $('.test-list-content .empty-message').hide();
 
 populateTestList();
 
+function updatePubTitle(testConfigPath, fileIndex, pubIndex, value){
+    let data = document.querySelector('#create-test-settings').attributes;
+    
+    fs.readFile(testConfigPath, (err, filedata) => {
+        if(err){
+            console.log(err);
+        }else{
+            testConfig = JSON.parse(filedata);
+            if(value == ''){
+                value = 'Publisher';
+            }
+        
+            testConfig.files[fileIndex].publishers[pubIndex].title = value;
+        
+            fs.writeFile(testConfigPath, JSON.stringify(testConfig), err => err ? console.log(err) : console.log());
+        
+            updateSubPubList(path.dirname(testConfigPath), fileIndex, 'pub');
+        }
+    });
+
+}
+
+function updateSubTitle(testConfigPath, fileIndex, subIndex, value){
+    let data = document.querySelector('#create-test-settings').attributes;
+    
+    fs.readFile(testConfigPath, (err, filedata) => {
+        if(err){
+            console.log(err);
+        }else{
+            testConfig = JSON.parse(filedata);
+            if(value == ''){
+                value = 'Subscriber';
+            }
+        
+            testConfig.files[fileIndex].subscribers[subIndex].title = value;
+        
+            fs.writeFile(testConfigPath, JSON.stringify(testConfig), err => err ? console.log(err) : console.log());
+        
+            updateSubPubList(path.dirname(testConfigPath), fileIndex, 'sub');
+        }
+    });
+
+}
+
+function createSettingItem(title, id, type, value, options){
+    let container = document.createElement('div');
+    container.className = 'setting-list-item';
+    
+    let titledom = document.createElement('span');
+    titledom.className = 'setting-list-item-title';
+    titledom.textContent = title;
+
+    let inputdom;
+
+    if(type == 'input'){
+        inputdom = document.createElement('input');
+        inputdom.type = 'number';
+        inputdom.id = id;
+        inputdom.value = value;
+    }else if(type == 'boolean'){
+        inputdom = document.createElement('ion-icon');
+        inputdom.id = id;
+        
+        if(value == false){
+            inputdom.name = 'close-circle-outline';
+        }else{
+            inputdom.name = 'checkmark-circle-outline';
+        }
+    }else if(type == 'file'){
+        inputdom = document.createElement('input');
+        inputdom.type = 'file';
+        inputdom.id = id;
+    }else if(type == 'dropdown'){
+        inputdom = document.createElement('select');
+        inputdom.id = id;
+
+        options.forEach(item => {
+            let option = document.createElement('option');
+            option.textContent = item;
+
+            if(item.includes(value)){
+                option.setAttribute('selected', '');
+            }
+
+            inputdom.appendChild(option);
+
+        });
+    }else{
+        console.log(`%c I don't know what the type is.`, 'color: red;');
+    }
+
+
+    container.appendChild(titledom);
+    container.appendChild(inputdom);
+
+    return container;
+
+}
+
 function viewSettings(event){
-    console.log(event.target.parentElement.firstChild);
+    let type = event.target.parentElement.parentElement.id.replace('-list', '');
+    let data = document.querySelector('#create-test-settings').attributes;
+
+    let itemName = event.target.parentElement.firstChild.textContent;
+
+    let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
+    let fileConfig = testConfig.files[data.fileIndex.value - 1];
+
+    // Clear list first
+    clearList(document.querySelector('#settings-list-first-half'));
+    clearList(document.querySelector('#settings-list-second-half'));
+    clearList(document.querySelector('#pub-sub-first-half'));
+    clearList(document.querySelector('#pub-sub-second-half'));
+
+    if(type == 'pub'){
+
+        document.querySelector('#pub-sub-setting-title').textContent = 'Publisher Settings';
+
+        let pubConfig;
+        let pubIndex;
+
+        fileConfig.publishers.forEach((pub, index) => {
+            if(pub.title == itemName){
+                pubConfig = pub;
+                pubIndex = index;
+            }
+        });
+
+        let nameInput = document.querySelector('#setting-name-input');
+        nameInput.addEventListener('keyup', e => {
+            updatePubTitle(
+                path.join( data.path.value, path.basename(data.path.value) + '.json' ), 
+                data.fileIndex.value - 1, 
+                pubIndex, 
+                e.target.value
+            );
+        });
+        nameInput.value = itemName;
+
+        let generalSettings = pubConfig.generalSettings;
+        let publisherSettings = pubConfig.publisherSettings;
+
+        let settingsListFirstHalf = document.querySelector('#settings-list-first-half');
+        let settingsListSecondHalf = document.querySelector('#settings-list-second-half');
+
+        $('.settings-list-container').show();
+
+        for(var i = 0; i < parseInt(generalSettings.length / 2); i ++){
+            let setting = generalSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListFirstHalf.appendChild(settingItem);
+        }
+
+        for(var i = parseInt(generalSettings.length / 2); i < generalSettings.length; i ++){
+            let setting = generalSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListSecondHalf.appendChild(settingItem);
+        }
+
+        settingsListFirstHalf = document.querySelector('#pub-sub-first-half');
+        settingsListSecondHalf = document.querySelector('#pub-sub-second-half');
+
+        for(var i = 0; i < parseInt(publisherSettings.length / 2); i ++){
+            let setting = publisherSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListFirstHalf.appendChild(settingItem);
+        }
+
+        for(var i = parseInt(publisherSettings.length / 2); i < publisherSettings.length; i ++){
+            let setting = publisherSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListSecondHalf.appendChild(settingItem);
+        }
+
+
+    }else if(type == 'sub'){
+
+        document.querySelector('#pub-sub-setting-title').textContent = 'Subscriber Settings';
+
+        let subConfig;
+        let subIndex;
+
+        fileConfig.subscribers.forEach((sub, index) => {
+            if(sub.title == itemName){
+                subConfig = sub;
+                subIndex = index;
+            }
+        });
+
+        let nameInput = document.querySelector('#setting-name-input');
+        nameInput.addEventListener('keyup', e => {
+            updateSubTitle(
+                path.join( data.path.value, path.basename(data.path.value) + '.json' ), 
+                data.fileIndex.value - 1, 
+                subIndex, 
+                e.target.value
+            );
+        });
+        nameInput.value = itemName;
+
+        let generalSettings = subConfig.generalSettings;
+        let subscriberSettings = subConfig.subscriberSettings;
+
+        let settingsListFirstHalf = document.querySelector('#settings-list-first-half');
+        let settingsListSecondHalf = document.querySelector('#settings-list-second-half');
+
+        $('.settings-list-container').show();
+
+        for(var i = 0; i < parseInt(generalSettings.length / 2); i ++){
+            let setting = generalSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListFirstHalf.appendChild(settingItem);
+        }
+
+        for(var i = parseInt(generalSettings.length / 2); i < generalSettings.length; i ++){
+            let setting = generalSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListSecondHalf.appendChild(settingItem);
+        }
+
+        settingsListFirstHalf = document.querySelector('#pub-sub-first-half');
+        settingsListSecondHalf = document.querySelector('#pub-sub-second-half');
+
+        for(var i = 0; i < parseInt(subscriberSettings.length / 2); i ++){
+            let setting = subscriberSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListFirstHalf.appendChild(settingItem);
+        }
+
+        for(var i = parseInt(subscriberSettings.length / 2); i < subscriberSettings.length; i ++){
+            let setting = subscriberSettings[i];
+            let settingItem = createSettingItem(setting.title, setting.id, setting.type, setting.value, setting.options);
+            settingItem.id = i;
+            settingsListSecondHalf.appendChild(settingItem);
+        }
+
+    }else{
+        console.log(`%c I don't know what the type is.`, 'color: red;');
+    }
+
 }
 
 function resetPubSubInput(){
@@ -217,17 +462,15 @@ function editListItemSetting(event){
     let testConfig = readData( path.join( data.path.value, path.basename(data.path.value) + '.json' ) );
     let fileConfig = testConfig.files[data.fileIndex.value - 1];
 
-    if(itemId.includes('Publisher ')){
-        itemId = itemId.replace('Publisher ', '');
+    let type = event.target.parentElement.parentElement.id.replace('-list', '');
+
+    if(type == 'pub'){
         fileConfig.publishers[itemId].title = newValue;
     }else{
-        itemId = itemId.replace('Subscriber ', '');
         fileConfig.subscribers[itemId].title = newValue;
     }
 
     fs.writeFile(path.join( data.path.value, path.basename( data.path.value ) + '.json' ), JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
-
-    // console.log(fileConfig.publishers[itemId].title);
 }
 
 function deleteListItem(event){
@@ -246,11 +489,16 @@ function createSubListItem(index, title){
     spandom.id = index;
     spandom.addEventListener('click', e => editListItem(e));
 
+    let viewicon = document.createElement('ion-icon');
+    viewicon.name = 'eye';
+    viewicon.addEventListener('click', e => viewSettings(e));
+
     let icondom = document.createElement('ion-icon');
     icondom.name = 'trash';
     icondom.addEventListener('click', e => deleteListItem(e));
 
     divdom.appendChild(spandom);
+    divdom.appendChild(viewicon);
     divdom.appendChild(icondom);
 
     return divdom;
@@ -537,30 +785,45 @@ function openTestSettings(element){
 }
 
 function updateSubPubList(testFolderPath, fileIndex, option){
-    let testConfig = readData( path.join( testFolderPath, path.basename(testFolderPath) + '.json' ) );
-    let fileConfig = testConfig.files[fileIndex];
+    let testConfigPath = path.join( testFolderPath, path.basename(testFolderPath) + '.json' );
 
-    if(option == 'pub'){
-        let count = parseInt(testConfig.files[fileIndex].publisherAmount);
+    fs.readFile(testConfigPath, (err, filedata) => {
+        let testConfig = JSON.parse(filedata);
+        let fileConfig = testConfig.files[fileIndex];
     
-        let pubListDom = document.querySelector('#pub-list');
+        if(option == 'pub'){
+            let count = parseInt(testConfig.files[fileIndex].publisherAmount);
+        
+            let pubListDom = document.querySelector('#pub-list');
+            
+            // Clear list first
+            while(pubListDom.firstChild){
+                pubListDom.removeChild(pubListDom.firstChild);
+            }
 
-        fileConfig.publishers.forEach((pub, index) => {
-            let pubListItem = createPubListItem(index, pub.title);
-            pubListDom.appendChild(pubListItem);
-        });
-    }else if(option == 'sub'){
-        let count = parseInt(testConfig.files[fileIndex].subscriberAmount);
-    
-        let subListDom = document.querySelector('#sub-list');
-    
-        fileConfig.subscribers.forEach((sub, index) => {
-            let subListItem = createSubListItem(index, sub.title);
-            subListDom.appendChild(subListItem);    
-        });
-    }else{
-        console.log("I don't know what the option is!");
-    }
+            fileConfig.publishers.forEach((pub, index) => {
+                let pubListItem = createPubListItem(index, pub.title);
+                pubListDom.appendChild(pubListItem);
+            });
+        }else if(option == 'sub'){
+            let count = parseInt(testConfig.files[fileIndex].subscriberAmount);
+        
+            let subListDom = document.querySelector('#sub-list');
+        
+            // Clear list first
+            while(subListDom.firstChild){
+                subListDom.removeChild(subListDom.firstChild);
+            }
+
+            fileConfig.subscribers.forEach((sub, index) => {
+                let subListItem = createSubListItem(index, sub.title);
+                subListDom.appendChild(subListItem);    
+            });
+        }else{
+            console.log("I don't know what the option is!");
+        }
+    });
+
 }
 
 // Called when back button is pressed
