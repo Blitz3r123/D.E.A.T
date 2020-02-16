@@ -16,7 +16,7 @@ function updatePubTitle(testConfigPath, fileIndex, pubIndex, value){
                 value = 'Publisher';
             }
         
-            testConfig.files[fileIndex].publishers[pubIndex].title = value;
+            testConfig.files[fileIndex].publishers[pubIndex - 1].title = value;
             // console.log(testConfig.files[fileIndex].publishers);
             // console.log(pubIndex);
         
@@ -40,7 +40,7 @@ function updateSubTitle(testConfigPath, fileIndex, subIndex, value){
                 value = 'Subscriber';
             }
         
-            testConfig.files[fileIndex].subscribers[subIndex].title = value;
+            testConfig.files[fileIndex].subscribers[subIndex - 1].title = value;
         
             fs.writeFile(testConfigPath, JSON.stringify(testConfig), err => err ? console.log(err) : console.log());
         
@@ -385,7 +385,7 @@ function updateSubConfigObj(testFolderPath, amount, fileIndex){
     // Reset list
     testConfig.files[fileIndex].subscribers = [];
 
-    for(i = 1; i < amount + 1; i++){
+    for(i = 0; i < amount; i++){
         testConfig.files[fileIndex].subscribers.push(createSubSettingsObj( 'Subscriber ' + i ));
     }
 
@@ -428,7 +428,7 @@ function updatePubConfigObj(testFolderPath, amount, fileIndex){
     // Reset list
     testConfig.files[fileIndex].publishers = [];
 
-    for(i = 1; i < amount + 1; i++){
+    for(i = 0; i < amount; i++){
         testConfig.files[fileIndex].publishers.push(createPubSettingsObj( 'Publisher ' + i ));
     }
 
@@ -461,16 +461,17 @@ function editListItemSetting(event){
     fs.readFile( path.join( data.path.value, path.basename(data.path.value) + '.json' ), (err, filedata) => {
         testConfig = JSON.parse(filedata);
         
-        // console.log(testConfig.files[data.fileIndex.value - 1].publishers[itemId - 1]);
+        // console.log(testConfig.files[data.fileIndex.value - 1].subscribers);
+        // console.log(itemId);
 
         let fileConfig = testConfig.files[data.fileIndex.value - 1];
     
         let type = event.target.parentElement.parentElement.id.replace('-list', '');
     
         if(type == 'pub'){
-            fileConfig.publishers[itemId - 1].title = newValue;
+            fileConfig.publishers[itemId].title = newValue;
         }else{
-            fileConfig.subscribers[itemId - 1].title = newValue;
+            fileConfig.subscribers[itemId].title = newValue;
         }
     
         fs.writeFile(path.join( data.path.value, path.basename( data.path.value ) + '.json' ), JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
