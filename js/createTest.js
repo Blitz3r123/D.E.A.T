@@ -443,7 +443,7 @@ $('#test-list-folder-selection-input').on('change', e => {
 function editListItem(event){
     let inputdom = document.createElement('input');
     inputdom.type = 'text';
-    inputdom.value = event.target.textContent;
+    inputdom.value = event.target.textContent.replace(/\W/g, ' ');;
     inputdom.className = 'pub-sub-list-item-title';
     inputdom.addEventListener('keyup', e => editListItemSetting(e));
     inputdom.id = event.target.id;
@@ -452,22 +452,30 @@ function editListItem(event){
 }
 
 function editListItemSetting(event){
-    let newValue = event.target.value;
+    let newValue = event.target.value.replace(/\W/g, ' ');;
     let itemId = event.target.id;
     let data = document.querySelector('#create-test-settings').attributes;
 
-    let testConfig = readData( path.join( data.path.value, path.basename(data.path.value) + '.json' ) );
-    let fileConfig = testConfig.files[data.fileIndex.value - 1];
+    // let testConfig = readData( path.join( data.path.value, path.basename(data.path.value) + '.json' ) );
 
-    let type = event.target.parentElement.parentElement.id.replace('-list', '');
+    fs.readFile( path.join( data.path.value, path.basename(data.path.value) + '.json' ), (err, filedata) => {
+        testConfig = JSON.parse(filedata);
+        
+        // console.log(testConfig.files[data.fileIndex.value - 1].publishers[itemId - 1]);
 
-    if(type == 'pub'){
-        fileConfig.publishers[itemId].title = newValue;
-    }else{
-        fileConfig.subscribers[itemId].title = newValue;
-    }
+        let fileConfig = testConfig.files[data.fileIndex.value - 1];
+    
+        let type = event.target.parentElement.parentElement.id.replace('-list', '');
+    
+        if(type == 'pub'){
+            fileConfig.publishers[itemId - 1].title = newValue;
+        }else{
+            fileConfig.subscribers[itemId - 1].title = newValue;
+        }
+    
+        fs.writeFile(path.join( data.path.value, path.basename( data.path.value ) + '.json' ), JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
+    });
 
-    fs.writeFile(path.join( data.path.value, path.basename( data.path.value ) + '.json' ), JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
 }
 
 function deleteListItem(event){
