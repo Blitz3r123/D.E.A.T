@@ -4,6 +4,103 @@ $('.test-list-content .empty-message').hide();
 
 populateTestList();
 
+$('#pub-sub-dropdown').on('change', e => {
+    let copyFrom = e.target.value;
+    let copyTo = e.target.parentElement.parentElement.childNodes[0].nextSibling.childNodes[3].value;
+    
+    let type = e.target.value.slice(0, 3).toLowerCase();
+
+    let data = document.querySelector('#create-test-settings').attributes;
+    let fileConfig = readData(path.join( data.path.value, path.basename(data.path.value) + '.json' ));
+
+    let settingsDrop = document.querySelector('#settings-dropdown');
+    let settingsType = settingsDrop.value;
+
+    if(type == 'pub'){
+        let pubArray = fileConfig.files[data.fileIndex.value - 1].publishers;
+        let pubConfig = pubArray.filter(a => a.title == copyFrom)[0];
+        let copyToConfig = pubArray.filter(a => a.title == copyTo)[0];
+
+        let copyFromData;
+
+        if(settingsType == 'generalSettings'){
+            copyFromData = pubConfig.generalSettings;
+            copyToConfig.generalSettings = copyFromData;
+        }else{
+            copyFromData = pubConfig.publishersettings;
+            copyToConfig.publishersettings = copyFromData;
+        }
+
+        fs.writeFile(path.join( data.path.value, path.basename(data.path.value) + '.json' ), fileConfig, err => err ? console.log(err) : console.log(''));
+    }else if(type == 'sub'){
+        let subArray = fileConfig.files[data.fileIndex.value - 1].subscribers;
+        let subConfig = subArray.filter(a => a.title == copyFrom)[0];
+        let copyToConfig = subArray.filter(a => a.title == copyTo)[0];
+
+        let copyFromData;
+
+        if(settingsType == 'generalSettings'){
+            copyFromData = subConfig.generalSettings;
+            copyToConfig.generalSettings = copyFromData;
+        }else{
+            copyFromData = subConfig.subscriberSettings;
+            copyToConfig.subscriberSettings = copyFromData;
+        }
+
+        fs.writeFile(path.join( data.path.value, path.basename(data.path.value) + '.json' ), fileConfig, err => err ? console.log(err) : console.log(''));
+        
+    }
+
+
+});
+
+function populateCopyDropdown(event){
+    let data = document.querySelector('#create-test-settings').attributes;
+
+    let settingsDrop = document.querySelector('#settings-dropdown');
+    let pubSubDrop = document.querySelector('#pub-sub-dropdown');
+
+    let subList = document.querySelector('#sub-list');
+    let pubList = document.querySelector('#pub-list');
+
+    let type = event.target.parentElement.parentElement.id.replace('-list', '');
+
+    clearList(pubSubDrop);
+    clearList(settingsDrop);
+
+    if(type == 'pub'){
+        settingsDrop.appendChild(createOption('generalSettings', 'General Settings'));
+        settingsDrop.appendChild(createOption('publisherSettings', 'Publisher Settings'));
+
+        pubList.childNodes.forEach(node => {
+            let pubName = node.innerText;
+
+            let option = createOption(pubName, pubName);
+
+            pubSubDrop.appendChild(option);
+        });
+    }else if(type == 'sub'){
+        settingsDrop.appendChild(createOption('generalSettings', 'General Settings'));
+        settingsDrop.appendChild(createOption('subscriberSettings', 'Subscriber Settings'));
+
+        subList.childNodes.forEach(node => {
+            let subName = node.innerText;
+
+            let option = createOption(subName, subName);
+
+            pubSubDrop.appendChild(option);
+        });
+    }
+}
+
+function createOption(value, title){
+    let option = document.createElement('option');
+    option.textContent = title;
+    option.value = value;
+
+    return option;
+}
+
 function updatePubTitle(testConfigPath, fileIndex, pubIndex, value){
     let data = document.querySelector('#create-test-settings').attributes;
     
@@ -106,6 +203,7 @@ function createSettingItem(title, id, type, value, options){
 }
 
 function viewSettings(event){
+    populateCopyDropdown(event);
     let type = event.target.parentElement.parentElement.id.replace('-list', '');
     let data = document.querySelector('#create-test-settings').attributes;
 
@@ -397,6 +495,8 @@ $('#pub-list-input').on('keyup', e => {
     let listdom = document.querySelector('#pub-list');
     let amount = parseInt(e.target.value);
     let data = document.querySelector('#create-test-settings').attributes;
+
+    clearList(listdom);
 
     if(amount == 0 || amount == '' || isNaN(amount)){
         while(listdom.firstChild){
