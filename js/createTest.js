@@ -741,7 +741,7 @@ function createNewTest(){
     let fileLocationInput = document.querySelector('#create-new-test-file-location');
 
     let saveLocation;
-
+    
     if(nameInput.value == ''){
         showPopup("Test Name is empty!");
     }else if(fileAmountInput.value == ''){
@@ -786,6 +786,10 @@ function createNewTest(){
                 createNewFileList(fileAmount);
 
                 $('#create-test-settings').show();
+
+                // Clear test name and test file amount fields
+                nameInput.value = '';
+                fileAmountInput.value = '';
 
             }else{
                 showPopup("Test already exists with that name in that location!");
