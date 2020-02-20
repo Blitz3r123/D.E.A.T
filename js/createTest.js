@@ -163,7 +163,7 @@ function updatePubTitle(testConfigPath, fileIndex, pubIndex, value){
                 value = 'Publisher';
             }
         
-            testConfig.files[fileIndex].publishers[pubIndex - 1].title = value;
+            testConfig.files[fileIndex].publishers[pubIndex].title = value;
             // console.log(testConfig.files[fileIndex].publishers);
             // console.log(pubIndex);
         
@@ -187,7 +187,7 @@ function updateSubTitle(testConfigPath, fileIndex, subIndex, value){
                 value = 'Subscriber';
             }
         
-            testConfig.files[fileIndex].subscribers[subIndex - 1].title = value;
+            testConfig.files[fileIndex].subscribers[subIndex].title = value;
         
             fs.writeFile(testConfigPath, JSON.stringify(testConfig), err => err ? console.log(err) : console.log());
         
@@ -790,6 +790,11 @@ function createNewTest(){
                 // Clear test name and test file amount fields
                 nameInput.value = '';
                 fileAmountInput.value = '';
+
+                document.querySelector('#test-rep-input').value = 1;
+                clearList(document.querySelector('#pub-list'));
+                clearList(document.querySelector('#sub-list'));
+                document.querySelector('#setting-name-input').value = '';
 
             }else{
                 showPopup("Test already exists with that name in that location!");
