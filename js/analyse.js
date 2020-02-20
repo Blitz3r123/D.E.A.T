@@ -256,7 +256,7 @@ function analyseFile(file){
                     
                     let latencyArray = [];
     
-                    console.log(dataArray);
+                    // console.log(dataArray);
     
                     let latencyIndex;
 

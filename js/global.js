@@ -1,49 +1,16 @@
-/*
-    Notes:
-    - Search features show the setting but changing values of settings isn't affecting it
-*/
-
 const fs = require('fs');
 const path = require('path');
-const mathjs = require('mathjs');
 
 // GLOBAL VARIABLES
 var hasError;
 
-/*
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---  START UP  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-*/
-
-// Temporary Function
-// readCreateTestData(__dirname + '/../data/CreateTest.json');
-
-/*
-
-    SEARCH TAGS: create test, create, settings, create settings
-    STATUS: Complete
-    DESCRIPTION: Add a message to the settings window if they haven't selected any publishers/subscribers
-
-*/
-// let testSettingsDOM = document.querySelector('#testSettings');                  
-// let testSettingsMessageDOM = document.querySelector('#testSettingsMessage');
-
-// if(!testSettingsDOM.className.includes('empty')){
-//     testSettingsMessageDOM.style.display = 'none';
-// }else{
-//     testSettingsDOM.className = 'test-settings empty';
-//     testSettingsMessageDOM.style.display = 'visible';
-//     $('.create-test-general-settings').hide();
-//     $('.create-test-publisher-settings').hide();
-//     $('.create-test-subscriber-settings').hide();
-// }
+// START UP
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
-// $('#createTestContent').hide();
+$('#createTestContent').hide();
 $('#runContent').hide();
-$('#indexContent').hide();
+// $('#indexContent').hide();
 $('#analyseContent').hide();
 $('#settingsContent').hide();
 

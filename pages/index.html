@@ -53,18 +53,6 @@
                     </a>
                 <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Run</a>
                 <a href="#" onClick="showContent('#analyseContent')" class="side-link sidebar-link"><ion-icon name="analytics"></ion-icon>Analyse</a>
-                    <!-- <a href="#" class="side-link sidebar-inner-link">
-                        <ion-icon name="paper-plane" style="margin-bottom: -0.5vh;"></ion-icon>
-                        Publisher Data
-                    </a>
-                        <a href="#" class="side-link sidebar-inner-inner-link">pub1.csv</a>
-                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">pub2.csv</a>
-                    <a href="#" class="side-link sidebar-inner-link margin-bot-1vh">
-                        <ion-icon name="mail-open" style="margin-bottom: -0.5vh;"></ion-icon>
-                        Subscriber Data
-                    </a>
-                        <a href="#" class="side-link sidebar-inner-inner-link">Subscriber 1</a>
-                        <a href="#" class="side-link sidebar-inner-inner-link margin-bot-1vh">Subscriber 2</a> -->
                 <a href="#" onClick="showContent('#settingsContent')" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="settings"></ion-icon>Settings</a>    
                 <a href="#" onClick="showContent('#helpContent')" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="help"></ion-icon>Help</a>
     
@@ -89,11 +77,11 @@
                             Quick Create
                         </p>
                         
-                        <a href="" class="create-button">Default Publisher</a>
-                        <a href="" class="create-button">Default Subscriber</a>
+                        <p class="create-button" onClick="createDefPub()">Default Publisher</p>
+                        <p class="create-button">Default Subscriber</p>
 
-                        <a href="" class="create-button">Custom Publisher</a>
-                        <a href="" class="create-button">Custom Subscriber</a>
+                        <p class="create-button">Custom Publisher</p>
+                        <p class="create-button">Custom Subscriber</p>
                     </div><!-- End of div.quick-create -->
 
                     <div class="quick-run">
@@ -106,6 +94,7 @@
 
                             <div class="publisher-list">
                                 <p class="list-title"><ion-icon name="paper-plane" style="margin-right: 0.5vw;"></ion-icon>Publishers</p>
+                                <!-- <a href="" class="list-item">Publisher 1</a>
                                 <a href="" class="list-item">Publisher 1</a>
                                 <a href="" class="list-item">Publisher 1</a>
                                 <a href="" class="list-item">Publisher 1</a>
@@ -113,20 +102,19 @@
                                 <a href="" class="list-item">Publisher 1</a>
                                 <a href="" class="list-item">Publisher 1</a>
                                 <a href="" class="list-item">Publisher 1</a>
-                                <a href="" class="list-item">Publisher 1</a>
-                                <a href="" class="list-item">Publisher 1</a>
+                                <a href="" class="list-item">Publisher 1</a> -->
                             </div><!-- End of Publisher List-->
 
                             <div class="subscriber-list">
                                 <p class="list-title"><ion-icon name="mail-open" style="margin-right: 0.5vw;"></ion-icon>Subscribers</p>
+                                <!-- <a href="" class="list-item">Subscriber 1</a>
                                 <a href="" class="list-item">Subscriber 1</a>
                                 <a href="" class="list-item">Subscriber 1</a>
                                 <a href="" class="list-item">Subscriber 1</a>
                                 <a href="" class="list-item">Subscriber 1</a>
                                 <a href="" class="list-item">Subscriber 1</a>
                                 <a href="" class="list-item">Subscriber 1</a>
-                                <a href="" class="list-item">Subscriber 1</a>
-                                <a href="" class="list-item">Subscriber 1</a>
+                                <a href="" class="list-item">Subscriber 1</a> -->
                             </div><!-- End of Subscriber List-->
 
                         </div><!-- End of List wrapper -->
@@ -434,11 +422,6 @@
                                 
                                 <p class="empty-message"><span class="emphasise">Import</span> tests from below or <span class="emphasise">create</span> one on the right.</p>
 
-                                <!-- <p class="test-list-item">Test One <ion-icon name="trash"></ion-icon></p>
-                                <p class="test-list-item">Test two</p>
-                                <p class="test-list-item">Another Test</p>
-                                <p class="test-list-item">Another Test</p> -->
-
                             </div>
 
                             <div class="test-list-folder-selection-container">
@@ -488,12 +471,7 @@
 
                         <div class="settings-top-bar">
 
-                            <div class="file-tab-container">
-                                
-                                <!-- <p class="file-tab-item active-file-tab-item">File One</p> -->
-                                <!-- <p class="file-tab-item">File Five</p> -->
-
-                            </div>
+                            <div class="file-tab-container"></div>
 
                             <div class="repetition-count-container">
                                 <span>Run</span><input id="test-rep-input" type="number" value="1" min="1"><span>times.</span>
@@ -518,17 +496,7 @@
 
                                     <input type="number" class="amount-input" placeholder="Enter amount" id="pub-list-input">
                                     
-                                    <div class="pub-sub-list" id="pub-list">
-
-                                        <!-- <div class="pub-sub-list-item"> -->
-
-                                            <!-- <span class="pub-sub-list-item-title">Publisher 1</span> -->
-                                            <!-- <input type="text" class="pub-sub-list-item-title" value="Publisher 1"></input> -->
-                                            <!-- <ion-icon name="trash"></ion-icon> -->
-
-                                        <!-- </div> -->
-
-                                    </div>
+                                    <div class="pub-sub-list" id="pub-list"></div>
 
                                 </div>
 
@@ -539,16 +507,7 @@
 
                                     <input type="number" class="amount-input" placeholder="Enter amount" id="sub-list-input">
 
-                                    <div class="pub-sub-list" id="sub-list">
-
-                                        <!-- <div class="pub-sub-list-item">
-
-                                            <span class="pub-sub-list-item-title">Subscriber 1</span>
-                                            <ion-icon name="trash"></ion-icon>
-
-                                        </div> -->
-
-                                    </div>
+                                    <div class="pub-sub-list" id="sub-list"></div>
 
                                 </div>
 
@@ -572,17 +531,9 @@
                                         <div class="copy-setting-container">
 
                                             <span class="copy-setting-title">Copy</span>
-                                            <select class="copy-setting-dropdown" id="settings-dropdown">
-                                                <!-- <option value="">General Settings</option>
-                                                <option value="">Publisher Settings</option>
-                                                <option value="">Subscriber Settings</option> -->
-                                            </select>
+                                            <select class="copy-setting-dropdown" id="settings-dropdown"></select>
                                             <span class="copy-setting-title">from</span>
-                                            <select class="copy-setting-dropdown" id="pub-sub-dropdown">
-                                                <!-- <option value="">Publisher 1</option>
-                                                <option value="">Publisher 2</option>
-                                                <option value="">Publisher 3</option> -->
-                                            </select>
+                                            <select class="copy-setting-dropdown" id="pub-sub-dropdown"></select>
 
                                         </div>
 
@@ -594,53 +545,9 @@
 
                                         <div class="settings-list-container">
 
-                                            <div class="settings-list" id="settings-list-first-half">
+                                            <div class="settings-list" id="settings-list-first-half"></div>
 
-                                                <!-- <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <ion-icon name="checkmark-circle-outline"></ion-icon>
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <input type="number" class="setting-list-item-input">
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <select class="setting-list-item-input">
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                    </select>
-                                                </div> -->
-
-                                            </div>
-
-                                            <div class="settings-list" id="settings-list-second-half">
-                                                
-                                                <!-- <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <ion-icon name="checkmark-circle-outline"></ion-icon>
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <input type="number" class="setting-list-item-input">
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <select class="setting-list-item-input">
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                    </select>
-                                                </div> -->
-
-                                            </div>
+                                            <div class="settings-list" id="settings-list-second-half"></div>
 
                                         </div>
 
@@ -652,53 +559,9 @@
 
                                         <div class="settings-list-container">
 
-                                            <div class="settings-list" id="pub-sub-first-half">
+                                            <div class="settings-list" id="pub-sub-first-half"></div>
 
-                                                <!-- <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <ion-icon name="checkmark-circle-outline"></ion-icon>
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <input type="number" class="setting-list-item-input">
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <select class="setting-list-item-input">
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                    </select>
-                                                </div> -->
-
-                                            </div>
-
-                                            <div class="settings-list" id='pub-sub-second-half'>
-                                                
-                                                <!-- <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <ion-icon name="checkmark-circle-outline"></ion-icon>
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <input type="number" class="setting-list-item-input">
-                                                </div>
-
-                                                <div class="setting-list-item">
-                                                    <span class="setting-list-item-title">Best Effort</span>
-                                                    <select class="setting-list-item-input">
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                        <option value="">hello</option>
-                                                    </select>
-                                                </div> -->
-
-                                            </div>
+                                            <div class="settings-list" id='pub-sub-second-half'></div>
 
                                         </div>
 
@@ -732,21 +595,7 @@
 
                         <input type="file" class="folder-selection-input">
 
-                        <div class="file-list-container" id="file-selection-list-container">
-
-                            <!-- <p class="file">pub.bat</p>
-                            <p class="file">pub1.bat</p>
-                            <p class="file">pub2.bat</p>
-                            <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p>
-                            <p class="file">pub3.bat</p> -->
-
-                        </div><!-- End of div.file-list-container-->
+                        <div class="file-list-container" id="file-selection-list-container"></div>
 
                         <p class="add-button">Add</p>
 
@@ -912,44 +761,24 @@
                         <div class="analyse-summary-publisher-content">
                             <p>Latency</p>
 
-                            <div class="graph-container" id='latency-graph-container'>
-                                <!-- <div class="graph"></div>
-                                <div class="graph"></div>
-                                <div class="graph"></div> -->
-                            </div>
+                            <div class="graph-container" id='latency-graph-container'></div>
 
                             <p>Non-Zero Latency</p>
 
-                            <div class="graph-container" id='non-zero-graph-container'>
-                                <!-- <div class="graph"></div>
-                                <div class="graph"></div>
-                                <div class="graph"></div> -->
-                            </div>
+                            <div class="graph-container" id='non-zero-graph-container'></div>
 
                             <p>C.D.F</p>
 
-                            <div class="graph-container" id='cdf-graph-container'>
-                                <!-- <div class="graph"></div>
-                                <div class="graph"></div>
-                                <div class="graph"></div> -->
-                            </div>
+                            <div class="graph-container" id='cdf-graph-container'></div>
 
                             <p>Average Latencies</p>
 
                             <table class="table table-bordered" id="publisher-summary-table">
                                 <thead class="thead-dark">
-                                    <tr>
-                                        <!-- <th>Run 1/pub1.csv</th>
-                                        <th>Run 1/pub1.csv</th>
-                                        <th>Run 1/pub1.csv</th> -->
-                                    </tr>
+                                    <tr></tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <!-- <td>234</td>
-                                        <td>234</td>
-                                        <td>234</td> -->
-                                    </tr>
+                                    <tr></tr>
                                 </tbody>
                             </table>
 
@@ -959,52 +788,28 @@
 
                             <p>Throughput</p>
 
-                            <div class="graph-container" id="throughput-graph-container">
-                                <!-- <div class="graph"></div>
-                                <div class="graph"></div>
-                                <div class="graph"></div> -->
-                            </div>
+                            <div class="graph-container" id="throughput-graph-container"></div>
 
                             <p>Packets/s</p>
 
-                            <div class="graph-container" id="packets-per-sec-graph-container">
-                                <!-- <div class="graph"></div>
-                                <div class="graph"></div>
-                                <div class="graph"></div> -->
-                            </div>
+                            <div class="graph-container" id="packets-per-sec-graph-container"></div>
 
                             <table class="table table-bordered" id="subscriber-summary-table">
                                 <thead class="thead-dark">
-                                    <tr>
-                                        <th></th>
-                                        <!-- <th>Run 1/pub1.csv</th>
-                                        <th>Run 1/pub1.csv</th>
-                                        <th>Run 1/pub1.csv</th> -->
-                                    </tr>
+                                    <tr><th></th></tr>
                                 </thead>
                                 <tbody>
                                     <tr id="total-packets-row">
                                         <td>Total Packets</td>
-                                        <!-- <td>234</td>
-                                        <td>234</td>
-                                        <td>234</td> -->
                                     </tr>
                                     <tr id="percent-lost-row">
                                         <td>% Lost</td>
-                                        <!-- <td>234</td>
-                                        <td>234</td>
-                                        <td>234</td> -->
                                     </tr>
                                     <tr id="throughput-row">
                                         <td>Throughput</td>
-                                        <!-- <td>234</td>
-                                        <td>234</td> -->
                                     </tr>
                                     <tr id="packets-per-sec-row">
                                         <td>Packets/s</td>
-                                        <!-- <td>234</td>
-                                        <td>234</td>
-                                        <td>234</td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -1232,6 +1037,7 @@
         
         <!-- JavaScript Functions -->
        <script src="./../js/global.js"></script>
+       <script src="./../js/homepage.js"></script>
        <script src="./../js/runTest.js"></script>
        <script src="./../js/generalSettings.js"></script>
        <script src="./../js/createGeneralSettings.js"></script>
