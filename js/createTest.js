@@ -1054,7 +1054,7 @@ function updateSubPubList(testFolderPath, fileIndex, option){
 // Called when back button is pressed
 function showTestSettingsPage(){
     document.querySelector('#create-test-page-title').textContent = 'CREATE TEST';    
-    document.querySelector('#setting-name-input').textContent = '';
+    document.querySelector('#setting-name-input').value = '';
     resetPubSubInput();
     $('#create-test-index').show();
     document.querySelector('#create-test-settings').setAttribute('path', '');
