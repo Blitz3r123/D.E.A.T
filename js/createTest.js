@@ -791,10 +791,17 @@ function createNewTest(){
                 nameInput.value = '';
                 fileAmountInput.value = '';
 
+                // Reset setting page
                 document.querySelector('#test-rep-input').value = 1;
                 clearList(document.querySelector('#pub-list'));
                 clearList(document.querySelector('#sub-list'));
                 document.querySelector('#setting-name-input').value = '';
+                let pubListAmountDom = document.querySelector('#pub-list-input');
+                let subListAmountDom = document.querySelector('#sub-list-input');
+
+                if(pubListAmountDom.value == '' && subListAmountDom.value == ''){
+                    $('.settings-list-container').hide();
+                }
 
             }else{
                 showPopup("Test already exists with that name in that location!");
@@ -978,7 +985,6 @@ function populateFileTabs(testFolderPath, count){
 function openTestSettings(element){
     $('#create-test-index').hide();
     
-    
     let testFolderPath = element.attributes.path.value;
     document.querySelector('#create-test-page-title').textContent = 'CREATE TEST: ' + path.basename(testFolderPath);
 
@@ -1047,7 +1053,8 @@ function updateSubPubList(testFolderPath, fileIndex, option){
 
 // Called when back button is pressed
 function showTestSettingsPage(){
-    document.querySelector('#create-test-page-title').textContent = 'CREATE TEST';
+    document.querySelector('#create-test-page-title').textContent = 'CREATE TEST';    
+    document.querySelector('#setting-name-input').textContent = '';
     resetPubSubInput();
     $('#create-test-index').show();
     document.querySelector('#create-test-settings').setAttribute('path', '');
