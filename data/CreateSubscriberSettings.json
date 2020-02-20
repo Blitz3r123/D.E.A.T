@@ -1,0 +1,1 @@
+[{"id":"publisherAmountSet","title":"Number of Publishers","value":"2","description":"The subscribing application will wait for this number of publishing applications to start.","type":"input"},{"id":"subIdSet","title":"Subscriber ID","value":"0","description":"ID of the subscriber in a multi-subscriber test.","type":"input"}]

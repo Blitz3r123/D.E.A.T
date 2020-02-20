@@ -36,9 +36,9 @@
 
 .quick-create-publisher-settings-container, .quick-create-subscriber-settings-container{
     background-color: #efefef;
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    padding: 0 2vw;
+    padding: 0 2vw; */
 }
 
 .row{

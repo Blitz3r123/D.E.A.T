@@ -1064,211 +1064,23 @@ function showTestSettingsPage(){
 }
 
 function createSubSettingsObj(title){
-    let generalSettings = readData( path.join( __dirname, '../data/QuickCreateGeneralSettings.json' ) );
+    let generalSettings = readData( path.join( __dirname, '../data/CreateGeneralSettings.json' ) );
+    let subscriberSettings = readData( path.join( __dirname, '../data/CreateSubscriberSettings.json' ) );
 
     return {
         "title": title,
-        "generalSettings": generalSettings,        
-        "subscriberSettings": [
-            {
-                "id": "publisherAmountSet",
-                "title": "Number of Publishers",
-                "value": "1",
-                "description": "The subscribing application will wait for this number of publishing applications to start.",
-                "type": "input"
-            },
-            {
-                "id": "subIdSet",
-                "title": "Subscriber ID",
-                "value": "0",
-                "description": "ID of the subscriber in a multi-subscriber test.",
-                "type": "input"
-            }
-        ]
+        "generalSettings": generalSettings,   
+        "subscriberSettings": subscriberSettings
     };
 }
 
 function createPubSettingsObj(title){
-    let generalSettings = readData( path.join( __dirname, '../data/QuickCreateGeneralSettings.json' ) );
+    let generalSettings = readData( path.join( __dirname, '../data/CreateGeneralSettings.json' ) );
+    let publisherSettings = readData( path.join( __dirname, '../data/CreatePublisherSettings.json' ) );
 
     return {
         "title": title,
         "generalSettings": generalSettings,
-        "publisherSettings": [
-            {
-                "id": "batchSizeSet",
-                "title": "Batch Size",
-                "value": "100",
-                "description": "Enable batching and set the maximum batched message size.",
-                "type": "input"
-            },
-            {
-                "id": "enableAutoThrottleSet",
-                "title": "Enable Auto Throttle",
-                "value": "false",
-                "description": "Enable the Auto Throttling feature.",
-                "type": "boolean"
-            },
-            {
-                "id": "enableTurboModeSet",
-                "title": "Enable Turbo Mode",
-                "value": "false",
-                "description": "Enables the Turbo Mode feature.",
-                "type": "boolean"
-            },
-            {
-                "id": "executionTimeSet",
-                "title": "Execution Time (s)",
-                "value": "0",
-                "description": "Allows you to limit the test duration by specifying the number of seconds to run the test.",
-                "type": "input"
-            },
-            {
-                "id": "iterationCountSet",
-                "title": "Number of Iterations",
-                "value": "100000000",
-                "description": "Number of samples to send.",
-                "type": "input"
-            },
-            {
-                "id": "latencyTestSet",
-                "title": "Latency Test",
-                "value": "false",
-                "description": "Run a latency test consisting of a ping-pong. The publisher sends a ping, then blocks until it receives a pong from the subscriber.",
-                "type": "boolean"
-            },
-            {
-                "id": "latencyCountSet",
-                "title": "Latency Count",
-                "value": "-1",
-                "description": "Number samples to send before a latency ping packet is sent.",
-                "type": "input"
-            },
-            {
-                "id": "subscriberAmountSet",
-                "title": "Number of Subscribers",
-                "value": "1",
-                "description": "Have the publishing application wait for this number of subscribing applications to start.",
-                "type": "input"
-            },
-            {
-                "id": "pubIdSet",
-                "title": "Publisher ID",
-                "value": "0",
-                "description": "Set the ID of the publisher in a multi-publisher test.",
-                "type": "input"
-            },
-            {
-                "id": "sendQueueSizeSet",
-                "title": "Send-queue Size",
-                "value": "50",
-                "description": "Size of the send queue.",
-                "type": "input"
-            },
-            {
-                "id": "sleepTimeSet",
-                "title": "Sleep Time (Milliseconds)",
-                "value": "0",
-                "description": "Time to sleep between each send.",
-                "type": "input"
-            },
-            {
-                "id": "instanceNumberSet",
-                "title": "Instance Number",
-                "value": "",
-                "description": "Set the instance number to be sent.",
-                "type": "input"
-            }
-        ]
+        "publisherSettings": publisherSettings
     };
-
-    // return {
-    //     "title": title,
-    //     "publisherSettings": [
-    //         {
-    //             "id": "batchSizeSet",
-    //             "title": "Batch Size",
-    //             "value": "100",
-    //             "description": "Enable batching and set the maximum batched message size.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "enableAutoThrottleSet",
-    //             "title": "Enable Auto Throttle",
-    //             "value": "false",
-    //             "description": "Enable the Auto Throttling feature.",
-    //             "type": "boolean"
-    //         },
-    //         {
-    //             "id": "enableTurboModeSet",
-    //             "title": "Enable Turbo Mode",
-    //             "value": "false",
-    //             "description": "Enables the Turbo Mode feature.",
-    //             "type": "boolean"
-    //         },
-    //         {
-    //             "id": "executionTimeSet",
-    //             "title": "Execution Time (s)",
-    //             "value": "0",
-    //             "description": "Allows you to limit the test duration by specifying the number of seconds to run the test.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "iterationCountSet",
-    //             "title": "Number of Iterations",
-    //             "value": "100000000",
-    //             "description": "Number of samples to send.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "latencyTestSet",
-    //             "title": "Latency Test",
-    //             "value": "false",
-    //             "description": "Run a latency test consisting of a ping-pong. The publisher sends a ping, then blocks until it receives a pong from the subscriber.",
-    //             "type": "boolean"
-    //         },
-    //         {
-    //             "id": "latencyCountSet",
-    //             "title": "Latency Count",
-    //             "value": "-1",
-    //             "description": "Number samples to send before a latency ping packet is sent.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "subscriberAmountSet",
-    //             "title": "Number of Subscribers",
-    //             "value": "1",
-    //             "description": "Have the publishing application wait for this number of subscribing applications to start.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "pubIdSet",
-    //             "title": "Publisher ID",
-    //             "value": "0",
-    //             "description": "Set the ID of the publisher in a multi-publisher test.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "sendQueueSizeSet",
-    //             "title": "Send-queue Size",
-    //             "value": "50",
-    //             "description": "Size of the send queue.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "sleepTimeSet",
-    //             "title": "Sleep Time (Milliseconds)",
-    //             "value": "0",
-    //             "description": "Time to sleep between each send.",
-    //             "type": "input"
-    //         },
-    //         {
-    //             "id": "instanceNumberSet",
-    //             "title": "Instance Number",
-    //             "value": "",
-    //             "description": "Set the instance number to be sent.",
-    //             "type": "input"
-    //         }
-    //     ]
-    // };
 }

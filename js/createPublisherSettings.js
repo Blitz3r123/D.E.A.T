@@ -1,9 +1,8 @@
-let quickCreateGenSettingVals = readData( path.join(__dirname, '../data/QuickCreateGeneralSettings.json') );
-let outputContainer = document.querySelector('#quick-create-general-settings-container');
+let quickCreatePubSettingVals = readData( path.join(__dirname, '../data/CreatePublisherSettings.json') );
+let createPubOutputContainer = document.querySelector('.quick-create-publisher-settings-container');
 
-// Render inputs from quick create general settings file
-quickCreateGenSettingVals.forEach(item => {
-
+// Render inputs from quick create publisher settings file
+quickCreatePubSettingVals.forEach(item => {
     let divDOM = document.createElement('div');
     divDOM.className = 'quick-create-setting';
 
@@ -29,7 +28,7 @@ quickCreateGenSettingVals.forEach(item => {
 
         inputDOM.className = 'checkmark';
 
-        inputDOM.addEventListener('click', updateSetting);
+        inputDOM.addEventListener('click', e => updatePubSetting(e));
         
     }else if(item.type == 'dropdown'){
         inputDOM = document.createElement('select');
@@ -48,7 +47,7 @@ quickCreateGenSettingVals.forEach(item => {
             inputDOM.appendChild(optionDOM);
         });
 
-        inputDOM.addEventListener('change', updateSetting);
+        inputDOM.addEventListener('change', e => updatePubSetting(e));
 
     }else if(item.type == 'input'){
         inputDOM = document.createElement('input');
@@ -59,13 +58,13 @@ quickCreateGenSettingVals.forEach(item => {
 
         inputDOM.value = item.value;
 
-        inputDOM.addEventListener('keyup', updateSetting);
+        inputDOM.addEventListener('keyup', e => updatePubSetting(e));
     }else if(item.type == 'file'){
         inputDOM = document.createElement('input');
         inputDOM.type = 'file';
         inputDOM.id = item.id;
 
-        inputDOM.addEventListener('change', updateSetting);
+        inputDOM.addEventListener('change', e => updatePubSetting(e));
     }
 
     pDOM.appendChild(document.createElement('br'));
@@ -73,17 +72,17 @@ quickCreateGenSettingVals.forEach(item => {
     divDOM.appendChild(pDOM);
     divDOM.appendChild(inputDOM);
 
-    outputContainer.appendChild(divDOM);
+    createPubOutputContainer.appendChild(divDOM);
 });
 
-function updateSetting(e){
+function updatePubSetting(e){
     let eTag = e.target.tagName;
     let eId = e.target.id;
     let eType;
     let settingValue;
     let settingIndex;
 
-    let allSettings = JSON.parse(fs.readFileSync( path.join( __dirname, '../data/QuickCreateGeneralSettings.json' ) ));
+    let allSettings = JSON.parse(fs.readFileSync( path.join( __dirname, '../data/CreatePublisherSettings.json' ) ));
 
     allSettings.forEach((setting, index) => {
         if(setting.id == eId){
@@ -119,11 +118,11 @@ function updateSetting(e){
         }
     }
 
-    fs.writeFile(path.join( __dirname, '../data/QuickCreateGeneralSettings.json' ), JSON.stringify(allSettings), err => {
+    fs.writeFile(path.join( __dirname, '../data/CreatePublisherSettings.json' ), JSON.stringify(allSettings), err => {
         if(err){
             console.log(err);
         }else{
-            console.log('Updated QuickCreateGeneralSettings.json!');
+            console.log('Updated CreatePublisherSettings.json!');
         }
     });
 }
