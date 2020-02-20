@@ -194,7 +194,6 @@ function createSettingItem(title, id, type, value, options){
         console.log(`%c I don't know what the type is.`, 'color: red;');
     }
 
-
     container.appendChild(titledom);
     container.appendChild(inputdom);
 
@@ -460,7 +459,7 @@ $('#sub-list-input').on('keyup', e => {
     }
 
     for(var i = 1; i < amount + 1; i++){
-        let item = createSubListItem(i, 'Subscriber ' + i);
+        let item = createSubListItem(i, 'Subscriber ' + (i - 1));
         listdom.appendChild(item);
     }
 
@@ -506,7 +505,7 @@ $('#pub-list-input').on('keyup', e => {
 
     for(var i = 1; i < amount + 1; i++){
         // Create pub list item dom
-        let item = createPubListItem(i, 'Publisher ' + i);
+        let item = createPubListItem(i, 'Publisher ' + (i - 1));
         listdom.appendChild(item);
     }
 
