@@ -53,6 +53,7 @@ function updateItemSetting(element, inputType, value){
 }
 
 $('#pub-sub-dropdown').on('change', e => {
+    let itemName = e.target.attributes.itemName.value;
     let copyFrom = e.target.value;
     let copyTo = e.target.parentElement.parentElement.childNodes[0].nextSibling.childNodes[3].value;
     
@@ -60,6 +61,8 @@ $('#pub-sub-dropdown').on('change', e => {
 
     let data = document.querySelector('#create-test-settings').attributes;
     let fileConfig = readData(path.join( data.path.value, path.basename(data.path.value) + '.json' ));
+
+    populateItemSettings(type, data, itemName);
 
     let settingsDrop = document.querySelector('#settings-dropdown');
     let settingsType = settingsDrop.value;
@@ -79,7 +82,7 @@ $('#pub-sub-dropdown').on('change', e => {
             copyToConfig.publishersettings = copyFromData;
         }
 
-        fs.writeFile(path.join( data.path.value, path.basename(data.path.value) + '.json' ), fileConfig, err => err ? console.log(err) : console.log(''));
+        fs.writeFile(path.join( data.path.value, path.basename(data.path.value) + '.json' ), JSON.stringify(fileConfig), err => err ? console.log(err) : console.log(''));
     }else if(type == 'sub'){
         let subArray = fileConfig.files[data.fileIndex.value - 1].subscribers;
         let subConfig = subArray.filter(a => a.title == copyFrom)[0];
@@ -95,23 +98,19 @@ $('#pub-sub-dropdown').on('change', e => {
             copyToConfig.subscriberSettings = copyFromData;
         }
 
-        fs.writeFile(path.join( data.path.value, path.basename(data.path.value) + '.json' ), fileConfig, err => err ? console.log(err) : console.log(''));
-        
+        fs.writeFile(path.join( data.path.value, path.basename(data.path.value) + '.json' ), JSON.stringify(fileConfig), err => err ? console.log(err) : console.log(''));
     }
-
-
 });
 
-function populateCopyDropdown(event){
-    let data = document.querySelector('#create-test-settings').attributes;
+function populateCopyDropdown(type, data, itemName){
+
+    populateItemSettings(type, data, itemName);
 
     let settingsDrop = document.querySelector('#settings-dropdown');
     let pubSubDrop = document.querySelector('#pub-sub-dropdown');
 
     let subList = document.querySelector('#sub-list');
     let pubList = document.querySelector('#pub-list');
-
-    let type = event.target.parentElement.parentElement.id.replace('-list', '');
 
     clearList(pubSubDrop);
     clearList(settingsDrop);
@@ -123,7 +122,7 @@ function populateCopyDropdown(event){
         pubList.childNodes.forEach(node => {
             let pubName = node.innerText;
 
-            let option = createOption(pubName, pubName);
+            let option = createOption(pubName, pubName, itemName);
 
             pubSubDrop.appendChild(option);
         });
@@ -134,14 +133,17 @@ function populateCopyDropdown(event){
         subList.childNodes.forEach(node => {
             let subName = node.innerText;
 
-            let option = createOption(subName, subName);
+            let option = createOption(subName, subName, itemName);
 
             pubSubDrop.appendChild(option);
         });
     }
+
+    pubSubDrop.setAttribute('itemName', itemName);
+
 }
 
-function createOption(value, title){
+function createOption(value, title, itemName){
     let option = document.createElement('option');
     option.textContent = title;
     option.value = value;
@@ -217,7 +219,7 @@ function createSettingItem(title, id, type, value, options){
         inputdom = document.createElement('ion-icon');
         inputdom.id = id;
         
-        if(value == 'false'){
+        if(value.toString() == 'false'){
             inputdom.name = 'close-circle-outline';
         }else{
             inputdom.name = 'checkmark-circle-outline';
@@ -264,14 +266,7 @@ function createSettingItem(title, id, type, value, options){
 
 }
 
-function viewSettings(event){
-    populateCopyDropdown(event);
-    let type = event.target.parentElement.parentElement.id.replace('-list', '');
-    let data = document.querySelector('#create-test-settings').attributes;
-
-    let itemName = event.target.parentElement.firstChild.textContent;
-
-    // let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
+function populateItemSettings(type, data, itemName){
     fs.readFile(path.join(data.path.value, path.basename(data.path.value) + '.json'), (err, testConfig) => {
         testConfig = JSON.parse(testConfig);
         let fileConfig = testConfig.files[data.fileIndex.value - 1];
@@ -415,7 +410,16 @@ function viewSettings(event){
             console.log(`%c I don't know what the type is.`, 'color: red;');
         }
     });
+}
 
+function viewSettings(event){
+    let type = event.target.parentElement.parentElement.id.replace('-list', '');
+    let data = document.querySelector('#create-test-settings').attributes;
+    
+    let itemName = event.target.parentElement.firstChild.textContent;
+    
+    populateCopyDropdown(type, data, itemName);
+    populateItemSettings(type, data, itemName);
 }
 
 function resetPubSubInput(){
