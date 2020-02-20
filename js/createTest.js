@@ -868,27 +868,31 @@ function populateFileTabs(testFolderPath, count){
 
             files.forEach(file => {
                 if(path.extname(file) == '.json'){
-                    let data = readData( path.join( testFolderPath, file ) );
-        
-                    if(count == undefined){
-                        count = parseInt(data.fileAmount);
-                    }
-        
-                    for(var i = 1; i < count + 1; i++){
-                        let pdom = document.createElement('p');
-                        
-                        if(i == 1){
-                            pdom.className = 'file-tab-item active-file-tab-item';
-                        }else{
-                            pdom.className = 'file-tab-item';
+                    // let data = readData( path.join( testFolderPath, file ) );
+
+                    fs.readFile(path.join( testFolderPath, file ), (err, data) => {
+                        data = JSON.parse(data);
+                        if(count == undefined){
+                            count = parseInt(data.fileAmount);
                         }
-                
-                        pdom.textContent = 'File ' + i;
-                        pdom.addEventListener('click', e => changeFileTab(e));
-                
-                        fileListDom.appendChild(pdom);
-                    }
+            
+                        for(var i = 1; i < count + 1; i++){
+                            let pdom = document.createElement('p');
+                            
+                            if(i == 1){
+                                pdom.className = 'file-tab-item active-file-tab-item';
+                            }else{
+                                pdom.className = 'file-tab-item';
+                            }
+                    
+                            pdom.textContent = 'File ' + i;
+                            pdom.addEventListener('click', e => changeFileTab(e));
+                    
+                            fileListDom.appendChild(pdom);
+                        }
+                    });
         
+                    
                 }
             });
         }
