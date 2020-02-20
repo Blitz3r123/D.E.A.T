@@ -847,3 +847,129 @@ function clearList(element){
         element.removeChild(element.firstChild);
     }
 }
+
+function createPubBatOutput(perftestLoc, generalSettings, publisherSettings){
+    let generalOutput = '';
+
+    generalSettings.forEach(item => {
+        if(item.title == 'Best Effort'){
+            item.value ? generalOutput += ' -bestEffort ' : generalOutput += '';
+        }else if(item.title == 'Data Length (bytes)'){
+            generalOutput += ' -dataLen ' + item.value;
+        }else if(item.title == 'Verbosity'){
+            generalOutput += ' -verbosity ' + item.value;
+        }else if(item.title == 'Dynamic Data'){
+            item.value ? generalOutput += ' -dynamicData ' : generalOutput += '';
+        }else if(item.title == 'Durability'){
+            generalOutput += ' -durability ' + item.value;
+        }else if(item.title == 'Domain ID'){
+            generalOutput += ' -domain ' + item.value;
+        }else if(item.title == 'Keyed Data'){
+            item.value ? generalOutput += ' -keyed' : generalOutput += '';
+        }else if(item.title == 'Multicast'){
+            item.value ? generalOutput += ' -multicast' : generalOutput = generalOutput;
+        }else if(item.title == 'Direct Communication'){
+            item.value ? generalOutput += '' : generalOutput += ' -noDirectCommunication ';
+        }else if(item.title == 'Positive Acknowledgements'){
+            item.value ? generalOutput += '' : generalOutput += ' -noPositiveAcks ';
+        }else if(item.title == 'Print Interval'){
+            item.value ? generalOutput += '' : generalOutput += ' -noPrintIntervals ';
+        }else if(item.title == 'Custom QOS File'){
+            generalOutput += ' -qosProfile ' + item.value;
+        }else if(item.title == 'Use Read Thread'){
+            item.value ? generalOutput += ' -useReadThread ' : generalOutput = generalOutput;
+        }else if(item.title == 'Wait Set Delay (Microseconds)'){
+            generalOutput += ' -waitSetDelayUSec ' + item.value;
+        }else if(item.title == 'Wait Set Event Count'){
+            generalOutput += ' -waitSetEventCount ' + item.value;
+        }else if(item.title == 'Asynchronous'){
+            item.value ? generalOutput += ' -asynchronous ' : generalOutput = generalOutput;
+        }else if(item.title == 'Display CPU'){
+            item.value ? generalOutput += ' -cpu ' : generalOutput = generalOutput;
+        }
+    });
+
+    let publisherOutput = ' -pub ';
+    publisherSettings.forEach(item => {
+        if(item.title == 'Batch Size'){
+            publisherOutput += ' -batchSize ' + item.value;
+        }else if(item.title == 'Enable Auto Throttle'){
+            item.value ? publisherOutput += ' -enableAutoThrottle ' : publisherOutput = publisherOutput;
+        }else if(item.title == 'Enable Turbo Mode'){
+            item.value ? publisherOutput += ' -enableTurboMode ' : publisherOutput = publisherOutput;
+        }else if(item.title == 'Execution Time (s)'){
+            publisherOutput += ' -executionTime ' + item.value;
+        }else if(item.title == 'Number of Iterations'){
+            publisherOutput += ' -numIter ' + item.value;
+        }else if(item.title == 'Latency Test'){
+            item.value ? publisherOutput += ' -latencyTest ' : publisherOutput = publisherOutput;
+        }else if(item.title == 'Latency Count'){
+            publisherOutput += ' -latencyCount ' + item.value;           
+        }else if(item.title == 'Number of Subscribers'){
+            publisherOutput += ' -numSubscribers ' + item.value;
+        }else if(item.title == 'Publisher ID'){
+            publisherOutput += ' -pidMultiPubTest ' + item.value;
+        }else if(item.title == 'Send-queue Size'){
+            publisherOutput += ' -sendQueueSize ' + item.value;
+        }else if(item.title == 'Sleep Time (Milliseconds)'){
+            publisherOutput += ' -sleep ' + item.value;
+        }else if(item.title == 'Instance Number'){
+            publisherOutput += ' -writeInstance ' + item.value;
+        }
+    });
+
+    return `"${perftestLoc}" ${generalOutput} ${publisherOutput}`;
+}
+
+function createSubBatOutput(perftestLoc, generalSettings, subscriberSettings){
+    let generalOutput = '';
+
+    generalSettings.forEach(item => {
+        if(item.title == 'Best Effort'){
+            item.value ? generalOutput += ' -bestEffort ' : generalOutput += '';
+        }else if(item.title == 'Data Length (bytes)'){
+            generalOutput += ' -dataLen ' + item.value;
+        }else if(item.title == 'Verbosity'){
+            generalOutput += ' -verbosity ' + item.value;
+        }else if(item.title == 'Dynamic Data'){
+            item.value ? generalOutput += ' -dynamicData ' : generalOutput += '';
+        }else if(item.title == 'Durability'){
+            generalOutput += ' -durability ' + item.value;
+        }else if(item.title == 'Domain ID'){
+            generalOutput += ' -domain ' + item.value;
+        }else if(item.title == 'Keyed Data'){
+            item.value ? generalOutput += ' -keyed' : generalOutput += '';
+        }else if(item.title == 'Multicast'){
+            item.value ? generalOutput += ' -multicast' : generalOutput = generalOutput;
+        }else if(item.title == 'Direct Communication'){
+            item.value ? generalOutput += '' : generalOutput += ' -noDirectCommunication ';
+        }else if(item.title == 'Positive Acknowledgements'){
+            item.value ? generalOutput += '' : generalOutput += ' -noPositiveAcks ';
+        }else if(item.title == 'Print Interval'){
+            item.value ? generalOutput += '' : generalOutput += ' -noPrintIntervals ';
+        }else if(item.title == 'Custom QOS File'){
+            generalOutput += ' -qosProfile ' + item.value;
+        }else if(item.title == 'Use Read Thread'){
+            item.value ? generalOutput += ' -useReadThread ' : generalOutput = generalOutput;
+        }else if(item.title == 'Wait Set Delay (Microseconds)'){
+            generalOutput += ' -waitSetDelayUSec ' + item.value;
+        }else if(item.title == 'Wait Set Event Count'){
+            generalOutput += ' -waitSetEventCount ' + item.value;
+        }else if(item.title == 'Asynchronous'){
+            item.value ? generalOutput += ' -asynchronous ' : generalOutput = generalOutput;
+        }else if(item.title == 'Display CPU'){
+            item.value ? generalOutput += ' -cpu ' : generalOutput = generalOutput;
+        }
+    });
+
+    let subscriberOutput = ' -sub ';
+    subscriberSettings.forEach(item => {
+        if(item.title == 'Subscriber ID'){
+            subscriberOutput += ' -sidMultiSubTest ' + item.value;
+        }else if(item.title == 'Number of Publishers'){
+            subscriberOutput += ' -numPublishers ' + item.value;
+        }
+    });
+
+    return `"${perftestLoc}" ${generalOutput} ${subscriberOutput}`;
+}
