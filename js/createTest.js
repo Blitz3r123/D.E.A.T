@@ -966,8 +966,10 @@ function populateFileTabs(testFolderPath, count){
 
 function openTestSettings(element){
     $('#create-test-index').hide();
-
+    
+    
     let testFolderPath = element.attributes.path.value;
+    document.querySelector('#create-test-page-title').textContent = 'CREATE TEST: ' + path.basename(testFolderPath);
 
     populateFileTabs(testFolderPath);
     updateSubPubList(testFolderPath, 0, 'pub');
@@ -1034,6 +1036,7 @@ function updateSubPubList(testFolderPath, fileIndex, option){
 
 // Called when back button is pressed
 function showTestSettingsPage(){
+    document.querySelector('#create-test-page-title').textContent = 'CREATE TEST';
     resetPubSubInput();
     $('#create-test-index').show();
     document.querySelector('#create-test-settings').setAttribute('path', '');
