@@ -122,6 +122,8 @@
     margin-right: 1vw;
 }
 
+#runContent .process .file-name .file-number{background-color: #444; color: white; padding: 0vh 1vw; margin-right: 1vw;}
+
 #runContent .process .reset-button-container:hover{cursor: pointer; color: white; background-color: #444;}
 #runContent .process .add-file-container:hover{cursor: pointer; color: white; background-color: #444;}
 #runContent .process .reset-button-container, #runContent .process .add-file-container{
@@ -130,7 +132,7 @@
     border-radius: 2px;
     width: 10%;
     text-align: center;
-    max-height: 100%;
+    max-height: 7vh;
     margin-left: 1vw;
     transition-duration: 0.2s;
     -webkit-transition-duration: 0.2s;
