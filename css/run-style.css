@@ -81,15 +81,20 @@
     width: 95%;
     margin-left: 2.5%;
     height: 89%;
-    overflow-y: scroll;
+    max-height: 89vh;
 }
 .run-selection-window::-webkit-scrollbar{width: 0px !important;}
 
-.process-list{
+.process-list-container{
     /* outline: 1px solid black; */
     background-color: #efefef;
     height: 90%;
     padding: 2vh 2vw;
+    overflow-y: scroll;
+}
+
+.process-list-container .process-list{
+
 }
 
 #runContent .process{
@@ -100,6 +105,7 @@
     height: auto;
     min-height: 10%;
     padding: 2% 2%;
+    margin-top: 2vh;
 }
 
 #runContent .process .process-container{

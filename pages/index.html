@@ -609,40 +609,42 @@
 
                 <div class="run-selection-window">
 
-                    <div class="process-list">
+                    <div class="process-list-container">
                         
-                        <div class="process">
+                        <div class="process-list">
                             
-                            <input class="process-title process-title-input" value="Process One"></input>
-
-                            <div class="process-container">
-
-                                <div class="file-container">
-                                
-                                    <p class="file-name"><span class="file-number">1</span>pub.bat</p>
-                                    <p class="file-name"><span class="file-number">2</span>pub1.bat</p>
-                                    <p class="file-name"><span class="file-number">3</span>pub2.bat</p>
-                                    <p class="file-name"><span class="file-number">4</span>pub3.bat</p>
-                                    <p class="file-name"><span class="file-number">5</span>pub.bat</p>
+                            <div class="process">
+                            
+                                <input class="process-title process-title-input" value="Process 1"></input>
     
-                                </div><!-- End of div.file-container -->
+                                <div class="process-container">
     
-                                <div class="reset-button-container">
-                                    <ion-icon name="trash"></ion-icon>
-                                </div><!-- End of div.reset-button-container -->
+                                    <div class="file-container">
+                                    
+                                        <!-- <p class="file-name"><span class="file-number">1</span>pub.bat</p>
+                                        <p class="file-name"><span class="file-number">2</span>pub1.bat</p>
+                                        <p class="file-name"><span class="file-number">3</span>pub2.bat</p>
+                                        <p class="file-name"><span class="file-number">4</span>pub3.bat</p>
+                                        <p class="file-name"><span class="file-number">5</span>pub.bat</p> -->
+        
+                                    </div>
+        
+                                    <div class="reset-button-container">
+                                        <ion-icon name="trash"></ion-icon>
+                                    </div>
+        
+                                    <div class="add-file-container">
+                                        <ion-icon name='add'></ion-icon>
+                                    </div>
     
-                                <div class="add-file-container">
-                                    <ion-icon name='add'></ion-icon>
-                                </div><!-- End of div.add-file-container -->
-
+                                </div>
+    
                             </div>
-                            <!-- End of div.process-container -->
 
                         </div>
-                        <!-- End of div.process -->
 
                         <div class="add-process-container">
-                            <ion-icon name='add'></ion-icon>
+                            <ion-icon name='add' onClick="addProcess()"></ion-icon>
                         </div><!-- End of div.add-process-container -->
 
                     </div><!-- End of div.process-list -->
