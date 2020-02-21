@@ -22,6 +22,34 @@ function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
 }
 
+function updateProcessTitle(event){
+    let processes = data.processes;
+    let currentProcess = processes.filter(a => a.title == event.target.id)[0];
+    
+    currentProcess.title = event.target.value;
+    event.target.id = event.target.value;
+
+    // If they press enter
+    if(event.keyCode == 13){
+        fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => {
+            if(err){
+                console.log(err);
+            }else{
+                populateProcesses();
+            }
+    
+        });
+    }else{
+        fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => {
+            if(err){
+                console.log(err);
+            }else{
+            }
+        });
+    }
+
+}
+
 function addFileItems(){
     let fileItems = document.querySelectorAll('.file-selected');
     let processes = data.processes;
@@ -185,6 +213,10 @@ function createProcessDom(newProcessTitle, files, pathvalue){
     let processTitleInput = document.createElement('input');                //  <input class="process-title process-title-input">
     processTitleInput.value = newProcessTitle;                              //  </input>
     processTitleInput.className = 'process-title process-title-input';
+    processTitleInput.id = newProcessTitle;
+    processTitleInput.addEventListener('keyup', e => {
+        updateProcessTitle(e);
+    });
 
     let processContainerDiv = document.createElement('div');                //  <div class="process-container">
     processContainerDiv.className = 'process-container';                    //  </div>
