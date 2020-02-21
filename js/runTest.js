@@ -3,15 +3,20 @@ let fileListContainerDOM = document.querySelector('#file-selection-list-containe
 
 $('.file-selection-window-container').hide();
 
-populateFileList();
+runConstructor();
 
 $('#close-button').on('click', e => {
     $('.file-selection-window-container').hide();
 });
 
 $('.add-file-container').on('click', e => {
+    populateFileList();
     $('.file-selection-window-container').show();
 });
+
+function runConstructor(){
+
+}
 
 function populateFileList(){
     fs.readFile(path.join( __dirname, '../data/GeneralSettings.json' ), (err, data) => {
@@ -19,6 +24,8 @@ function populateFileList(){
             console.log(err);
         }else{
             let defScriptLoc = JSON.parse(data).defScriptLoc;
+            
+            document.querySelector('.path-view').textContent = defScriptLoc;
 
             fs.readdir(defScriptLoc, (err, files) => {
                 if(err){
