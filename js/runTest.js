@@ -116,6 +116,16 @@ function addProcess(){
 
     processList.appendChild(processDom);
 
+    let processObj = {
+        "title": newProcessTitle,
+        "files": []
+    };
+
+    let processes = data.processes;
+    processes.push(processObj);
+
+    fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => err ? console.log(err) : console.log());
+
 }
 
 function createProcessDom(newProcessTitle, files){
@@ -133,20 +143,23 @@ function createProcessDom(newProcessTitle, files){
     let fileContainerDiv = document.createElement('div');                   //  <div class="file-container">
     fileContainerDiv.className = 'file-container';                          //  </div>
 
-    if(files.length > 0){
-        files.forEach((file, index) => {
-            let fileItem = document.createElement('p');
-            fileItem.className = 'file-name';
-            let spanItem = document.createElement('span');
-            spanItem.className = 'file-number';
-            spanItem.textContent = file.order;
-            let fileName = document.createElement('span');
-            fileName.textContent = file.title;
-            fileItem.appendChild(spanItem);
-            fileItem.appendChild(fileName);
-            fileContainerDiv.appendChild(fileItem);
-        });
+    if(files != undefined){
+        if(files.length > 0){
+            files.forEach((file, index) => {
+                let fileItem = document.createElement('p');
+                fileItem.className = 'file-name';
+                let spanItem = document.createElement('span');
+                spanItem.className = 'file-number';
+                spanItem.textContent = file.order;
+                let fileName = document.createElement('span');
+                fileName.textContent = file.title;
+                fileItem.appendChild(spanItem);
+                fileItem.appendChild(fileName);
+                fileContainerDiv.appendChild(fileItem);
+            });
+        }
     }
+
 
     let resetButtonContainerDiv = document.createElement('div');            //  <div class="reset-button-container">
     resetButtonContainerDiv.className = 'reset-button-container';           //      <ion-icon name="trash"></ion-icon>    
