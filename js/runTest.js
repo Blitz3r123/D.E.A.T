@@ -1,3 +1,4 @@
+let runDataPath = path.join(__dirname, '../data/RunTest.json');
 let state = document.querySelector('#runContent').attributes;
 let data = readData(path.join(__dirname, '../data/RunTest.json'));
 let fileListContainerDOM = document.querySelector('#file-selection-list-container');
@@ -21,12 +22,25 @@ function runConstructor(){
     populateProcesses();
 }
 
+function deleteProcess(event){
+    let id = event.target.parentElement.parentElement.parentElement.id;
+    let processes = data.processes;
+
+    let toDeleteProcess = processes.filter(a => a.title == id)[0];
+    processes.splice(processes.indexOf(toDeleteProcess), 1);
+
+    fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => err ? console.log(err) : console.log(''));
+    populateProcesses();
+}
+
 function populateProcesses(){
     let processes = data.processes;
+    let processList = document.querySelector('.process-list');
+
+    clearList(processList);
 
     processes.forEach(process => {
         let processDom = createProcessDom(process.title, process.files);
-        let processList = document.querySelector('.process-list');
         processList.appendChild(processDom);
     });
 }
@@ -139,6 +153,7 @@ function createProcessDom(newProcessTitle, files){
     let trashIconDiv = document.createElement('ion-icon');                  //  </div>
     trashIconDiv.name = 'trash';
     resetButtonContainerDiv.appendChild(trashIconDiv);
+    resetButtonContainerDiv.addEventListener('click', e => deleteProcess(e));
 
     let addFileContainerDiv = document.createElement('div');                //  <div class="add-file-container">
     addFileContainerDiv.className = 'add-file-container';                   //      <ion-icon name="add"></ion-icon>
