@@ -109,7 +109,7 @@
     padding-top: 1%;
     width: 90%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex-wrap: wrap;
     align-content: flex-start;
 }
@@ -119,6 +119,7 @@
     padding-left: 1%;
     line-height: 3vh;
     background-color: #efefef;
+    margin-right: 1vw;
 }
 
 #runContent .process .reset-button-container:hover{cursor: pointer; color: white; background-color: #444;}

@@ -1,6 +1,16 @@
 let fileListContainerDOM = document.querySelector('#file-selection-list-container');
 
+$('.file-selection-window-container').hide();
+
 populateFileList();
+
+$('#close-button').on('click', e => {
+    $('.file-selection-window-container').hide();
+});
+
+$('.add-file-container').on('click', e => {
+    $('.file-selection-window-container').show();
+});
 
 function populateFileList(){
     fs.readFile(path.join( __dirname, '../data/GeneralSettings.json' ), (err, data) => {
