@@ -6,12 +6,31 @@
                 {
                     "title": "pub.bat",
                     "path": "/Users/kaleem/Documents/University/D.E.A.T/test/pub.bat",
-                    "status": "pending"
+                    "status": "pending",
+                    "order": 1
                 },
                 {
                     "title": "sub.bat",
                     "path": "/Users/kaleem/Documents/University/D.E.A.T/test/sub.bat",
-                    "status": "pending"
+                    "status": "pending",
+                    "order": 2
+                }
+            ]
+        },
+        {
+            "title": "Process 2",
+            "files": [
+                {
+                    "title": "pub.bat",
+                    "path": "/Users/kaleem/Documents/University/D.E.A.T/test/pub.bat",
+                    "status": "pending",
+                    "order": 1
+                },
+                {
+                    "title": "sub.bat",
+                    "path": "/Users/kaleem/Documents/University/D.E.A.T/test/sub.bat",
+                    "status": "pending",
+                    "order": 2
                 }
             ]
         }

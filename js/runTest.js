@@ -18,7 +18,17 @@ $('.add-file-container').on('click', e => {
 $('.folder-selection-input').on('change', e => populateFileList(e));
 
 function runConstructor(){
-    
+    populateProcesses();
+}
+
+function populateProcesses(){
+    let processes = data.processes;
+
+    processes.forEach(process => {
+        let processDom = createProcessDom(process.title, process.files);
+        let processList = document.querySelector('.process-list');
+        processList.appendChild(processDom);
+    });
 }
 
 function populateFileList(event){
@@ -94,9 +104,10 @@ function addProcess(){
 
 }
 
-function createProcessDom(newProcessTitle){
+function createProcessDom(newProcessTitle, files){
     let processDiv = document.createElement('div');                         //  <div class="process">
     processDiv.className = 'process';                                       //  </div>
+    processDiv.id = newProcessTitle;
 
     let processTitleInput = document.createElement('input');                //  <input class="process-title process-title-input">
     processTitleInput.value = newProcessTitle;                              //  </input>
@@ -107,6 +118,21 @@ function createProcessDom(newProcessTitle){
 
     let fileContainerDiv = document.createElement('div');                   //  <div class="file-container">
     fileContainerDiv.className = 'file-container';                          //  </div>
+
+    if(files.length > 0){
+        files.forEach((file, index) => {
+            let fileItem = document.createElement('p');
+            fileItem.className = 'file-name';
+            let spanItem = document.createElement('span');
+            spanItem.className = 'file-number';
+            spanItem.textContent = file.order;
+            let fileName = document.createElement('span');
+            fileName.textContent = file.title;
+            fileItem.appendChild(spanItem);
+            fileItem.appendChild(fileName);
+            fileContainerDiv.appendChild(fileItem);
+        });
+    }
 
     let resetButtonContainerDiv = document.createElement('div');            //  <div class="reset-button-container">
     resetButtonContainerDiv.className = 'reset-button-container';           //      <ion-icon name="trash"></ion-icon>    

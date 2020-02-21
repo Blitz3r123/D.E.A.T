@@ -1,0 +1,19 @@
+{
+    "processes": [
+        {
+            "title": "Process 1",
+            "files": [
+                {
+                    "title": "pub.bat",
+                    "path": "/Users/kaleem/Documents/University/D.E.A.T/test/pub.bat",
+                    "status": "pending"
+                },
+                {
+                    "title": "sub.bat",
+                    "path": "/Users/kaleem/Documents/University/D.E.A.T/test/sub.bat",
+                    "status": "pending"
+                }
+            ]
+        }
+    ]
+}
