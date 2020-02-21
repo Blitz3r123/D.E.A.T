@@ -100,8 +100,21 @@
     height: auto;
     min-height: 10%;
     padding: 2% 2%;
+}
+
+#runContent .process .process-container{
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    height: auto;
+    min-height: 10%;
+    padding: 2% 2%;
     display: flex;
     justify-content: space-between;
+}
+
+#runContent .process .process-title{
+    font-size: 1.2em;
+    font-weight: 600;
 }
 
 #runContent .process .file-container{
