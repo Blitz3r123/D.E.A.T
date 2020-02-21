@@ -117,6 +117,11 @@
     font-weight: 600;
 }
 
+#runContent .process .process-title-input{
+    border: none;
+    background-color: #eee;
+}
+
 #runContent .process .file-container{
     /* border: 1px solid #444; */
     padding-top: 1%;
