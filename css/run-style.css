@@ -66,6 +66,11 @@
     padding: 0.5vh 0.5vw;
 }
 
+.file-selected{
+    background-color: #444;
+    color: white;
+}
+
 .file-selection-window .add-button:hover{color: white; background-color: #444; cursor: pointer;}
 .file-selection-window .add-button{
     outline: 1px solid #444;

@@ -2,6 +2,7 @@ let runDataPath = path.join(__dirname, '../data/RunTest.json');
 let state = document.querySelector('#runContent').attributes;
 let data = readData(path.join(__dirname, '../data/RunTest.json'));
 let fileListContainerDOM = document.querySelector('#file-selection-list-container');
+let settings = readData(path.join( __dirname, '../data/GeneralSettings.json' ));
 
 $('.file-selection-window-container').hide();
 
@@ -11,15 +12,55 @@ $('#close-button').on('click', e => {
     $('.file-selection-window-container').hide();
 });
 
-$('.add-file-container').on('click', e => {
-    populateDefFileList();
-    $('.file-selection-window-container').show();
-});
-
 $('.folder-selection-input').on('change', e => populateFileList(e));
 
 function runConstructor(){
     populateProcesses();
+}
+
+function setState(item, value){
+    document.querySelector('#runContent').setAttribute(item, value);
+}
+
+function addFileItems(){
+    let fileItems = document.querySelectorAll('.file-selected');
+    let processes = data.processes;
+    let currentProcess = processes.filter(a => a.title == state.currentProcess.value)[0];
+    let files = currentProcess.files;
+
+    fileItems.forEach((item, index) => {
+        let filePath = item.id;
+        let fileName = item.textContent;
+
+        let fileObj = {
+            "title": fileName,
+            "path": filePath,
+            "status": "pending",
+            "order": files.length + 1
+        };
+        
+        files.push(fileObj);
+    });
+
+    fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => {
+        if(err){
+            console.log(err);
+        }else{
+            fileItems.forEach(item => {
+                item.className = 'file';
+            });
+            $('.file-selection-window-container').hide();
+            clearList(document.querySelector('#file-selection-list-container'));
+            populateProcesses();
+        }
+
+    });
+
+
+}
+
+function selectFileListItem(event){
+    event.target.className == 'file' ? event.target.className = 'file file-selected' : event.target.className = 'file';
 }
 
 function deleteProcess(event){
@@ -36,11 +77,12 @@ function deleteProcess(event){
 function populateProcesses(){
     let processes = data.processes;
     let processList = document.querySelector('.process-list');
+    let defScriptLoc = settings.defScriptLoc;
 
     clearList(processList);
 
     processes.forEach(process => {
-        let processDom = createProcessDom(process.title, process.files);
+        let processDom = createProcessDom(process.title, process.files, defScriptLoc);
         processList.appendChild(processDom);
     });
 }
@@ -56,15 +98,23 @@ function populateFileList(event){
     files.forEach(file => {
         if(!fs.lstatSync(path.join(newPath, file)).isDirectory()){
             if(file.toLowerCase().includes('pub') || file.toLowerCase().includes('sub') || file.toLowerCase().includes('.bat')){
-                let listItem = document.createElement('p');
-                listItem.className = 'file';
-                listItem.textContent = file;
-
-                fileListContainerDOM.appendChild(listItem);
+                createFileListItem(file, path.join(newPath, file));
             }
         }
     });
 
+}
+
+function createFileListItem(filename, path){
+    let listItem = document.createElement('p');
+    listItem.className = 'file';
+    listItem.textContent = filename;
+    listItem.id = path;
+    listItem.addEventListener('click', e => {
+        selectFileListItem(e);
+    });
+
+    fileListContainerDOM.appendChild(listItem);
 }
 
 function populateDefFileList(){
@@ -84,12 +134,11 @@ function populateDefFileList(){
                     console.log(err);
                 }else{
                     files.forEach(file => {
-                        let pDOM = document.createElement('p');
-                        pDOM.className = 'file';
-                        pDOM.textContent = file;
-
-                        let fileListDOM = document.querySelector('#file-selection-list-container');
-                        fileListDOM.appendChild(pDOM);
+                        if(!fs.lstatSync(path.join(defScriptLoc, file)).isDirectory()){
+                            if(file.toLowerCase().includes('pub') || file.toLowerCase().includes('sub') || file.toLowerCase().includes('.bat')){
+                                createFileListItem(file, path.join(defScriptLoc, file));
+                            }
+                        }
                     });
                 }
             });
@@ -107,7 +156,7 @@ function addProcess(){
 
     let processList = document.querySelector('.process-list');
 
-    // processList.childElementCount == 1 when the page is fresh
+    // processList.childElementCount == 0 when the page is fresh
     let processAmount = processList.childElementCount;
 
     let newProcessTitle = 'Process ' + (processAmount + 1);
@@ -128,7 +177,7 @@ function addProcess(){
 
 }
 
-function createProcessDom(newProcessTitle, files){
+function createProcessDom(newProcessTitle, files, pathvalue){
     let processDiv = document.createElement('div');                         //  <div class="process">
     processDiv.className = 'process';                                       //  </div>
     processDiv.id = newProcessTitle;
@@ -155,6 +204,7 @@ function createProcessDom(newProcessTitle, files){
                 fileName.textContent = file.title;
                 fileItem.appendChild(spanItem);
                 fileItem.appendChild(fileName);
+                fileItem.id = toString(path.join(pathvalue, file.title));
                 fileContainerDiv.appendChild(fileItem);
             });
         }
@@ -170,6 +220,11 @@ function createProcessDom(newProcessTitle, files){
 
     let addFileContainerDiv = document.createElement('div');                //  <div class="add-file-container">
     addFileContainerDiv.className = 'add-file-container';                   //      <ion-icon name="add"></ion-icon>
+    addFileContainerDiv.addEventListener('click', e => {
+        populateDefFileList();
+        setState('currentProcess', newProcessTitle);
+        $('.file-selection-window-container').show();
+    });
     let addIconDiv = document.createElement('ion-icon');                    //  </div>
     addIconDiv.name = 'add';
     addFileContainerDiv.appendChild(addIconDiv);
