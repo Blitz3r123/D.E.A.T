@@ -4,6 +4,32 @@ $('.test-list-content .empty-message').hide();
 
 populateTestList();
 
+$('.create-test-start-button').on('click', e => {
+    createBatFiles();
+});
+
+function createBatFiles(){
+    let data = document.querySelector('#create-test-settings').attributes;
+    let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
+    let fileConfig = testConfig.files[data.fileIndex.value - 1];
+
+    let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
+    let perfTestLoc = generalSettings.defPerftestLoc;
+
+    fileConfig.publishers.forEach(publisher => {
+        let fileOutput = createPubBatOutput(perfTestLoc, publisher.generalSettings, publisher.publisherSettings);
+
+        fs.writeFile( path.join(data.path.value, publisher.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(''));
+    });
+
+    fileConfig.subscribers.forEach(subscriber => {
+        let fileOutput = createSubBatOutput(perfTestLoc, subscriber.generalSettings, subscriber.subscriberSettings);
+
+        fs.writeFile( path.join(data.path.value, subscriber.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(''));
+    });
+
+}
+
 function updateItemSetting(element, inputType, value){
     // Either 'Publisher' or 'Subscriber'
     let type = element.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[5].childNodes[1].textContent.replace(' Settings', '');
