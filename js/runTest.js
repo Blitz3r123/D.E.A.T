@@ -1,4 +1,5 @@
 let state = document.querySelector('#runContent').attributes;
+let data = readData(path.join(__dirname, '../data/RunTest.json'));
 let fileListContainerDOM = document.querySelector('#file-selection-list-container');
 
 $('.file-selection-window-container').hide();
@@ -17,13 +18,29 @@ $('.add-file-container').on('click', e => {
 $('.folder-selection-input').on('change', e => populateFileList(e));
 
 function runConstructor(){
-    let pathView = document.querySelector('.path-view');
-    pathView.scrollLeft = pathView.scrollWidth;
+    
 }
 
 function populateFileList(event){
+    let pathView = document.querySelector('.path-view');
     let newPath = event.target.files[0].path;
-    $('.path-view').textContent = newPath;
+    pathView.textContent = newPath;
+    pathView.scrollLeft = pathView.scrollWidth;
+    clearList(document.querySelector('#file-selection-list-container'));
+
+    let files = readFolder(newPath);
+    files.forEach(file => {
+        if(!fs.lstatSync(path.join(newPath, file)).isDirectory()){
+            if(file.toLowerCase().includes('pub') || file.toLowerCase().includes('sub') || file.toLowerCase().includes('.bat')){
+                let listItem = document.createElement('p');
+                listItem.className = 'file';
+                listItem.textContent = file;
+
+                fileListContainerDOM.appendChild(listItem);
+            }
+        }
+    });
+
 }
 
 function populateDefFileList(){

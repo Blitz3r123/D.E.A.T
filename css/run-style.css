@@ -40,6 +40,7 @@
     padding: 0.5vw 1vh;
     margin-bottom: 0;
     overflow-x: scroll;
+    white-space: nowrap;
 }
 
 .file-selection-window .folder-selection-input{
