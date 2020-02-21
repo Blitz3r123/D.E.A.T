@@ -1,3 +1,37 @@
+populateQuickRunLists();
+
+function populateQuickRunLists(){
+    let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
+    let defScriptLoc = generalSettings.defScriptLoc;
+
+    let scriptFiles = readFolder(defScriptLoc);
+
+    if(scriptFiles.length <= 1){
+        let pdom = document.createElement('p');
+        pdom.className = 'list-item';
+        pdom.textContent = "Couldn't find anything. Why not create one?";
+
+        document.querySelector('.publisher-list').appendChild(pdom);
+
+        pdom = document.createElement('p');
+        pdom.className = 'list-item';
+        pdom.textContent = "Couldn't find anything. Why not create one?";
+
+        document.querySelector('.subscriber-list').appendChild(pdom);
+    }else{
+        scriptFiles.forEach(file => {
+            let pdom = document.createElement('p');
+            pdom.className = 'list-item';
+            pdom.textContent = file;
+            if(file.toLowerCase().includes('pub')){
+                document.querySelector('.publisher-list').appendChild(pdom);
+            }else if(file.toLowerCase().includes('sub')){
+                document.querySelector('.subscriber-list').appendChild(pdom);
+            }
+        });
+    }
+}
+
 function createDefPub(){
     let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
     let defScriptLoc = generalSettings.defScriptLoc;

@@ -51,7 +51,7 @@ html{
     .list-wrapper{display: flex; justify-content: space-evenly; height: 80%;}
         .list-title{padding-left: 1vw; text-decoration: underline; margin-bottom: 1vh;}
         .list-item{outline: 1px solid #444; display: block; width: 90%; margin-left: 5%; margin-bottom: 1vh; padding-left: 1vw; color: #444; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;}
-        .list-item:hover{text-decoration: none; color: white; background-color: #444;}
+        .list-item:hover{text-decoration: none; color: white; background-color: #444; cursor: pointer;}
         .publisher-list, .subscriber-list {outline: 1px solid #444; width: 45%; overflow: scroll; max-height: 28vh; min-height: 100%;}
         .publisher-list::-webkit-scrollbar, .subscriber-list::-webkit-scrollbar{width: 0px !important;}
         .recent-results{width: 73vw; margin-left: 3.5vw; outline: 1px solid #444; margin-top: 3vh; height: 35vh; padding: 2vh 1vw;}
