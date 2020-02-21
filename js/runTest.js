@@ -10,15 +10,23 @@ $('#close-button').on('click', e => {
 });
 
 $('.add-file-container').on('click', e => {
-    populateFileList();
+    populateDefFileList();
     $('.file-selection-window-container').show();
 });
 
-function runConstructor(){
+$('.folder-selection-input').on('change', e => populateFileList(e));
 
+function runConstructor(){
+    let pathView = document.querySelector('.path-view');
+    pathView.scrollLeft = pathView.scrollWidth;
 }
 
-function populateFileList(){
+function populateFileList(event){
+    let newPath = event.target.files[0].path;
+    $('.path-view').textContent = newPath;
+}
+
+function populateDefFileList(){
     fs.readFile(path.join( __dirname, '../data/GeneralSettings.json' ), (err, data) => {
         if(err){
             console.log(err);
@@ -26,6 +34,9 @@ function populateFileList(){
             let defScriptLoc = JSON.parse(data).defScriptLoc;
             
             document.querySelector('.path-view').textContent = defScriptLoc;
+
+            let pathView = document.querySelector('.path-view');
+            pathView.scrollLeft = pathView.scrollWidth;
 
             fs.readdir(defScriptLoc, (err, files) => {
                 if(err){
