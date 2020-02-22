@@ -276,6 +276,7 @@
 .run-test-window .dash-bar .button-container .current-process-container span{
     padding: inherit;
     height: 100%;
+    color: green;
 }
 
 .run-test-window .dash-bar .button-container .stop-test-button:hover{background-color: white; border: 1px solid red; cursor: pointer; color: red;}

@@ -5,8 +5,11 @@ let fileListContainerDOM = document.querySelector('#file-selection-list-containe
 let settings = readData(path.join( __dirname, '../data/GeneralSettings.json' ));
 
 $('.file-selection-window-container').hide();
-// Delete next 1 lines when done
+$('.run-test-window').hide();
+// Delete next 3 lines when done with running test part
+$('.run-test-window').show();
 $('.run-selection-window').hide();
+startTests();
 
 runConstructor();
 
@@ -28,8 +31,32 @@ $('#run-test-start').on('click', e => {
     startTests();
 });
 
-function startTests(){
+function stopTest(){
+    console.log(`%c You need to implement this part.`, 'color: blue;');
+}
 
+function startTests(){
+    populateRunFileList();
+
+    $('.run-selection-window').hide();
+    $('#run-test-window').show();
+}
+
+function populateRunFileList(){
+    let processes = data.processes;
+
+    let pendingProcesses = processes.filter(a => a.status.toLowerCase() == 'pending');
+
+    let dropdown = document.querySelector('.dropdown-selection');
+
+    pendingProcesses[0].files.forEach(file => {
+        let optiondom = document.createElement('option');
+        optiondom.value = file.path;
+        optiondom.textContent = file.title;
+        dropdown.appendChild(optiondom);
+    });
+
+    document.querySelector('#current-process-title').textContent = pendingProcesses[0].title;
 }
 
 function removeFileItem(event){
@@ -233,6 +260,7 @@ function addProcess(){
         "title": newProcessTitle,
         "repCount": 1,
         "currentRep": 0,
+        "status": "pending",
         "files": []
     };
 
