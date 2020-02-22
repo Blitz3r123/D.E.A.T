@@ -5,6 +5,8 @@ let fileListContainerDOM = document.querySelector('#file-selection-list-containe
 let settings = readData(path.join( __dirname, '../data/GeneralSettings.json' ));
 
 $('.file-selection-window-container').hide();
+// Delete next 1 lines when done
+$('.run-selection-window').hide();
 
 runConstructor();
 
@@ -20,6 +22,14 @@ function runConstructor(){
 
 function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
+}
+
+$('#run-test-start').on('click', e => {
+    startTests();
+});
+
+function startTests(){
+
 }
 
 function removeFileItem(event){
