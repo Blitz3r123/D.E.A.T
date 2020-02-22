@@ -229,13 +229,7 @@ function createProcessDom(newProcessTitle, files, pathvalue){
             files.forEach((file, index) => {
                 let fileItem = document.createElement('p');
                 fileItem.className = 'file-name';
-                let spanItem = document.createElement('span');
-                spanItem.className = 'file-number';
-                spanItem.textContent = file.order;
-                let fileName = document.createElement('span');
-                fileName.textContent = file.title;
-                fileItem.appendChild(spanItem);
-                fileItem.appendChild(fileName);
+                fileItem.textContent = file.title;
                 fileItem.id = toString(path.join(pathvalue, file.title));
                 fileContainerDiv.appendChild(fileItem);
             });
