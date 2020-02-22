@@ -7,9 +7,9 @@ let settings = readData(path.join( __dirname, '../data/GeneralSettings.json' ));
 $('.file-selection-window-container').hide();
 $('.run-test-window').hide();
 // Delete next 3 lines when done with running test part
-$('.run-test-window').show();
-$('.run-selection-window').hide();
-startTests();
+// $('.run-test-window').show();
+// $('.run-selection-window').hide();
+// startTests();
 
 runConstructor();
 
@@ -32,6 +32,8 @@ $('#run-test-start').on('click', e => {
 });
 
 function stopTest(){
+    $('.run-selection-window').show();
+    $('#run-test-window').hide();
     console.log(`%c You need to implement this part.`, 'color: blue;');
 }
 
