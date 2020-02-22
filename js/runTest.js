@@ -49,7 +49,7 @@ function populateRunFileList(){
 
     let pendingProcesses = processes.filter(a => a.status.toLowerCase() == 'pending');
 
-    let dropdown = document.querySelector('.dropdown-selection');
+    let dropdown = document.querySelector('#process-dropdown-selection');
 
     pendingProcesses[0].files.forEach(file => {
         let optiondom = document.createElement('option');

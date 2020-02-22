@@ -1,3 +1,6 @@
+// Delete following 1 line when done
+console.warn(`%c UNCOMMENT THE D3.JS IMPORT WHEN YOU HAVE INTERNET`, 'color: red;');
+
 const fs = require('fs');
 const path = require('path');
 
@@ -8,8 +11,8 @@ var hasError;
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
-$('#createTestContent').hide();
-// $('#runContent').hide();
+// $('#createTestContent').hide();
+$('#runContent').hide();
 $('#indexContent').hide();
 $('#analyseContent').hide();
 $('#settingsContent').hide();

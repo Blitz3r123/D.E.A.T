@@ -1,12 +1,35 @@
+let createTestState = document.querySelector('#create-test-settings').attributes;
+
 // $('#create-test-index').hide();
 $('#create-test-settings').hide();
+$('.run-create-test-container').hide();
 $('.test-list-content .empty-message').hide();
 
-populateTestList();
+// Delete following 3 line when finished working on this:
+// $('#create-test-settings').hide();
+// $('#create-test-index').hide();
+// startCreateTest();
+
+createTestConstructor();
+
+function createTestConstructor(){
+    populateTestList();
+
+}
+
 
 $('.create-test-start-button').on('click', e => {
     createBatFiles();
+    startCreateTest();
 });
+
+function startCreateTest(){
+    let data = document.querySelector('#create-test-settings').attributes;
+    let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
+    console.log(testConfig);
+    $('.create-test-index').hide();
+    $('.run-create-test-container').show();
+}
 
 function createBatFiles(){
     let data = document.querySelector('#create-test-settings').attributes;
