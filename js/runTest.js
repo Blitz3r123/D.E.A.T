@@ -22,6 +22,17 @@ function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
 }
 
+function removeFileItem(event){
+    let processTitle = event.target.parentElement.parentElement.parentElement.id;
+    let processConfig = getProcess(processTitle);
+
+    let fileToDel = processConfig.files.filter(a => a.path == event.target.id)[0];
+
+    processConfig.files.splice( processConfig.files.indexOf(fileToDel) , 1 );
+
+    fs.writeFile(runDataPath, JSON.stringify({"processes": data.processes}), err => err ? console.log(err) : populateProcesses());
+}
+
 function updateProcessRepCount(event){
     let process = getProcess(event.target.id);
     event.target.value == '' ? process.repCount = 1 : process.repCount = parseInt(event.target.value);
@@ -34,7 +45,7 @@ function updateProcessRepCount(event){
 
 function getProcess(processTitle){
     let processes = data.processes;
-    return processes.filter(a => a.title == event.target.id)[0];
+    return processes.filter(a => a.title == processTitle)[0];
 }
 
 function updateProcessTitle(event){
@@ -276,7 +287,8 @@ function createProcessDom(newProcessTitle, files, pathvalue, process){
                 let fileItem = document.createElement('p');
                 fileItem.className = 'file-name';
                 fileItem.textContent = file.title;
-                fileItem.id = toString(path.join(pathvalue, file.title));
+                fileItem.id = path.join(pathvalue, file.title);
+                fileItem.addEventListener('click', e => {removeFileItem(e)});
                 fileContainerDiv.appendChild(fileItem);
             });
         }
