@@ -71,6 +71,20 @@
     color: white;
 }
 
+.top-bar{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1vh;
+}
+
+.rep-count-container{
+    width: 20%;
+}
+
+.run-input{
+    width: 30%;
+}
+
 .file-selection-window .add-button:hover{color: white; background-color: #444; cursor: pointer;}
 .file-selection-window .add-button{
     outline: 1px solid #444;

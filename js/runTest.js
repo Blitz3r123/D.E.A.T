@@ -22,6 +22,21 @@ function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
 }
 
+function updateProcessRepCount(event){
+    let process = getProcess(event.target.id);
+    event.target.value == '' ? process.repCount = 1 : process.repCount = parseInt(event.target.value);
+    let timesSpan = document.querySelector('#times-span');
+
+    event.target.value > 1 ? timesSpan.textContent = ' times.' : timesSpan.textContent = ' time.';
+
+    fs.writeFile(runDataPath, JSON.stringify({"processes": data.processes}), err => err ? console.log(err) : console.log(''));
+}
+
+function getProcess(processTitle){
+    let processes = data.processes;
+    return processes.filter(a => a.title == event.target.id)[0];
+}
+
 function updateProcessTitle(event){
     let processes = data.processes;
     let currentProcess = processes.filter(a => a.title == event.target.id)[0];
@@ -110,7 +125,7 @@ function populateProcesses(){
     clearList(processList);
 
     processes.forEach(process => {
-        let processDom = createProcessDom(process.title, process.files, defScriptLoc);
+        let processDom = createProcessDom(process.title, process.files, defScriptLoc, process);
         processList.appendChild(processDom);
     });
 }
@@ -195,6 +210,8 @@ function addProcess(){
 
     let processObj = {
         "title": newProcessTitle,
+        "repCount": 1,
+        "currentRep": 0,
         "files": []
     };
 
@@ -205,10 +222,13 @@ function addProcess(){
 
 }
 
-function createProcessDom(newProcessTitle, files, pathvalue){
+function createProcessDom(newProcessTitle, files, pathvalue, process){
     let processDiv = document.createElement('div');                         //  <div class="process">
     processDiv.className = 'process';                                       //  </div>
     processDiv.id = newProcessTitle;
+
+    let topBar = document.createElement('div');
+    topBar.className = 'top-bar';
 
     let processTitleInput = document.createElement('input');                //  <input class="process-title process-title-input">
     processTitleInput.value = newProcessTitle;                              //  </input>
@@ -217,6 +237,32 @@ function createProcessDom(newProcessTitle, files, pathvalue){
     processTitleInput.addEventListener('keyup', e => {
         updateProcessTitle(e);
     });
+
+    let repCountDiv = document.createElement('div');
+    repCountDiv.className = 'rep-count-container';
+    
+    let runSpan = document.createElement('span');
+    runSpan.textContent = 'Run ';
+    runSpan.className = 'run-span';
+    let repCountInput = document.createElement('input');
+    repCountInput.value = 1;
+    repCountInput.className = 'run-input';
+    repCountInput.id = newProcessTitle;
+    repCountInput.addEventListener('keyup', e => {
+        updateProcessRepCount(e);
+    });
+    process != undefined ? repCountInput.value = process.repCount : repCountInput.value = 1;
+    let timesSpan = document.createElement('span');
+    timesSpan.id = 'times-span';
+    process != undefined && process.repCount > 1 ? timesSpan.textContent = ' times.' : timesSpan.textContent = ' time.';
+    timesSpan.className = 'times-span';
+
+    repCountDiv.appendChild(runSpan);
+    repCountDiv.appendChild(repCountInput);
+    repCountDiv.appendChild(timesSpan);
+
+    topBar.appendChild(processTitleInput);
+    topBar.appendChild(repCountDiv);
 
     let processContainerDiv = document.createElement('div');                //  <div class="process-container">
     processContainerDiv.className = 'process-container';                    //  </div>
@@ -261,7 +307,9 @@ function createProcessDom(newProcessTitle, files, pathvalue){
                                                                             //      <div class="add-file-container"></div>
                                                                             //  </div>  
 
-    processDiv.appendChild(processTitleInput);
+    processDiv.appendChild(topBar);
+    // processDiv.appendChild(processTitleInput);
+    // processDiv.appendChild(repCountDiv);
     processDiv.appendChild(processContainerDiv);
 
     return processDiv;
