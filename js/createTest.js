@@ -17,17 +17,27 @@ function createTestConstructor(){
 
 }
 
-
 $('.create-test-start-button').on('click', e => {
     createBatFiles();
     startCreateTest();
 });
 
+function stopCreateTest(){
+    $('#create-test-settings').show();
+    // $('#create-test-index').show();
+    $('.run-create-test-container').hide();
+}
+
 function startCreateTest(){
     let data = document.querySelector('#create-test-settings').attributes;
     let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
-    console.log(testConfig);
-    $('.create-test-index').hide();
+    let batFiles = readFolder(data.path.value).filter(a => a.toLowerCase().includes('.bat'));
+
+    batFiles.forEach(file => {
+        console.log(path.join(data.path.value, file));
+    });
+
+    $('#create-test-settings').hide();
     $('.run-create-test-container').show();
 }
 
