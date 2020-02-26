@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const child_process = require('child_process');
 
 // GLOBAL VARIABLES
 var hasError;
@@ -780,7 +781,7 @@ function isChecked(name){
 }
 
 function createFile(output, path){
-    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log(''));
+    fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log(`%c Created file at \n ${path}`, 'color: blue;'));
 }
 
 function showPopup(message){
@@ -806,6 +807,14 @@ function readData(path){
     let data = fs.readFileSync(path);
 
     return JSON.parse(data);
+}
+
+function normaliseString(string){
+    return string.replace(/\s/g, "^");
+}
+
+function unnormaliseString(string){
+    return string.replace(/\^/g, " ");
 }
 
 function removeWhiteSpaces(string){

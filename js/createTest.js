@@ -33,12 +33,71 @@ function startCreateTest(){
     let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
     let batFiles = readFolder(data.path.value).filter(a => a.toLowerCase().includes('.bat'));
 
+    let fileDrop = document.querySelector('#file-dropdown-selection');
+
     batFiles.forEach(file => {
-        console.log(path.join(data.path.value, file));
+        file = unnormaliseString(file);
+        // Populate file dropdown:
+        let option = document.createElement('option');
+        option.value = path.join(data.path.value, file);
+        option.textContent = file;
+        fileDrop.appendChild(option);
     });
 
+    let runConfig = createRunConfig();
+
+    fs.writeFile(path.join(createTestState.path.value, 'runConfig.json'), JSON.stringify(runConfig), err => err ? console.log(err) : console.log(`%c Created run config file in \n ${createTestState.path.value}`, 'color: green;'));
+
+    runNextPendingFile(runConfig);
+    
     $('#create-test-settings').hide();
     $('.run-create-test-container').show();
+}
+
+// Takes in run config file and runs next pending file
+function runNextPendingFile(runConfig){
+    let pendFiles = runConfig.files.filter(a => a.status == 'pending');
+    let nextFile = pendFiles[0];
+
+    let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
+    let perfTestLoc = generalSettings.defPerftestLoc;
+    
+    // Set executable permission on perftest_java.bat
+    child_process.exec(`chmod 755 ${perfTestLoc} && cd ${path.dirname(perfTestLoc)} && ls -l`, (error, stdout, stderr) => {
+        if(error){
+            console.log(`%c error: \n${error}`, 'color: red;');
+        }
+        if(stderr){
+            console.log(`%c stderr:\n${stderr}`, 'color: orange;');
+        }
+    });
+
+    // Execute .bat file of test
+    child_process.exec(`chmod 755 ${nextFile.path} && ${nextFile.path}`, (error, stdout, stderr) => {
+        console.log(`%c error: \n${error}`, 'color: red;');
+        console.log(`%c stderr:\n${stderr}`, 'color: orange;');
+        console.log(`%c stdout:\n${stdout}`, 'color: blue;');
+    });
+
+}
+
+// Create run config file to see what files are pending/running/complete/aborted
+function createRunConfig(){
+    let batFiles = readFolder(createTestState.path.value).filter(a => a.toLowerCase().includes('.bat'));
+    let runObj = {
+        files: []
+    };
+
+    batFiles.forEach(file => {
+        let newObj = {
+            path: path.join( createTestState.path.value, file ),
+            title: file,
+            status: 'pending'
+        };
+        runObj.files.push(newObj);
+    });
+
+    return runObj;
 }
 
 function createBatFiles(){
@@ -52,13 +111,13 @@ function createBatFiles(){
     fileConfig.publishers.forEach(publisher => {
         let fileOutput = createPubBatOutput(perfTestLoc, publisher.generalSettings, publisher.publisherSettings);
 
-        fs.writeFile( path.join(data.path.value, publisher.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(''));
+        fs.writeFile( path.join(data.path.value, publisher.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${publisher.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
     });
 
     fileConfig.subscribers.forEach(subscriber => {
         let fileOutput = createSubBatOutput(perfTestLoc, subscriber.generalSettings, subscriber.subscriberSettings);
 
-        fs.writeFile( path.join(data.path.value, subscriber.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(''));
+        fs.writeFile( path.join(data.path.value, subscriber.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${subscriber.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
     });
 
 }
@@ -327,7 +386,9 @@ function createSettingItem(title, id, type, value, options){
 
 function populateItemSettings(type, data, itemName){
     fs.readFile(path.join(data.path.value, path.basename(data.path.value) + '.json'), (err, testConfig) => {
+
         testConfig = JSON.parse(testConfig);
+
         let fileConfig = testConfig.files[data.fileIndex.value - 1];
     
         // Clear list first
@@ -337,14 +398,14 @@ function populateItemSettings(type, data, itemName){
         clearList(document.querySelector('#pub-sub-second-half'));
     
         if(type == 'pub'){
-    
+
             document.querySelector('#pub-sub-setting-title').textContent = 'Publisher Settings';
     
             let pubConfig;
             let pubIndex;
     
             fileConfig.publishers.forEach((pub, index) => {
-                if(pub.title == itemName){
+                if(pub.title == normaliseString(itemName)){
                     pubConfig = pub;
                     pubIndex = index;
                 }
@@ -409,7 +470,7 @@ function populateItemSettings(type, data, itemName){
             let subIndex;
     
             fileConfig.subscribers.forEach((sub, index) => {
-                if(sub.title == itemName){
+                if(sub.title == normaliseString(itemName)){
                     subConfig = sub;
                     subIndex = index;
                 }
@@ -743,6 +804,7 @@ function deleteListItem(event){
 }
 
 function createSubListItem(index, title){
+    title = unnormaliseString(title);
     let divdom = document.createElement('div');
     divdom.className = 'pub-sub-list-item';
 
@@ -769,6 +831,7 @@ function createSubListItem(index, title){
 }
 
 function createPubListItem(index, title){
+    title = unnormaliseString(title);
     let divdom = document.createElement('div');
     divdom.className = 'pub-sub-list-item';
 
@@ -816,9 +879,9 @@ function createNewTest(){
                 saveLocation = fileLocationInput.files[0].path;
             }
 
-            let testName = nameInput.value;
+            let testName = normaliseString(nameInput.value);
             let fileAmount = parseInt(fileAmountInput.value);
-            
+
             // Check test folder doesn't already exist
             if(!fs.existsSync( path.join( saveLocation, testName ) )){
                 fs.mkdirSync( path.join( saveLocation, testName ) );
@@ -826,11 +889,6 @@ function createNewTest(){
                 let newFolder = path.join( saveLocation, testName );
                 
                 let config = createTestConfigObj(testName, fileAmount);
-
-                // for(var i = 1; i < fileAmount + 1; i++){
-                //     let batFileLocation = path.join( newFolder, 'File ' + i + '.bat');
-                //     createFile('', batFileLocation);
-                // }
                 
                 createFile(JSON.stringify(config), path.join( newFolder, testName + '.json' ));
                 
@@ -838,7 +896,7 @@ function createNewTest(){
 
                 // Redirect to file settings page here
                 $('#create-test-index').hide();
-                document.querySelector('#create-test-settings').setAttribute('path', newFolder);
+                document.querySelector('#create-test-settings').setAttribute('path', normaliseString(newFolder));
                 document.querySelector('#create-test-settings').setAttribute('fileAmount', fileAmountInput.value);
                 document.querySelector('#create-test-settings').setAttribute('fileIndex', 1);
 
@@ -945,7 +1003,7 @@ function populateTestList(pathValue){
 
         itemContents.forEach(content => {
             if(path.extname(content) == '.json'){
-                listOutput.push(item);
+                listOutput.push(unnormaliseString(item));
             }
         });
     });
@@ -979,7 +1037,7 @@ function createTestListItem(title, pathValue){
     
     pdom.className = 'test-list-item';
 
-    pdom.setAttribute('path', pathValue);
+    pdom.setAttribute('path', normaliseString(pathValue));
 
     let spandom = document.createElement('span');
     spandom.textContent = title;
@@ -999,6 +1057,8 @@ function createTestListItem(title, pathValue){
 function populateFileTabs(testFolderPath, count){
     let fileListDom = document.querySelector('.file-tab-container');
 
+    testFolderPath = normaliseString(testFolderPath);
+
     fs.readdir(testFolderPath, (err, files) => {
         if(err){
             console.log(err);
@@ -1009,15 +1069,13 @@ function populateFileTabs(testFolderPath, count){
             }
 
             files.forEach(file => {
-                if(path.extname(file) == '.json'){
-                    // let data = readData( path.join( testFolderPath, file ) );
-
+                if(path.extname(file) == '.json' && file.toLowerCase().includes( path.basename(createTestState.path.value) )){
                     fs.readFile(path.join( testFolderPath, file ), (err, data) => {
                         data = JSON.parse(data);
                         if(count == undefined){
                             count = parseInt(data.fileAmount);
                         }
-            
+
                         for(var i = 1; i < count + 1; i++){
                             let pdom = document.createElement('p');
                             
@@ -1045,7 +1103,7 @@ function openTestSettings(element){
     $('#create-test-index').hide();
     
     let testFolderPath = element.attributes.path.value;
-    document.querySelector('#create-test-page-title').textContent = 'CREATE TEST: ' + path.basename(testFolderPath);
+    document.querySelector('#create-test-page-title').textContent = 'CREATE TEST: ' + unnormaliseString(path.basename(testFolderPath));
 
     populateFileTabs(testFolderPath);
     updateSubPubList(testFolderPath, 0, 'pub');
@@ -1058,7 +1116,7 @@ function openTestSettings(element){
         $('.settings-list-container').hide();
     }
     
-    document.querySelector('#create-test-settings').setAttribute('path', testFolderPath);
+    document.querySelector('#create-test-settings').setAttribute('path', normaliseString(testFolderPath));
     document.querySelector('#create-test-settings').setAttribute('fileIndex', 1);
 
     $('#create-test-settings').show();
@@ -1067,7 +1125,7 @@ function openTestSettings(element){
 function updateSubPubList(testFolderPath, fileIndex, option){
     let testConfigPath = path.join( testFolderPath, path.basename(testFolderPath) + '.json' );
 
-    fs.readFile(testConfigPath, (err, filedata) => {
+    fs.readFile(normaliseString(testConfigPath), (err, filedata) => {
         if(err){
             console.log(`%c ${err}`, 'color: red;');
         }
@@ -1127,7 +1185,7 @@ function createSubSettingsObj(title){
     let subscriberSettings = readData( path.join( __dirname, '../data/CreateSubscriberSettings.json' ) );
 
     return {
-        "title": title,
+        "title": normaliseString(title),
         "generalSettings": generalSettings,   
         "subscriberSettings": subscriberSettings
     };
@@ -1138,7 +1196,7 @@ function createPubSettingsObj(title){
     let publisherSettings = readData( path.join( __dirname, '../data/CreatePublisherSettings.json' ) );
 
     return {
-        "title": title,
+        "title": normaliseString(title),
         "generalSettings": generalSettings,
         "publisherSettings": publisherSettings
     };
