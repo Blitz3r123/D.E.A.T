@@ -14,13 +14,20 @@ createTestConstructor();
 
 function createTestConstructor(){
     populateTestList();
-
 }
 
 $('.create-test-start-button').on('click', e => {
     createBatFiles();
     startCreateTest();
 });
+
+// Greys out start button on create-test page if there are no files
+function checkStartTestStatus(){
+    let batFiles = readFolder(createTestState.path.value).filter(a => a.toLowerCase().includes('.bat'));
+
+    console.log(batFiles);
+
+}
 
 function stopCreateTest(){
     $('#create-test-settings').show();
@@ -139,7 +146,7 @@ function updateItemSetting(element, inputType, value){
     }
 
     if(type == 'Publisher'){
-        let pubConfig = fileConfig.publishers.filter(a => a.title == itemName)[0];
+        let pubConfig = fileConfig.publishers.filter(a => a.title == normaliseString(itemName))[0];
         if(settingType == 'General Settings'){
             let setting = pubConfig.generalSettings.filter(a => a.id == element.id)[0];
             setting.value = value;
@@ -150,7 +157,7 @@ function updateItemSetting(element, inputType, value){
             console.log(`%c I don't know what the settingType is!`, 'color: red;');
         }
     }else if(type == 'Subscriber'){
-        let subConfig = fileConfig.subscribers.filter(a => a.title == itemName)[0];
+        let subConfig = fileConfig.subscribers.filter(a => a.title == normaliseString(itemName))[0];
         if(settingType == 'General Settings'){
             let setting = subConfig.generalSettings.filter(a => a.id == element.id)[0];
             setting.value = value;
@@ -165,7 +172,7 @@ function updateItemSetting(element, inputType, value){
     }
     
     fs.writeFile(path.join(data.path.value, path.basename(data.path.value) + '.json'), JSON.stringify(testConfig), err => {
-        err ? console.log(err) : console.log('');
+        err ? console.log(err) : createBatFiles();
     });
 
 }
@@ -721,8 +728,7 @@ function updatePubConfigObj(testFolderPath, amount, fileIndex){
         testConfig.files[fileIndex].publishers.push(createPubSettingsObj( 'Publisher ' + i ));
     }
 
-    fs.writeFile(testConfigFile, JSON.stringify(testConfig), err => err ? console.log(err) : console.log(''));
-
+    fs.writeFile(testConfigFile, JSON.stringify(testConfig), err => err ? console.log(err) : createBatFiles());
 };
 
 $('#test-list-folder-selection-input').on('change', e => {
@@ -1119,6 +1125,7 @@ function openTestSettings(element){
     document.querySelector('#create-test-settings').setAttribute('path', normaliseString(testFolderPath));
     document.querySelector('#create-test-settings').setAttribute('fileIndex', 1);
 
+    checkStartTestStatus();
     $('#create-test-settings').show();
 }
 

@@ -1,9 +1,9 @@
 .create-test-index{
     /* outline: 1px solid #aaa; */
-    margin-top: 3vh;
+    /* margin-top: 3vh; */
     width: 95%;
     margin-left: 2.5%;
-    height: 87vh;
+    height: 89vh;
     /* overflow-y: scroll; */
     display: flex;
     justify-content: space-between;
@@ -13,7 +13,7 @@
     /* outline: 1px solid #aaa; */
     width: 50%;
     height: 100%;
-    padding: 2vh 1vw;
+    padding: 0vh 1vw 2vh 1vw;
 }
 
 .create-test-title{
