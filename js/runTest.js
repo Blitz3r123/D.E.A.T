@@ -21,10 +21,18 @@ $('.folder-selection-input').on('change', e => populateFileList(e));
 
 function runConstructor(){
     populateProcesses();
+    validateStartButton();
 }
 
 function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
+}
+
+function validateStartButton(){
+    let startButton = document.querySelector('#run-test-start');
+    let processAmount = data.processes.length;
+    let emptyProcessAmount = data.processes.filter(a => a.files.length == 0).length;
+    processAmount > 0 && emptyProcessAmount == 0 ? startButton.className = 'start-button' : startButton.className = 'start-button disabled';
 }
 
 $('#run-test-start').on('click', e => {
@@ -149,7 +157,7 @@ function addFileItems(){
 
     });
 
-
+    validateStartButton();
 }
 
 function selectFileListItem(event){
@@ -159,12 +167,13 @@ function selectFileListItem(event){
 function deleteProcess(event){
     let id = event.target.parentElement.parentElement.parentElement.id;
     let processes = data.processes;
-
+    
     let toDeleteProcess = processes.filter(a => a.title == id)[0];
     processes.splice(processes.indexOf(toDeleteProcess), 1);
-
-    fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => err ? console.log(err) : console.log(''));
+    
+    fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => err ? console.log(err) : console.log(`%c Removed a process from \n ${runDataPath}`, 'color: green;'));
     populateProcesses();
+    validateStartButton();
 }
 
 function populateProcesses(){
@@ -270,6 +279,7 @@ function addProcess(){
     processes.push(processObj);
 
     fs.writeFile(runDataPath, JSON.stringify({"processes": processes}), err => err ? console.log(err) : console.log());
+    validateStartButton();
 
 }
 

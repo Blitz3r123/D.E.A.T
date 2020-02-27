@@ -228,6 +228,7 @@
 
 .start-button.disabled{
     background-color: #ddd !important;
+    pointer-events: none;
 }
 
 .start-button.disabled:hover{
