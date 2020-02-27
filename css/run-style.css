@@ -311,4 +311,17 @@
     white-space: normal;
     display: flex;
     flex-direction: column-reverse;
+    width: 100%;
+    background-color: #222;
+    color: #eee;
+    outline: 0;
+    border: 0;
+}
+
+.run-console-output span.err{
+    color: red;
+}
+
+.run-console-output span.stderr{
+    color: orange;
 }

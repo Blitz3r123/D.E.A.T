@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const child_process = require('child_process');
+const { exec } = require('child_process');
 
 // GLOBAL VARIABLES
 var hasError;
@@ -9,8 +9,8 @@ var hasError;
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
-$('#createTestContent').hide();
-// $('#runContent').hide();
+// $('#createTestContent').hide();
+$('#runContent').hide();
 $('#indexContent').hide();
 $('#analyseContent').hide();
 $('#settingsContent').hide();
