@@ -1,1 +1,0 @@
-"/Users/kaleem/Documents/performance-testing/rtiperftest/perftest_java.bat"  -dataLen 500 -verbosity 1 -dynamicData  -durability 0 -domain 1 -keyed -multicast -qosProfile path -useReadThread  -waitSetDelayUSec 100 -waitSetEventCount 5 -asynchronous  -cpu   -sub  -numPublishers 2 -sidMultiSubTest 0

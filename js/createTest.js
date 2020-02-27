@@ -25,7 +25,7 @@ $('.create-test-start-button').on('click', e => {
 function checkStartTestStatus(){
     let batFiles = readFolder(createTestState.path.value).filter(a => a.toLowerCase().includes('.bat'));
 
-    console.log(batFiles);
+    // console.log(batFiles);
 
 }
 
@@ -1075,7 +1075,7 @@ function populateFileTabs(testFolderPath, count){
             }
 
             files.forEach(file => {
-                if(path.extname(file) == '.json' && file.toLowerCase().includes( path.basename(createTestState.path.value) )){
+                if(path.extname(file) == '.json' && file.toLowerCase().includes( path.basename(createTestState.path.value.toLowerCase()) )){
                     fs.readFile(path.join( testFolderPath, file ), (err, data) => {
                         data = JSON.parse(data);
                         if(count == undefined){
