@@ -810,11 +810,11 @@ function readData(path){
 }
 
 function normaliseString(string){
-    return string.replace(/\s/g, "^");
+    return string.replace(/\s/g, "_");
 }
 
 function unnormaliseString(string){
-    return string.replace(/\^/g, " ");
+    return string.replace(/\_/g, " ");
 }
 
 function removeWhiteSpaces(string){

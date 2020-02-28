@@ -14,6 +14,7 @@ createTestConstructor();
 
 function createTestConstructor(){
     populateTestList();
+    document.querySelector('#create-test-console').value = '';
 }
 
 $('.create-test-start-button').on('click', e => {
@@ -69,16 +70,6 @@ function runNextPendingFile(runConfig){
     let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
     let perfTestLoc = generalSettings.defPerftestLoc;
     
-    // Set executable permission on perftest_java.bat
-    // child_process.exec(`chmod 755 ${perfTestLoc} && cd ${path.dirname(perfTestLoc)} && ls -l`, (error, stdout, stderr) => {
-    //     if(error){
-    //         console.log(`%c error: \n${error}`, 'color: red;');
-    //     }
-    //     if(stderr){
-    //         console.log(`%c stderr:\n${stderr}`, 'color: orange;');
-    //     }
-    // });
-
     let conOut = document.querySelector('#create-test-console');
         
     // Execute .bat file of test
@@ -89,34 +80,19 @@ function runNextPendingFile(runConfig){
     console.log('Executing ' + command);
 
     dir.stdout.on('data', data => {
+        console.log('STDOUT: \n');
+        console.log(data);
         conOut.value += data;
         conOut.scrollTop = conOut.scrollHeight;
     });
     
     dir.stderr.on('data', data => {
+        console.log('STDERR: \n');
+        console.log(data);
         conOut.value += data;
         conOut.scrollTop = conOut.scrollHeight;
         
     });
-    // child_process.exec(`chmod 755 ${nextFile.path} && ${nextFile.path}`, (error, stdout, stderr) => {
-    //     console.log(`%c error: \n${error}`, 'color: red;');
-    //     console.log(`%c stderr:\n${stderr}`, 'color: orange;');
-    //     console.log(`%c stdout:\n${stdout}`, 'color: blue;');
-
-    //     let conOut = document.querySelector('#create-test-console');
-
-    //     let stderrSpan = document.createElement('span');
-    //     stderrSpan.className = 'stderr';
-    //     stderrSpan.textContent = stderr + '\n';
-
-    //     let errSpan = document.createElement('span');
-    //     errSpan.className = 'err';
-    //     errSpan.textContent = '\n' + error + '\n';
-
-    //     conOut.appendChild(stderrSpan);
-    //     conOut.appendChild(errSpan);
-
-    // });
 
 }
 
