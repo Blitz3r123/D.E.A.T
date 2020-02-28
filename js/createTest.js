@@ -82,9 +82,11 @@ function runNextPendingFile(runConfig){
     let conOut = document.querySelector('#create-test-console');
         
     // Execute .bat file of test
-    let command = `chmod 755 ${perfTestLoc} && cd ${path.dirname(perfTestLoc)} && chmod 755 ${nextFile.path} && ${nextFile.path}`;
+    let command = `${nextFile.path}`;
     // let command = 'ping www.google.com';
     let dir = exec(command);
+
+    console.log('Executing ' + command);
 
     dir.stdout.on('data', data => {
         conOut.value += data;
