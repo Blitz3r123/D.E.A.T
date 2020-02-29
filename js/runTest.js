@@ -261,7 +261,7 @@ function addProcess(){
     // processList.childElementCount == 0 when the page is fresh
     let processAmount = processList.childElementCount;
 
-    let newProcessTitle = 'Process ' + (processAmount + 1);
+    let newProcessTitle = 'Test ' + (processAmount + 1);
 
     let processDom = createProcessDom(newProcessTitle);
 
