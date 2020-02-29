@@ -210,9 +210,33 @@
     background-color: #eff7fc;
 }
 
-#runContent .start-button:hover{cursor: pointer; color: #28a745; background-color: white; border: 1px solid #28a745;}
 #runContent .start-button{
-    /* outline: 1px solid red; */
+    width: 50%;
+    margin-left: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    height: 5vh;
+    
+}
+
+#runContent .start-button span:hover{cursor: pointer; color: green; background-color: white;}
+#runContent .start-button span{
+    display: block;
+    height: 100%;
+    width: 25%;
+    line-height: 5vh;
+    border: 1px solid green;
+    background-color: green;
+    color: white;
+    border-radius: 3px;
+    
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+/* #runContent .start-button:hover{cursor: pointer; color: #28a745; background-color: white; border: 1px solid #28a745;}
+#runContent .start-button{
     width: 20%;
     margin-left: 80%;
     text-align: center;
@@ -224,7 +248,7 @@
     transition-duration: 0.2s;
     -webkit-transition-duration: 0.2s;
     -moz-transition-duration: 0.2s;
-}
+} */
 
 .start-button.disabled{
     background-color: #ddd !important;
@@ -324,4 +348,8 @@
 
 .run-console-output span.stderr{
     color: orange;
+}
+
+.run-go-button{
+    
 }
