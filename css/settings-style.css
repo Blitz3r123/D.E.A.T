@@ -160,7 +160,17 @@
 }
 
 .domain{
-    
+    border: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #eff7fc;
+    border-bottom: 1px solid #144a6b;
+    height: 80%;
+    /* outline: 1px solid black; */
+    padding-top: 1vh;
+    display: block;
+    color: #144a6b;
 }   
 
 .login-details-container{
@@ -171,8 +181,15 @@
 }   
 
 .username{
-    padding: 0.1vh 3vw;
+    padding: 0.1vh 0vw;
+    border: 0;
     border-bottom: 1px solid #144a6b;
+    display: block;
+    text-align: center;
+    height: 80%;
+    width: 50%;
+    background-color: #eff7fc;
+    color: #144a6b;
 }
 
 .password-container{
@@ -181,19 +198,25 @@
     /* padding: 0vh 3vw; */
     display: flex;
     justify-content: space-evenly;
-    border-bottom: 1px solid #144a6b;
+    /* border: 0; */
+    /* border-bottom: 1px solid #144a6b; */
 }
 
-.password-container span{
-    display: block;
-    margin-right: 1vw;
-    padding-left: 2vw;
+.password-container input{
+    border: none;
+    background-color: #eff7fc;
+    width: 50%;
+    margin-left: 2vw;
+    border-bottom: 1px solid #144a6b;
+    text-align: center;
+    height: 119%;
+    color: #144a6b;
 }
 
 .password-container ion-icon{cursor: pointer;}
 .password-container ion-icon{
     display: block;
-    margin-left: 1vw;
+    /* margin-left: 1vw; */
     padding-right: 0.5vw;
     font-size: 1.5em;
 }
