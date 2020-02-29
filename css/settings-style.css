@@ -130,15 +130,20 @@
 }
 
 .connection-list{
-
+    color: #144a6b;
 }
 
 .connection-list-item{
-    
+    padding: 0vh 1vw;
+    background-color: #eff7fc;
+    border-radius: 3px;
+    margin-top: 2vh;
 }
 
 .connection-list-item-title-container{
-    
+    width: 100%;
+    font-weight: 700;
+    padding-top: 1vh;
 }
 
 .connection-list-item-title{
@@ -146,7 +151,8 @@
 }   
 
 .connection-list-item-content-container{
-    
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .domain-container{
@@ -158,41 +164,74 @@
 }   
 
 .login-details-container{
-    
+    width: 50%;
+    /* outline: 1px solid black; */
+    display: flex;
+    justify-content: space-around;
 }   
 
 .username{
-
+    padding: 0.1vh 3vw;
+    border-bottom: 1px solid #144a6b;
 }
 
 .password-container{
-    
+    /* outline: 1px solid #144a6b; */
+    height: 65%;
+    /* padding: 0vh 3vw; */
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #144a6b;
 }
 
 .password-container span{
-    
+    display: block;
+    margin-right: 1vw;
+    padding-left: 2vw;
 }
 
+.password-container ion-icon{cursor: pointer;}
 .password-container ion-icon{
-    
+    display: block;
+    margin-left: 1vw;
+    padding-right: 0.5vw;
+    font-size: 1.5em;
 }
 
 .edit-container{
     
 }
 
+.edit-container .edit:hover{cursor: pointer;}
 .edit-container .edit{
-    
+    font-size: 1.5em;
+    padding: 0.1vh 0.5vw;
 }
 
+.edit-container .delete:hover{cursor: pointer;}
 .edit-container .delete{
-    
+    font-size: 1.5em;
+    padding: 0.1vh 0.5vw;
 }
 
+.add-connection-container:hover{
+    color: #eff7fc;
+    background-color: #144a6b;
+    cursor: pointer;
+}
 .add-connection-container{
-    
+        /* outline: 1px solid #eff7fc; */
+        width: 10%;
+        /* margin-left: 1%; */
+        text-align: center;
+        height: 7vh;
+        margin-top: 2vh;
+        line-height: 11vh;
+        background-color: #eff7fc;
+        transition-duration: 0.2s;
+        -webkit-transition-duration: 0.2s;
 }
 
 .add-connection-container ion-icon{
-    
+    font-size: 3em;
 }
