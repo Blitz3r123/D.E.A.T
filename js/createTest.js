@@ -43,6 +43,8 @@ function startCreateTest(){
 
     let fileDrop = document.querySelector('#file-dropdown-selection');
 
+    clearList(fileDrop);
+
     batFiles.forEach(file => {
         file = unnormaliseString(file);
         // Populate file dropdown:
