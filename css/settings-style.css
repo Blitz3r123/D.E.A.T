@@ -14,7 +14,7 @@
 .general-setting-container{
     /* outline: 1px solid black; */
     padding: 1vh 1vw;
-    background-color: #efefef;
+    background-color: #eff7fc;
     border-radius: 2px;
     padding-bottom: 0;
     margin-top: 1vh;
@@ -31,11 +31,11 @@
 }
 
 .quick-create-general-settings-container{
-    background-color: #efefef;
+    background-color: #eff7fc;
 }
 
 .quick-create-publisher-settings-container, .quick-create-subscriber-settings-container{
-    background-color: #efefef;
+    background-color: #eff7fc;
     /* display: flex;
     justify-content: space-between;
     padding: 0 2vw; */
@@ -83,7 +83,7 @@
 #field-selection-container{
     display: flex;
     justify-content: space-evenly;
-    background-color: #efefef;
+    background-color: #eff7fc;
     padding: 3vh 3vw;
 }
 
