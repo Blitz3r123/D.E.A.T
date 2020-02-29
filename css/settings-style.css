@@ -134,7 +134,7 @@
 }
 
 .connection-list-item{
-    padding: 0vh 1vw;
+    padding: 1vh 1vw;
     background-color: #eff7fc;
     border-radius: 3px;
     margin-top: 2vh;
@@ -144,15 +144,19 @@
     width: 100%;
     font-weight: 700;
     padding-top: 1vh;
+    margin-bottom: 2vh;
 }
 
 .connection-list-item-title{
-    
+    border: none;
+    background-color: #eff7fc;
+    font-weight: 700;
 }   
 
 .connection-list-item-content-container{
     display: flex;
     justify-content: space-evenly;
+    padding-bottom: 2vh;
 }
 
 .domain-container{
