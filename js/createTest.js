@@ -6,8 +6,8 @@ $('.run-create-test-container').hide();
 $('.test-list-content .empty-message').hide();
 
 // Delete following 3 line when finished working on this:
-// $('#create-test-settings').hide();
-// $('#create-test-index').hide();
+$('#create-test-settings').show();
+$('#create-test-index').hide();
 // startCreateTest();
 
 createTestConstructor();
