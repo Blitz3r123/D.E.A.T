@@ -126,7 +126,7 @@
 
                 <div class="recent-results">
                     <p class="subtitle">
-                        <ion-icon name="stats" style="margin-bottom: -0.5vh;"></ion-icon>    
+                        <ion-icon name="analytics-outline" style="margin-bottom: -0.5vh;"></ion-icon>    
                         Recent Results
                     </p>
 
@@ -926,6 +926,55 @@
                 
                 <div class="scroll">
 
+                    <div id="rdp-settings-container">
+
+                        <h1>Remote Desktop Connections</h1>
+
+                        <div class="connection-list">
+
+                            <div class="connection-list-item">
+
+                                <div class="connection-list-item-title-container">
+                                    <p class="connection-list-item-title">Connection 1</p>
+                                </div>
+
+                                <div class="connection-list-item-content-container">
+
+                                    <div class="domain-container">
+                                        <p class="domain">nsq905ap</p>
+                                    </div>
+
+                                    <div class="login-details-container">
+                                        <p class="username">acwh025</p>
+
+                                        <div class="password-container">
+                                            <span>password</span>
+                                            <ion-icon name="eye"></ion-icon>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="edit-container">
+
+                                        <ion-icon name="pencil-outline" class="edit"></ion-icon>
+                                        <ion-icon name="trash" class="delete"></ion-icon>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="add-connection-container">
+                                <ion-icon name="add"></ion-icon>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
                     <div id='general-settings-container'>
                     
                         <h1>General</h1>
@@ -1049,7 +1098,7 @@
 
                     <hr>
 
-                    <div id="results-settings-container">  
+                    <div id="results-settings-container" style="display: none;">  
 
                         <h1>Test Results</h1>
 
@@ -1117,6 +1166,10 @@
 
                     </div><!-- End of div#results-settings-container -->
 
+                    <!-- <hr> -->
+
+                    
+
                 </div><!-- End of div.scroll -->
 
             </div><!-- End of div.main-content#settingsContent -->
@@ -1128,8 +1181,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <!-- <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script> -->
-        <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
+        <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
         <script src="https://unpkg.com/d3@5.12.0/dist/d3.min.js"></script>
         <link href="https://unpkg.com/c3@0.7.11/c3.min.css" rel="stylesheet">
         <script src="https://unpkg.com/c3@0.7.11/c3.min.js"></script>

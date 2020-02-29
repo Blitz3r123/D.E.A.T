@@ -21,7 +21,7 @@ $('.folder-selection-input').on('change', e => populateFileList(e));
 
 function runConstructor(){
     populateProcesses();
-    validateStartButton();
+    // validateStartButton();
 }
 
 function setState(item, value){
