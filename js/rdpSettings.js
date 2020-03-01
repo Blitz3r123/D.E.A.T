@@ -10,8 +10,18 @@ async function rdpConstructor(){
         console.log(`%c ${err}`, 'color: red;');
     }
 
+    // $('.add-rdp-connection-container').hide();
+
     renderList();
 }
+
+function showRDPAdd(){
+    $('.add-rdp-connection-container').show();
+}
+
+$('#close-rdp-box').on('click', e => {
+    $('.' + e.target.parentElement.parentElement.className).hide();
+});
 
 function renderList(){
     let connectionList = document.querySelector('#rdp-connection-list');
