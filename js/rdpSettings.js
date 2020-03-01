@@ -119,8 +119,19 @@ function createAddRDPButton(){
     div.className = 'add-connection-container';
     icon.name = 'add';
     icon.id = 'rdp-add';
+    icon.addEventListener('click', e => showRDPAdd());
 
     div.appendChild(icon);
 
     return div;
+}
+
+function showPassword(event){
+    let currType = event.target.parentElement.childNodes[0].type;
+    if(currType == 'password'){
+        event.target.parentElement.childNodes[0].type = 'text';
+    }else{
+        event.target.parentElement.childNodes[0].type = 'password';
+
+    }
 }
