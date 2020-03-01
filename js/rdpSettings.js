@@ -132,6 +132,5 @@ function showPassword(event){
         event.target.parentElement.childNodes[0].type = 'text';
     }else{
         event.target.parentElement.childNodes[0].type = 'password';
-
     }
 }

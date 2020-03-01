@@ -262,3 +262,76 @@
 .add-connection-container ion-icon{
     font-size: 3em;
 }
+
+.add-rdp-connection-container{
+    outline: 1px solid #eff7fc;
+    position: absolute;
+    width: 25vw;
+    left: 45vw;
+    height: 45vh;
+    top: 22vh;
+    z-index: 999;
+    background-color: white;
+    box-shadow: 0 0 100vh 0 #111;
+}
+
+.close-button-container{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-button-container ion-icon:hover{cursor: pointer;}
+.close-button-container ion-icon{
+    font-size: 1.5em;
+    margin: 1vh 1vw 0 0;
+}
+
+.add-rdp-heading{
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.add-rdp-container{
+    text-align: center;
+    margin-top: 2vh;
+}
+
+.input-title{
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    padding-left: 6.5vw;
+}
+
+.rdp-input{
+    text-align: center;
+    outline: none;
+}
+
+.buttons-container{
+    width: 100%;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.test-button:hover{cursor: pointer; color: white; background-color: blue;}
+.test-button{
+    border: 1px solid blue;
+    padding: 1vh 2vw;
+    color: blue;
+    border-radius: 2px;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}   
+
+.add-rdp-button:hover{cursor: pointer; color: green; background-color: white;}
+.add-rdp-button{
+    border: 1px solid green;
+    background-color: green;
+    color: white;
+    padding: 1vh 3vw;
+    border-radius: 2px;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
