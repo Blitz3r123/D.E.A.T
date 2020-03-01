@@ -15,6 +15,52 @@ async function rdpConstructor(){
     renderList();
 }
 
+$('#add-rdp-button').on('click', e => {
+    addRDPConnection(e);
+    renderList();
+});
+
+function deleteRDPConnection(event){
+    console.log(event.target.id);
+}
+
+function addRDPConnection(event){
+    console.log(event.target.parentElement.parentElement.childNodes);
+    let titleVal = event.target.parentElement.parentElement.childNodes[5].childNodes[3].value;
+    let domainVal = event.target.parentElement.parentElement.childNodes[7].childNodes[3].value;
+    let usernameVal = event.target.parentElement.parentElement.childNodes[9].childNodes[3].value;
+    let passwordVal = event.target.parentElement.parentElement.childNodes[11].childNodes[3].value;
+
+    if(titleVal == '' || domainVal == '' || usernameVal == '' || passwordVal == ''){
+        showPopup("You can't leave anything empty!");
+        return;
+    }else{
+        // console.log(`%c titleVal:>|${titleVal}|<`, 'background: #eee; color: blue;');
+        // console.log(`%c domainVal:>|${domainVal}|<`, 'background: #eee; color: blue;');
+        // console.log(`%c usernameVal:>|${usernameVal}|<`, 'background: #eee; color: blue;');
+        // console.log(`%c passwordVal:>|${passwordVal}|<`, 'background: #eee; color: blue;');
+    
+        let connection = {
+            title: titleVal,
+            domain: domainVal,
+            username: usernameVal,
+            password: passwordVal
+        };
+    
+        rdpData.push(connection);
+
+        fs.writeFile(path.join(__dirname, './../data/RDPSettings.json'), JSON.stringify(rdpData), err => {
+            if(err){
+                console.log(`%c err`, 'color: red;');
+            }else{
+                $('.add-rdp-connection-container').hide();
+            }
+        });
+
+    }
+
+}
+
 function showRDPAdd(){
     $('.add-rdp-connection-container').show();
 }
@@ -25,6 +71,7 @@ $('#close-rdp-box').on('click', e => {
 
 function renderList(){
     let connectionList = document.querySelector('#rdp-connection-list');
+    clearList(connectionList);
     rdpData.forEach(connection => {
         connectionList.appendChild(createConnectionItem(connection));
     });
@@ -114,6 +161,10 @@ function createConnectionItem(connection){
         editIcon.name = 'trash';
         editIcon.className = 'delete';
         editIcon.id = 'rdp-delete-' + normaliseString(connection.title);
+        editIcon.addEventListener('click', e => {
+            deleteRDPConnection(e);
+        });
+        editContainer.appendChild(editIcon);
         contContainer.appendChild(editContainer);
         
     itemContainer.appendChild(titleContainer);

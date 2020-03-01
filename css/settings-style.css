@@ -268,9 +268,8 @@
     position: absolute;
     width: 25vw;
     left: 45vw;
-    height: 45vh;
+    height: 55vh;
     top: 22vh;
-    z-index: 999;
     background-color: white;
     box-shadow: 0 0 1vh 0 #111;
 }
