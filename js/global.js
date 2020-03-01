@@ -805,8 +805,20 @@ function readFolder(pathVal){
 
 function readData(path){
     let data = fs.readFileSync(path);
-
+    
     return JSON.parse(data);
+}
+
+function asyncReadData(path){
+    return new Promise((resolve, reject) => {
+        let data = fs.readFile(path, (err, data) => {
+            if(err){
+                reject(err);
+            }else{
+                resolve(JSON.parse(data));
+            }
+        });
+    });
 }
 
 function normaliseString(string){

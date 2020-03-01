@@ -930,25 +930,25 @@
 
                         <h1>Remote Desktop Connections</h1>
 
-                        <div class="connection-list">
+                        <div class="connection-list" id="rdp-connection-list">
 
-                            <div class="connection-list-item">
+                            <!-- <div class="connection-list-item">
 
                                 <div class="connection-list-item-title-container">
-                                    <input type="text" value="Connection 1" class="connection-list-item-title"></input>
+                                    <input type="text" value="Connection 1" class="connection-list-item-title" id="rdp-title"></input>
                                 </div>
 
                                 <div class="connection-list-item-content-container">
 
                                     <div class="domain-container">
-                                        <input type="text" placeholder="Domain" value="nsq905ap" class="domain"></input>
+                                        <input type="text" placeholder="Domain" value="nsq905ap" class="domain" id="rdp-domain"></input>
                                     </div>
 
                                     <div class="login-details-container">
-                                        <input type="text" class="username" placeholder="Username" value="acwh025"></input>
+                                        <input type="text" class="username" placeholder="Username" value="acwh025" id="rdp-username"></input>
 
                                         <div class="password-container">
-                                            <input type="password" placeholder="Password" value="Password"></input>
+                                            <input type="password" placeholder="Password" value="Password" id="rdp-password"></input>
                                             <ion-icon name="eye"></ion-icon>
                                         </div>
 
@@ -956,7 +956,7 @@
 
                                     <div class="edit-container">
 
-                                        <ion-icon name="trash" class="delete"></ion-icon>
+                                        <ion-icon name="trash" class="delete" id="rdp-delete"></ion-icon>
 
                                     </div>
 
@@ -965,8 +965,8 @@
                             </div>
 
                             <div class="add-connection-container">
-                                <ion-icon name="add"></ion-icon>
-                            </div>
+                                <ion-icon name="add" id="rdp-add"></ion-icon>
+                            </div> -->
 
                         </div>
 
@@ -1194,6 +1194,7 @@
        <script src="./../js/createGeneralSettings.js"></script>
        <script src="./../js/createPublisherSettings.js"></script>
        <script src="./../js/createSubscriberSettings.js"></script>
+       <script src="./../js/rdpSettings.js"></script>
        <script src="./../js/analyse.js"></script>
        <script src="./../js/createTest.js"></script>
        <!-- End of JavaScript Functions -->
