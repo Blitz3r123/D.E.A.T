@@ -9,11 +9,11 @@ var hasError;
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
-$('#createTestContent').hide();
+// $('#createTestContent').hide();
 $('#runContent').hide();
 $('#indexContent').hide();
 $('#analyseContent').hide();
-// $('#settingsContent').hide();
+$('#settingsContent').hide();
 
 // Hide popup view
 $('#popup').hide();

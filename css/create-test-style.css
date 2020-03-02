@@ -136,10 +136,11 @@
     white-space: nowrap;
 }
 
-.buttons-container{
+.settings-top-bar .buttons-container{
     display: flex;
     justify-content: space-evenly;
     width: 50%;
+    margin: 0;
 }
 
 .create-test-back-button:hover{color: blue; background-color: white; border: 1px solid blue; cursor: pointer;}
