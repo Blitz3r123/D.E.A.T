@@ -20,16 +20,21 @@ $('#add-rdp-button').on('click', e => {
     renderList();
 });
 
-function deleteRDPConnection(event){
-    console.log(event.target.id);
+async function deleteRDPConnection(event){
+    let conName = unnormaliseString(event.target.id.replace('rdp-delete-', ''));
+
+    let toDelete = rdpData.filter(a => {return a.title == conName})[0];
+    rdpData.splice( rdpData.indexOf(toDelete), 1 );
+    await asyncWriteFile(path.join(__dirname, './../data/RDPSettings.json'), JSON.stringify(rdpData));
 }
 
 function addRDPConnection(event){
-    console.log(event.target.parentElement.parentElement.childNodes);
-    let titleVal = event.target.parentElement.parentElement.childNodes[5].childNodes[3].value;
-    let domainVal = event.target.parentElement.parentElement.childNodes[7].childNodes[3].value;
-    let usernameVal = event.target.parentElement.parentElement.childNodes[9].childNodes[3].value;
-    let passwordVal = event.target.parentElement.parentElement.childNodes[11].childNodes[3].value;
+    // console.log(event.target.parentElement.parentElement.childNodes);
+    let parentElem = event.target.parentElement.parentElement;
+    let titleVal = parentElem.childNodes[5].childNodes[3].value;
+    let domainVal = parentElem.childNodes[7].childNodes[3].value;
+    let usernameVal = parentElem.childNodes[9].childNodes[3].value;
+    let passwordVal = parentElem.childNodes[11].childNodes[3].value;
 
     if(titleVal == '' || domainVal == '' || usernameVal == '' || passwordVal == ''){
         showPopup("You can't leave anything empty!");
@@ -163,6 +168,7 @@ function createConnectionItem(connection){
         editIcon.id = 'rdp-delete-' + normaliseString(connection.title);
         editIcon.addEventListener('click', e => {
             deleteRDPConnection(e);
+            renderList();
         });
         editContainer.appendChild(editIcon);
         contContainer.appendChild(editContainer);

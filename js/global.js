@@ -784,6 +784,18 @@ function createFile(output, path){
     fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log(`%c Created file at \n ${path}`, 'color: blue;'));
 }
 
+function asyncWriteFile(path, output){
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path, output, err => {
+            if(err){
+                reject(err);
+            }else{
+                resolve('SUCCESS');
+            }
+        });
+    });
+}
+
 function showPopup(message){
     let popup = document.querySelector('#popup');
     let popupMessage = document.querySelector('#popup-message');
