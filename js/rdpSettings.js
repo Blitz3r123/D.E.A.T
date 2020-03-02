@@ -64,6 +64,12 @@ function addRDPConnection(event){
 
     }
 
+    // Reset input values
+    document.querySelector('#rdp-connection-title').value = '';
+    document.querySelector('#rdp-domain').value = '';
+    document.querySelector('#rdp-username').value = '';
+    document.querySelector('#rdp-password').value = '';
+
 }
 
 function showRDPAdd(){
