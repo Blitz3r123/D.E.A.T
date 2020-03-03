@@ -15,6 +15,37 @@ async function rdpConstructor(){
     renderList();
 }
 
+$('#test-rdp-button').on('click', e => {testRDPConnection(e)});
+
+function testRDPConnection(event){
+    let parentElem = event.target.parentElement.parentElement;
+    let titleVal = parentElem.childNodes[5].childNodes[3].value;
+    let domainVal = parentElem.childNodes[7].childNodes[3].value;
+    let usernameVal = parentElem.childNodes[9].childNodes[3].value;
+    let passwordVal = parentElem.childNodes[11].childNodes[3].value;
+
+    showPopup("Connecting...");
+
+    var client = rdp.createClient({ 
+        domain : 'ENTERPRISE', 
+        userName : usernameVal,
+        password : passwordVal,
+        enablePerf : true,
+        autoLogin : true,
+        decompress : false,
+        screen : { width : 800, height : 600 },
+        locale : 'en',
+        logLevel : 'INFO'
+    }).on('connect', function () {
+        showPopup("Connected to " + domainVal);
+    }).on('close', function() {
+        console.log("Disconnected to " + domainVal);
+    }).on('bitmap', function(bitmap) {
+    }).on('error', function(err) {
+        showPopup("Error: " + err);
+    }).connect(domainVal, 3389);
+}
+
 $('#add-rdp-button').on('click', e => {
     addRDPConnection(e);
     renderList();
