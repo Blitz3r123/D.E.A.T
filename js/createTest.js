@@ -7,8 +7,8 @@ $('.test-list-content .empty-message').hide();
 
 // Delete following 3 line when finished working on this:
 // $('#create-test-settings').show();
-$('#create-test-index').hide();
-$('#create-test-rdp-settings').show();
+// $('#create-test-index').hide();
+// $('#create-test-rdp-settings').show();
 
 createTestConstructor();
 
@@ -16,6 +16,11 @@ function createTestConstructor(){
     populateTestList();
     document.querySelector('#create-test-console').value = '';
 }
+
+$('.rdp-settings-back-button').on('click', e => {
+    $('#create-test-rdp-settings').hide();
+    $('#create-test-settings').show();
+});
 
 $('#run-create-test-button').on('click', e => {
     let runOption = getRunOption();
@@ -1168,7 +1173,6 @@ function openTestSettings(element){
     document.querySelector('#create-test-settings').setAttribute('path', normaliseString(testFolderPath));
     document.querySelector('#create-test-settings').setAttribute('fileIndex', 1);
 
-    checkStartTestStatus();
     $('#create-test-settings').show();
 }
 
