@@ -373,6 +373,127 @@ input.pub-sub-list-item-title{
     max-width: 30%;
 }
 
+#create-test-rdp-settings{
+    display: block;
+}
+
 .run-create-test-container{
     height: 89.3vh;
+}
+
+.machine-list-container{
+    background-color: #eff7fc;
+    height: 90%;
+    padding: 2vh 2vw;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.machine{
+    /* outline: 1px solid black; */
+    /* background-color: red; */
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    height: auto;
+    min-height: 10%;
+    padding: 2% 2%;
+    margin-top: 2vh;
+}
+
+.machine .machine-container{
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    height: auto;
+    min-height: 10%;
+    padding: 2% 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.machine .machine-title{
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.machine .machine-title-input{
+    border: none;
+    background-color: #eff7fc;
+}
+
+.machine .file-container{
+    /* border: 1px solid #444; */
+    padding-top: 1%;
+    width: 90%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.machine .file-name{
+    outline: 1px solid #aaa;
+    padding-left: 1%;
+    line-height: 3vh;
+    background-color: #eff7fc;
+    margin-right: 1vw;
+}
+
+.machine .file-name .file-number{background-color: #444; color: white; padding: 0vh 1vw; margin-right: 1vw;}
+
+.machine .reset-button-container:hover{cursor: pointer; color: white; background-color: #444;}
+.machine .add-file-container:hover{cursor: pointer; color: white; background-color: #444;}
+.machine .reset-button-container, .machine .add-file-container{
+    /* outline: 1px solid black; */
+    border: 1px solid #444;
+    border-radius: 2px;
+    width: 10%;
+    text-align: center;
+    max-height: 7vh;
+    margin-left: 1vw;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+.machine .reset-button-container ion-icon, .add-file-container ion-icon{
+    font-size: 2em;
+    /* outline: 1px solid black; */
+    height: 100%;
+}
+
+.add-machine-container:hover{cursor: pointer; color: #efefef; background-color: #666;}
+.add-machine-container{
+    outline: 1px solid #666;
+    margin-top: 2vh;
+    font-size: 3em;
+    width: 10%;
+    text-align: center;
+    height: 10vh;
+    color: #666;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+.add-machine-container ion-icon{
+    /* outline: 1px solid black; */
+    height: 100%;
+}
+
+.create-test-rdp-run-button-container{
+    height: 8%;
+    background-color: #eff7fc;
+    /* outline: 1px solid black; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.create-test-rdp-run-button:hover{cursor: pointer; color: green; background-color: #eff7fc;}
+.create-test-rdp-run-button{
+    border: 1px solid green;
+    margin-right: 3vw;
+    padding: 1vh 5vw;
+    color: white;
+    background-color: green;
+    border-radius: 2px;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
 }

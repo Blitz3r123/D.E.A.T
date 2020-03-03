@@ -480,11 +480,11 @@
                             <div class="buttons-container">
                                 <p class="create-test-back-button" onClick="showTestSettingsPage()">Back</p>
                                 <p class="create-test-start-button-container">
-                                    <select>
+                                    <select id="create-test-run-option">
                                         <option>Run local</option>
                                         <option>Run on remote desktop</option>
                                     </select>
-                                    <span class='go-button'>Go</span>
+                                    <span class='go-button' id="run-create-test-button">Go</span>
                                 </p>
                             </div>
 
@@ -579,6 +579,48 @@
 
                         </div>
 
+                    </div>
+
+                </div>
+
+                <div id="create-test-rdp-settings" class="create-test-index" style="display: none;">
+
+                    <div class="machine-list-container">
+                        
+                        <div class="machine-list">
+                            
+                            <div class="machine">
+                            
+                                <input class="machine-title machine-title-input" value="Machine 1"></input>
+    
+                                <div class="machine-container">
+    
+                                    <div class="file-container">
+                                    
+                                    </div>
+        
+                                    <div class="reset-button-container">
+                                        <ion-icon name="trash"></ion-icon>
+                                    </div>
+        
+                                    <div class="add-file-container">
+                                        <ion-icon name='add'></ion-icon>
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+
+                        </div>
+
+                        <div class="add-machine-container">
+                            <ion-icon name='add'></ion-icon>
+                        </div><!-- End of div.add-machine-container -->
+
+                    </div><!-- End of div.machine-list -->
+
+                    <div class="create-test-rdp-run-button-container">
+                        <p class="create-test-rdp-run-button">Start</p>
                     </div>
 
                 </div>

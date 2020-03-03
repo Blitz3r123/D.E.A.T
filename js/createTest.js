@@ -7,14 +7,47 @@ $('.test-list-content .empty-message').hide();
 
 // Delete following 3 line when finished working on this:
 // $('#create-test-settings').show();
-// $('#create-test-index').hide();
-// startCreateTest();
+$('#create-test-index').hide();
+$('#create-test-rdp-settings').show();
 
 createTestConstructor();
 
 function createTestConstructor(){
     populateTestList();
     document.querySelector('#create-test-console').value = '';
+}
+
+$('#run-create-test-button').on('click', e => {
+    let runOption = getRunOption();
+    runCreateTest(runOption);
+});
+
+function runCreateTestRDP(){
+    console.log(`%c RUN TEST ON VM HERE`, 'color: green;');
+    console.trace();
+}
+
+function runCreateTest(runOption){
+    if(runOption == 'local'){
+        startCreateTest();
+    }else{                          // runOption == 'rdp'
+        showRDPSettings();
+    }
+}   
+
+function showRDPSettings(){
+    $('#create-test-settings').hide();
+    $('#create-test-rdp-settings').show();
+}
+
+// Gets whether user wants to run locally or through RDP
+function getRunOption(){
+    let select = document.querySelector('#create-test-run-option');
+    if(select.value.includes('local')){
+        return 'local';
+    }else if(select.value.includes('remote desktop')){
+        return 'rdp';
+    }
 }
 
 $('.create-test-start-button').on('click', e => {
