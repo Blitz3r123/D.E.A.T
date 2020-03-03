@@ -805,6 +805,32 @@ function showPopup(message){
     $('#popup').show();
 }
 
+async function asyncReadFolder(pathval){
+    return new Promise((resolve, reject) => {
+        fs.lstat(pathval, (err, stats) => {
+            
+            if(err){
+                reject(err);
+            }else{
+                
+                if(stats.isDirectory()){
+                    fs.readdir(pathval, (error, files) => {
+                        if(error){
+                            reject(error);
+                        }else{
+                            resolve(files);
+                        }
+                    });
+                }else{
+                    reject("Not a directory!");     
+                }
+
+            }
+
+        });
+    });
+}
+
 // Takes in the folder path and returns its files (not as paths - just its names)
 function readFolder(pathVal){
     let theFiles = [];

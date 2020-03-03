@@ -41,8 +41,95 @@ function runCreateTest(runOption){
 }   
 
 function showRDPSettings(){
+    renderMachineList();
     $('#create-test-settings').hide();
     $('#create-test-rdp-settings').show();
+}
+
+async function renderMachineList(){
+    let testPath = createTestState.path.value;
+    let testConfig = await asyncReadData( path.join(createTestState.path.value, path.basename(createTestState.path.value) + '.json') ).catch(err => console.log(err));
+
+    let files = await asyncReadFolder(testPath);
+
+    files = files.filter(a => {
+        return path.extname(a).includes('.json');
+    });
+
+    let machineConfigFiles = files.filter(a => {
+        return a.includes('machineConfig');
+    });
+
+    if(machineConfigFiles.length == 0){
+        createMachineConfigFile(testPath);
+    }else{
+
+        let configPath = path.join(testPath, machineConfigFiles[0]);
+
+        let machines = await asyncReadData(configPath);
+        let list = document.querySelector('.machine-list');
+
+        machines.forEach(machine => {
+            let machineItem = createMachineItem(machine);
+            list.appendChild(machineItem);
+            // console.log(machine);
+        });
+
+    }
+    
+}
+
+function createMachineItem(machine){
+    let machineDiv = document.createElement('div');
+    machineDiv.className = 'machine';
+
+    let titleInput = document.createElement('input');
+    titleInput.className = 'machine-title machine-title-input';
+    titleInput.value = machine.title;
+
+    machineDiv.appendChild(titleInput);
+
+    let machineContainerDiv = document.createElement('div');
+    machineContainerDiv.className = 'machine-container';
+
+    let fileContainer = document.createElement('div');
+    fileContainer.className = 'file-container';
+    
+    machine.files.forEach(file => {
+        let fileItem = document.createElement('p');
+        fileItem.className = 'file-name';
+        fileItem.textContent = path.basename(file);
+        fileItem.id = file;
+        fileItem.addEventListener('click', e => {
+            deleteMachineFile(e);
+        });
+        fileContainer.appendChild(fileItem);
+    });
+
+    machineContainerDiv.appendChild(fileContainer);
+
+    let resetButtonContainer = document.createElement('div');
+    resetButtonContainer.className = 'reset-button-container';
+    let resetIcon = document.createElement('ion-icon');
+    resetIcon.name = 'trash';
+    resetButtonContainer.appendChild(resetIcon);
+
+    let addFileContainer = document.createElement('div');
+    addFileContainer.className = 'add-file-container';
+    let addIcon = document.createElement('ion-icon');
+    addIcon.name = 'add';
+    addFileContainer.appendChild(addIcon);
+
+    machineContainerDiv.appendChild(resetButtonContainer);
+    machineContainerDiv.appendChild(addFileContainer);
+
+    machineDiv.appendChild(machineContainerDiv);
+
+    return machineDiv;
+}
+
+function createMachineConfigFile(testPath){
+
 }
 
 // Gets whether user wants to run locally or through RDP
