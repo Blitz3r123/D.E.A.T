@@ -46,6 +46,33 @@ function showRDPSettings(){
     $('#create-test-rdp-settings').show();
 }
 
+$('#add-machine').on('click', e => {
+    addMachine();
+});
+
+async function addMachine(){
+    let testPath = createTestState.path.value;
+
+    let testFiles = await asyncReadFolder(testPath);
+
+    let machineConfig = await asyncReadData( path.join( testPath, 'machineConfig.json' ) );
+
+    let machineObj = {title: "", files: []};
+
+    machineObj.title = "Machine " + (parseInt(machineConfig.length) + 1);
+
+    machineConfig.push(machineObj);
+
+    fs.writeFile(path.join( testPath, 'machineConfig.json' ), JSON.stringify(machineConfig), err => {
+        if(err){
+            console.log(err);
+        }
+    });
+
+    renderMachineList();
+
+}
+
 async function renderMachineList(){
     let testPath = createTestState.path.value;
     let testConfig = await asyncReadData( path.join(createTestState.path.value, path.basename(createTestState.path.value) + '.json') ).catch(err => console.log(err));
@@ -69,11 +96,15 @@ async function renderMachineList(){
         let machines = await asyncReadData(configPath);
         let list = document.querySelector('.machine-list');
 
-        machines.forEach(machine => {
-            let machineItem = createMachineItem(machine);
-            list.appendChild(machineItem);
-            // console.log(machine);
-        });
+        clearList(list);
+
+        if(machines.length > 0){
+            machines.forEach(machine => {
+                let machineItem = createMachineItem(machine);
+                list.appendChild(machineItem);
+                // console.log(machine);
+            });
+        }
 
     }
     
@@ -129,7 +160,7 @@ function createMachineItem(machine){
 }
 
 function createMachineConfigFile(testPath){
-    fs.writeFile(path.join( testPath, 'machineConfig.json'), JSON.stringify({}), err => {
+    fs.writeFile(path.join( testPath, 'machineConfig.json'), JSON.stringify([]), err => {
         if(err){
             console.log(err);
         }
