@@ -383,10 +383,11 @@ input.pub-sub-list-item-title{
 
 .machine-list-container{
     background-color: #eff7fc;
-    height: 90%;
+    height: 84%;
     padding: 2vh 2vw;
     overflow-y: scroll;
     width: 100%;
+    padding-top: 0;
 }
 
 .machine{
@@ -496,4 +497,32 @@ input.pub-sub-list-item-title{
     border-radius: 2px;
     transition-duration: 0.2s;
     -webkit-transition-duration: 0.2s;
+}
+
+#create-test-rdp-settings .back-button-container{
+    height: 6%;
+    background-color: #eff7fc;
+    padding: 1vh 0 0 2vw;
+}
+
+#create-test-rdp-settings .rdp-settings-back-button:hover{cursor: pointer; color: red; background-color: white;}
+#create-test-rdp-settings .rdp-settings-back-button{
+    margin: 0;
+    border: 1px solid red;
+    width: 20%;
+    text-align: center;
+    color: white;
+    border-radius: 2px;
+    background-color: red;
+    display: flex;
+    justify-content: space-evenly;
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+.rdp-settings-back-button ion-icon{
+    display: block;
+    font-size: 1.4em;
+    margin-left: -2vw;
+    margin-right: -1vw;
 }

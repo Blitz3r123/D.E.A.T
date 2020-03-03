@@ -50,18 +50,18 @@ function getRunOption(){
     }
 }
 
-$('.create-test-start-button').on('click', e => {
-    createBatFiles();
-    startCreateTest();
-});
+// $('.create-test-start-button').on('click', e => {
+//     createBatFiles();
+//     startCreateTest();
+// });
 
 // Greys out start button on create-test page if there are no files
-function checkStartTestStatus(){
-    let batFiles = readFolder(createTestState.path.value).filter(a => a.toLowerCase().includes('.bat'));
+// function checkStartTestStatus(){
+//     let batFiles = readFolder(createTestState.path.value).filter(a => a.toLowerCase().includes('.bat'));
 
-    // console.log(batFiles);
+//     // console.log(batFiles);
 
-}
+// }
 
 function stopCreateTest(){
     $('#create-test-settings').show();
