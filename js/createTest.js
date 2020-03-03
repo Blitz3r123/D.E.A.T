@@ -129,7 +129,11 @@ function createMachineItem(machine){
 }
 
 function createMachineConfigFile(testPath){
-
+    fs.writeFile(path.join( testPath, 'machineConfig.json'), JSON.stringify({}), err => {
+        if(err){
+            console.log(err);
+        }
+    });
 }
 
 // Gets whether user wants to run locally or through RDP
