@@ -110,6 +110,24 @@ async function renderMachineList(){
     
 }
 
+async function deleteMachine(machineTitle){
+    let testPath = createTestState.path.value;
+    let machineConf = await asyncReadData( path.join( testPath, 'machineConfig.json' ) );
+
+    let toDelete = machineConf.filter(a => a.title == machineTitle)[0];
+
+    machineConf = machineConf.filter(a => a != toDelete);
+
+    fs.writeFile(path.join(testPath, 'machineConfig.json'), JSON.stringify(machineConf), err => {
+        if(err){
+            console.log(`%c err`, 'color: red;');
+        }
+    });
+
+    renderMachineList();
+
+}
+
 function createMachineItem(machine){
     let machineDiv = document.createElement('div');
     machineDiv.className = 'machine';
@@ -143,6 +161,9 @@ function createMachineItem(machine){
     resetButtonContainer.className = 'reset-button-container';
     let resetIcon = document.createElement('ion-icon');
     resetIcon.name = 'trash';
+    resetIcon.addEventListener('click', e => {
+        deleteMachine(machine.title);
+    });
     resetButtonContainer.appendChild(resetIcon);
 
     let addFileContainer = document.createElement('div');
