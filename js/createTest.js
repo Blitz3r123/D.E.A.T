@@ -277,6 +277,8 @@ function runNextPendingFile(runConfig){
         
     });
 
+    document.querySelector('#current-file-title').textContent = path.basename(nextFile.path);
+
 }
 
 // Create run config file to see what files are pending/running/complete/aborted
@@ -799,13 +801,26 @@ function changeFileTab(event){
 
 }
 
-// Update repetition count when changes
-$('#test-rep-input').on('keyup', e => {
+function preUpdateRepCount(e){
     let data = document.querySelector('#create-test-settings').attributes;
     let testFolderPath = data.path.value;
     let fileIndex = data.fileIndex.value;
 
+    let timeSpan = document.querySelector('#test-rep-time');
+
+    e.target.value > 1 ? timeSpan.textContent = 'times.' : timeSpan.textContent = 'time.';
+
     updateRepCount(e.target.value, testFolderPath, fileIndex);
+}
+
+// Update repetition count when changes
+$('#test-rep-input').on('keyup', e => {
+    preUpdateRepCount(e);
+});
+
+// Update repetition count when changes
+$('#test-rep-input').on('change', e => {
+    preUpdateRepCount(e);
 });
 
 function updateRepCount(value, pathval, fileIndex){
