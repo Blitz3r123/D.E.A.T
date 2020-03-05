@@ -240,10 +240,84 @@ function startCreateTest(){
 
     fs.writeFile(path.join(createTestState.path.value, 'runConfig.json'), JSON.stringify(runConfig), err => err ? console.log(err) : console.log(`%c Created run config file in \n ${createTestState.path.value}`, 'color: green;'));
 
-    runNextPendingFile(runConfig);
+    // runNextPendingFile(runConfig);
+    runConfig.files.forEach(file => {
+        file.status = 'running';
+        runFile(file.path);
+
+    });
     
     $('#create-test-settings').hide();
     $('.run-create-test-container').show();
+}
+
+async function runFile(pathval){
+    let runConfig = await asyncReadData(path.join(createTestState.path.value, 'runConfig.json'));
+
+    let fileConf = runConfig.files.filter(a => a.path == pathval)[0];
+
+    let command = `${pathval}`;
+    let dir = exec(command, (err, stdout, stderr) => {
+        if(err){
+            fileConf.output += err;
+        }else if(stdout){
+            fileConf.output += stdout;
+        }else if(stderr){
+            fileConf.output += stderr;
+        }
+
+        fs.writeFile(
+            path.join(
+                createTestState.path.value,
+                'runConfig.json'
+            ),
+            JSON.stringify(runConfig),
+            err => {
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
+
+    });
+
+    dir.stdout.on('data', data => {
+        console.log('STDOUT: \n');
+        console.log(data);
+        fileConf.output += data;
+        fs.writeFile(
+            path.join(
+                createTestState.path.value,
+                'runConfig.json'
+            ),
+            JSON.stringify(runConfig),
+            err => {
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
+    });
+    
+    dir.stderr.on('data', data => {
+        console.log('STDERR: \n');
+        console.log(data);
+        
+        fileConf.output += data;
+        fs.writeFile(
+            path.join(
+                createTestState.path.value,
+                'runConfig.json'
+            ),
+            JSON.stringify(runConfig),
+            err => {
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
+
+    });
 }
 
 // Takes in run config file and runs next pending file
@@ -293,7 +367,8 @@ function createRunConfig(){
         let newObj = {
             path: path.join( createTestState.path.value, file ),
             title: file,
-            status: 'pending'
+            status: 'pending',
+            output: ''
         };
         runObj.files.push(newObj);
     });
@@ -326,7 +401,43 @@ function createBatFiles(){
         });
     }
 
+}
 
+async function createBatSequenceFiles(){
+    let allFiles = await asyncReadFolder(createTestState.path.value).catch(err => console.log(err));
+    let batFiles = await allFiles.filter(a => path.extname(a) == '.bat');
+    let fileName, fileOutput;
+
+    // for(var i = 0; i < batFiles.length; i++){
+    //     if(i != batFiles.length - 1){
+    //         fileName = i;
+    //         fileOutput = `
+    //             @echo off
+    //             Start /wait ${batFiles[i]}
+    //             REG ADD "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V ${`${i + 1}.bat`} /t REG_SZ /F /D ${i + 1 + '.bat'}
+    //             pause
+    //             shutdown -r -t 0
+    //         `;
+    //     }else{
+    //         fileName = i;
+    //         fileOutput = `
+    //             @echo off
+    //             Start /wait ${batFiles[i]}
+    //             exit
+    //         `;
+    //     }
+
+    //     console.log(`%c i: ${i}.bat`, 'color: green;');
+
+    //     // fs.writeFile(
+    //     //     path.join(
+    //     //         createTestState.path.value,
+    //     //         `${i}.bat`
+    //     //     ),
+    //     //     fileOutput,
+    //     //     err => {err ? console.log(err) : console.log(`Created ${i + '.bat'} in ${createTestState.path.value}`);}
+    //     // );
+    // }
 
 }
 
