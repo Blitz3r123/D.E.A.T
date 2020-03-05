@@ -34,6 +34,7 @@ function runCreateTestRDP(){
 
 function runCreateTest(runOption){
     if(runOption == 'local'){
+        createBatFiles();
         startCreateTest();
     }else{                          // runOption == 'rdp'
         showRDPSettings();
@@ -303,22 +304,29 @@ function createRunConfig(){
 function createBatFiles(){
     let data = document.querySelector('#create-test-settings').attributes;
     let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
-    let fileConfig = testConfig.files[data.fileIndex.value - 1];
-
+    // let fileConfig = testConfig.files[data.fileIndex.value - 1];
     let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
     let perfTestLoc = generalSettings.defPerftestLoc;
 
-    fileConfig.publishers.forEach(publisher => {
-        let fileOutput = createPubBatOutput(perfTestLoc, publisher.generalSettings, publisher.publisherSettings);
+    let fileConfig;
 
-        fs.writeFile( path.join(data.path.value, publisher.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${publisher.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
-    });
+    for(var i = 0; i < testConfig.files.length; i++){
+        fileConfig = testConfig.files[i];
+        
+        fileConfig.publishers.forEach(publisher => {
+            let fileOutput = createPubBatOutput(perfTestLoc, publisher.generalSettings, publisher.publisherSettings);
+    
+            fs.writeFile( path.join(data.path.value, publisher.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${publisher.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
+        });
+    
+        fileConfig.subscribers.forEach(subscriber => {
+            let fileOutput = createSubBatOutput(perfTestLoc, subscriber.generalSettings, subscriber.subscriberSettings);
+    
+            fs.writeFile( path.join(data.path.value, subscriber.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${subscriber.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
+        });
+    }
 
-    fileConfig.subscribers.forEach(subscriber => {
-        let fileOutput = createSubBatOutput(perfTestLoc, subscriber.generalSettings, subscriber.subscriberSettings);
 
-        fs.writeFile( path.join(data.path.value, subscriber.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${subscriber.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
-    });
 
 }
 
