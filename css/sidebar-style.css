@@ -30,12 +30,16 @@
   max-width: 80%;
   color: #444;
 }
+.main-content .page-title::-webkit-scrollbar {
+  width: 0px !important;
+}
 .main-content .page-title {
   font-size: 3em;
-  padding: 3vh 0 3vh 3vw;
+  padding: 0vh 0 0vh 3vw;
   text-decoration: underline;
   overflow-x: scroll;
   white-space: nowrap;
+  margin-bottom: 0;
 }
 
 .sidebar {
