@@ -23,7 +23,7 @@ $('.rdp-settings-back-button').on('click', e => {
 });
 
 $('#run-create-test-button').on('click', e => {
-    let runOption = getRunOption();
+    let runOption = getCreateRunOption();
     runCreateTest(runOption);
 });
 
@@ -190,7 +190,7 @@ function createMachineConfigFile(testPath){
 }
 
 // Gets whether user wants to run locally or through RDP
-function getRunOption(){
+function getCreateRunOption(){
     let select = document.querySelector('#create-test-run-option');
     if(select.value.includes('local')){
         return 'local';

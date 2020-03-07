@@ -28,6 +28,28 @@ function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
 }
 
+$('#run-test-go-button').on('click', e => {
+    let option = getRunOption();
+
+    option == 'local' ? runTestsLocally() : runTestsRemotely();
+});
+
+function runTestsLocally(){
+    let processes = data.processes;
+
+    console.log(processes);
+}
+
+function getRunOption(){
+    let sel = document.querySelector('#run-test-run-option');
+
+    if(sel.value.toLowerCase().includes('local')){
+        return 'local';
+    }else{
+        return 'remote';
+    }
+}
+
 function validateStartButton(){
     let startButton = document.querySelector('#run-test-start');
     let processAmount = data.processes.length;
