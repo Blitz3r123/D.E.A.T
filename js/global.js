@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
+var rdp = require('node-rdpjs');
 
 // GLOBAL VARIABLES
 var hasError;
@@ -9,8 +10,8 @@ var hasError;
 
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
-// $('#createTestContent').hide();
-$('#runContent').hide();
+$('#createTestContent').hide();
+// $('#runContent').hide();
 $('#indexContent').hide();
 $('#analyseContent').hide();
 $('#settingsContent').hide();
@@ -784,12 +785,50 @@ function createFile(output, path){
     fs.writeFile(path, output, err => err ? console.log(`error creating file: ${err}`) : console.log(`%c Created file at \n ${path}`, 'color: blue;'));
 }
 
+function asyncWriteFile(path, output){
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path, output, err => {
+            if(err){
+                reject(err);
+            }else{
+                resolve('SUCCESS');
+            }
+        });
+    });
+}
+
 function showPopup(message){
     let popup = document.querySelector('#popup');
     let popupMessage = document.querySelector('#popup-message');
 
     popupMessage.textContent = message;
     $('#popup').show();
+}
+
+async function asyncReadFolder(pathval){
+    return new Promise((resolve, reject) => {
+        fs.lstat(pathval, (err, stats) => {
+            
+            if(err){
+                reject(err);
+            }else{
+                
+                if(stats.isDirectory()){
+                    fs.readdir(pathval, (error, files) => {
+                        if(error){
+                            reject(error);
+                        }else{
+                            resolve(files);
+                        }
+                    });
+                }else{
+                    reject("Not a directory!");     
+                }
+
+            }
+
+        });
+    });
 }
 
 // Takes in the folder path and returns its files (not as paths - just its names)
@@ -805,8 +844,20 @@ function readFolder(pathVal){
 
 function readData(path){
     let data = fs.readFileSync(path);
-
+    
     return JSON.parse(data);
+}
+
+function asyncReadData(path){
+    return new Promise((resolve, reject) => {
+        let data = fs.readFile(path, (err, data) => {
+            if(err){
+                reject(err);
+            }else{
+                resolve(JSON.parse(data));
+            }
+        });
+    });
 }
 
 function normaliseString(string){

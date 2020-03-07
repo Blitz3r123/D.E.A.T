@@ -21,11 +21,33 @@ $('.folder-selection-input').on('change', e => populateFileList(e));
 
 function runConstructor(){
     populateProcesses();
-    validateStartButton();
+    // validateStartButton();
 }
 
 function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
+}
+
+$('#run-test-go-button').on('click', e => {
+    let option = getRunOption();
+
+    option == 'local' ? runTestsLocally() : runTestsRemotely();
+});
+
+function runTestsLocally(){
+    let processes = data.processes;
+
+    console.log(processes);
+}
+
+function getRunOption(){
+    let sel = document.querySelector('#run-test-run-option');
+
+    if(sel.value.toLowerCase().includes('local')){
+        return 'local';
+    }else{
+        return 'remote';
+    }
 }
 
 function validateStartButton(){
@@ -261,7 +283,7 @@ function addProcess(){
     // processList.childElementCount == 0 when the page is fresh
     let processAmount = processList.childElementCount;
 
-    let newProcessTitle = 'Process ' + (processAmount + 1);
+    let newProcessTitle = 'Test ' + (processAmount + 1);
 
     let processDom = createProcessDom(newProcessTitle);
 

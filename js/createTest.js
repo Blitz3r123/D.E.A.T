@@ -6,9 +6,9 @@ $('.run-create-test-container').hide();
 $('.test-list-content .empty-message').hide();
 
 // Delete following 3 line when finished working on this:
-// $('#create-test-settings').hide();
+// $('#create-test-settings').show();
 // $('#create-test-index').hide();
-// startCreateTest();
+// $('#create-test-rdp-settings').show();
 
 createTestConstructor();
 
@@ -17,18 +17,200 @@ function createTestConstructor(){
     document.querySelector('#create-test-console').value = '';
 }
 
-$('.create-test-start-button').on('click', e => {
-    createBatFiles();
-    startCreateTest();
+$('.rdp-settings-back-button').on('click', e => {
+    $('#create-test-rdp-settings').hide();
+    $('#create-test-settings').show();
 });
 
-// Greys out start button on create-test page if there are no files
-function checkStartTestStatus(){
-    let batFiles = readFolder(createTestState.path.value).filter(a => a.toLowerCase().includes('.bat'));
+$('#run-create-test-button').on('click', e => {
+    let runOption = getCreateRunOption();
+    runCreateTest(runOption);
+});
 
-    // console.log(batFiles);
+function runCreateTestRDP(){
+    console.log(`%c RUN TEST ON VM HERE`, 'color: green;');
+    console.trace();
+}
+
+function runCreateTest(runOption){
+    if(runOption == 'local'){
+        createBatFiles();
+        startCreateTest();
+    }else{                          // runOption == 'rdp'
+        showRDPSettings();
+    }
+}   
+
+function showRDPSettings(){
+    renderMachineList();
+    $('#create-test-settings').hide();
+    $('#create-test-rdp-settings').show();
+}
+
+$('#add-machine').on('click', e => {
+    addMachine();
+});
+
+async function addMachine(){
+    let testPath = createTestState.path.value;
+
+    let testFiles = await asyncReadFolder(testPath);
+
+    let machineConfig = await asyncReadData( path.join( testPath, 'machineConfig.json' ) );
+
+    let machineObj = {title: "", files: []};
+
+    machineObj.title = "Machine " + (parseInt(machineConfig.length) + 1);
+
+    machineConfig.push(machineObj);
+
+    fs.writeFile(path.join( testPath, 'machineConfig.json' ), JSON.stringify(machineConfig), err => {
+        if(err){
+            console.log(err);
+        }
+    });
+
+    renderMachineList();
 
 }
+
+async function renderMachineList(){
+    let testPath = createTestState.path.value;
+    let testConfig = await asyncReadData( path.join(createTestState.path.value, path.basename(createTestState.path.value) + '.json') ).catch(err => console.log(err));
+
+    let files = await asyncReadFolder(testPath);
+
+    files = files.filter(a => {
+        return path.extname(a).includes('.json');
+    });
+
+    let machineConfigFiles = files.filter(a => {
+        return a.includes('machineConfig');
+    });
+
+    if(machineConfigFiles.length == 0){
+        createMachineConfigFile(testPath);
+    }else{
+
+        let configPath = path.join(testPath, machineConfigFiles[0]);
+
+        let machines = await asyncReadData(configPath);
+        let list = document.querySelector('.machine-list');
+
+        clearList(list);
+
+        if(machines.length > 0){
+            machines.forEach(machine => {
+                let machineItem = createMachineItem(machine);
+                list.appendChild(machineItem);
+                // console.log(machine);
+            });
+        }
+
+    }
+    
+}
+
+async function deleteMachine(machineTitle){
+    let testPath = createTestState.path.value;
+    let machineConf = await asyncReadData( path.join( testPath, 'machineConfig.json' ) );
+
+    let toDelete = machineConf.filter(a => a.title == machineTitle)[0];
+
+    machineConf = machineConf.filter(a => a != toDelete);
+
+    fs.writeFile(path.join(testPath, 'machineConfig.json'), JSON.stringify(machineConf), err => {
+        if(err){
+            console.log(`%c err`, 'color: red;');
+        }
+    });
+
+    renderMachineList();
+
+}
+
+function createMachineItem(machine){
+    let machineDiv = document.createElement('div');
+    machineDiv.className = 'machine';
+
+    let titleInput = document.createElement('input');
+    titleInput.className = 'machine-title machine-title-input';
+    titleInput.value = machine.title;
+
+    machineDiv.appendChild(titleInput);
+
+    let machineContainerDiv = document.createElement('div');
+    machineContainerDiv.className = 'machine-container';
+
+    let fileContainer = document.createElement('div');
+    fileContainer.className = 'file-container';
+    
+    machine.files.forEach(file => {
+        let fileItem = document.createElement('p');
+        fileItem.className = 'file-name';
+        fileItem.textContent = path.basename(file);
+        fileItem.id = file;
+        fileItem.addEventListener('click', e => {
+            deleteMachineFile(e);
+        });
+        fileContainer.appendChild(fileItem);
+    });
+
+    machineContainerDiv.appendChild(fileContainer);
+
+    let resetButtonContainer = document.createElement('div');
+    resetButtonContainer.className = 'reset-button-container';
+    let resetIcon = document.createElement('ion-icon');
+    resetIcon.name = 'trash';
+    resetIcon.addEventListener('click', e => {
+        deleteMachine(machine.title);
+    });
+    resetButtonContainer.appendChild(resetIcon);
+
+    let addFileContainer = document.createElement('div');
+    addFileContainer.className = 'add-file-container';
+    let addIcon = document.createElement('ion-icon');
+    addIcon.name = 'add';
+    addFileContainer.appendChild(addIcon);
+
+    machineContainerDiv.appendChild(resetButtonContainer);
+    machineContainerDiv.appendChild(addFileContainer);
+
+    machineDiv.appendChild(machineContainerDiv);
+
+    return machineDiv;
+}
+
+function createMachineConfigFile(testPath){
+    fs.writeFile(path.join( testPath, 'machineConfig.json'), JSON.stringify([]), err => {
+        if(err){
+            console.log(err);
+        }
+    });
+}
+
+// Gets whether user wants to run locally or through RDP
+function getCreateRunOption(){
+    let select = document.querySelector('#create-test-run-option');
+    if(select.value.includes('local')){
+        return 'local';
+    }else if(select.value.includes('remote desktop')){
+        return 'rdp';
+    }
+}
+
+// $('.create-test-start-button').on('click', e => {
+//     createBatFiles();
+//     startCreateTest();
+// });
+
+// Greys out start button on create-test page if there are no files
+// function checkStartTestStatus(){
+//     let batFiles = readFolder(createTestState.path.value).filter(a => a.toLowerCase().includes('.bat'));
+
+//     // console.log(batFiles);
+
+// }
 
 function stopCreateTest(){
     $('#create-test-settings').show();
@@ -43,6 +225,8 @@ function startCreateTest(){
 
     let fileDrop = document.querySelector('#file-dropdown-selection');
 
+    clearList(fileDrop);
+
     batFiles.forEach(file => {
         file = unnormaliseString(file);
         // Populate file dropdown:
@@ -56,10 +240,84 @@ function startCreateTest(){
 
     fs.writeFile(path.join(createTestState.path.value, 'runConfig.json'), JSON.stringify(runConfig), err => err ? console.log(err) : console.log(`%c Created run config file in \n ${createTestState.path.value}`, 'color: green;'));
 
-    runNextPendingFile(runConfig);
+    // runNextPendingFile(runConfig);
+    runConfig.files.forEach(file => {
+        file.status = 'running';
+        runFile(file.path);
+
+    });
     
     $('#create-test-settings').hide();
     $('.run-create-test-container').show();
+}
+
+async function runFile(pathval){
+    let runConfig = await asyncReadData(path.join(createTestState.path.value, 'runConfig.json'));
+
+    let fileConf = runConfig.files.filter(a => a.path == pathval)[0];
+
+    let command = `${pathval}`;
+    let dir = exec(command, (err, stdout, stderr) => {
+        if(err){
+            fileConf.output += err;
+        }else if(stdout){
+            fileConf.output += stdout;
+        }else if(stderr){
+            fileConf.output += stderr;
+        }
+
+        fs.writeFile(
+            path.join(
+                createTestState.path.value,
+                'runConfig.json'
+            ),
+            JSON.stringify(runConfig),
+            err => {
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
+
+    });
+
+    dir.stdout.on('data', data => {
+        console.log('STDOUT: \n');
+        console.log(data);
+        fileConf.output += data;
+        fs.writeFile(
+            path.join(
+                createTestState.path.value,
+                'runConfig.json'
+            ),
+            JSON.stringify(runConfig),
+            err => {
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
+    });
+    
+    dir.stderr.on('data', data => {
+        console.log('STDERR: \n');
+        console.log(data);
+        
+        fileConf.output += data;
+        fs.writeFile(
+            path.join(
+                createTestState.path.value,
+                'runConfig.json'
+            ),
+            JSON.stringify(runConfig),
+            err => {
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
+
+    });
 }
 
 // Takes in run config file and runs next pending file
@@ -94,6 +352,8 @@ function runNextPendingFile(runConfig){
         
     });
 
+    document.querySelector('#current-file-title').textContent = path.basename(nextFile.path);
+
 }
 
 // Create run config file to see what files are pending/running/complete/aborted
@@ -107,7 +367,8 @@ function createRunConfig(){
         let newObj = {
             path: path.join( createTestState.path.value, file ),
             title: file,
-            status: 'pending'
+            status: 'pending',
+            output: ''
         };
         runObj.files.push(newObj);
     });
@@ -118,22 +379,65 @@ function createRunConfig(){
 function createBatFiles(){
     let data = document.querySelector('#create-test-settings').attributes;
     let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
-    let fileConfig = testConfig.files[data.fileIndex.value - 1];
-
+    // let fileConfig = testConfig.files[data.fileIndex.value - 1];
     let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
     let perfTestLoc = generalSettings.defPerftestLoc;
 
-    fileConfig.publishers.forEach(publisher => {
-        let fileOutput = createPubBatOutput(perfTestLoc, publisher.generalSettings, publisher.publisherSettings);
+    let fileConfig;
 
-        fs.writeFile( path.join(data.path.value, publisher.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${publisher.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
-    });
+    for(var i = 0; i < testConfig.files.length; i++){
+        fileConfig = testConfig.files[i];
+        
+        fileConfig.publishers.forEach(publisher => {
+            let fileOutput = createPubBatOutput(perfTestLoc, publisher.generalSettings, publisher.publisherSettings);
+    
+            fs.writeFile( path.join(data.path.value, publisher.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${publisher.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
+        });
+    
+        fileConfig.subscribers.forEach(subscriber => {
+            let fileOutput = createSubBatOutput(perfTestLoc, subscriber.generalSettings, subscriber.subscriberSettings);
+    
+            fs.writeFile( path.join(data.path.value, subscriber.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${subscriber.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
+        });
+    }
 
-    fileConfig.subscribers.forEach(subscriber => {
-        let fileOutput = createSubBatOutput(perfTestLoc, subscriber.generalSettings, subscriber.subscriberSettings);
+}
 
-        fs.writeFile( path.join(data.path.value, subscriber.title + '.bat') , fileOutput, err => err ? console.log(err) : console.log(`%c Created \n ${subscriber.title + '.bat'} \n in \n ${data.path.value}`, 'color: green;'));
-    });
+async function createBatSequenceFiles(){
+    let allFiles = await asyncReadFolder(createTestState.path.value).catch(err => console.log(err));
+    let batFiles = await allFiles.filter(a => path.extname(a) == '.bat');
+    let fileName, fileOutput;
+
+    // for(var i = 0; i < batFiles.length; i++){
+    //     if(i != batFiles.length - 1){
+    //         fileName = i;
+    //         fileOutput = `
+    //             @echo off
+    //             Start /wait ${batFiles[i]}
+    //             REG ADD "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V ${`${i + 1}.bat`} /t REG_SZ /F /D ${i + 1 + '.bat'}
+    //             pause
+    //             shutdown -r -t 0
+    //         `;
+    //     }else{
+    //         fileName = i;
+    //         fileOutput = `
+    //             @echo off
+    //             Start /wait ${batFiles[i]}
+    //             exit
+    //         `;
+    //     }
+
+    //     console.log(`%c i: ${i}.bat`, 'color: green;');
+
+    //     // fs.writeFile(
+    //     //     path.join(
+    //     //         createTestState.path.value,
+    //     //         `${i}.bat`
+    //     //     ),
+    //     //     fileOutput,
+    //     //     err => {err ? console.log(err) : console.log(`Created ${i + '.bat'} in ${createTestState.path.value}`);}
+    //     // );
+    // }
 
 }
 
@@ -616,13 +920,26 @@ function changeFileTab(event){
 
 }
 
-// Update repetition count when changes
-$('#test-rep-input').on('keyup', e => {
+function preUpdateRepCount(e){
     let data = document.querySelector('#create-test-settings').attributes;
     let testFolderPath = data.path.value;
     let fileIndex = data.fileIndex.value;
 
+    let timeSpan = document.querySelector('#test-rep-time');
+
+    e.target.value > 1 ? timeSpan.textContent = 'times.' : timeSpan.textContent = 'time.';
+
     updateRepCount(e.target.value, testFolderPath, fileIndex);
+}
+
+// Update repetition count when changes
+$('#test-rep-input').on('keyup', e => {
+    preUpdateRepCount(e);
+});
+
+// Update repetition count when changes
+$('#test-rep-input').on('change', e => {
+    preUpdateRepCount(e);
 });
 
 function updateRepCount(value, pathval, fileIndex){
@@ -1133,7 +1450,6 @@ function openTestSettings(element){
     document.querySelector('#create-test-settings').setAttribute('path', normaliseString(testFolderPath));
     document.querySelector('#create-test-settings').setAttribute('fileIndex', 1);
 
-    checkStartTestStatus();
     $('#create-test-settings').show();
 }
 

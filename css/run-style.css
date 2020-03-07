@@ -109,7 +109,7 @@
 
 .process-list-container{
     /* outline: 1px solid black; */
-    background-color: #efefef;
+    background-color: #eff7fc;
     height: 90%;
     padding: 2vh 2vw;
     overflow-y: scroll;
@@ -143,7 +143,7 @@
 
 #runContent .process .process-title-input{
     border: none;
-    background-color: #eee;
+    background-color: #eff7fc;
 }
 
 #runContent .process .file-container{
@@ -160,7 +160,7 @@
     outline: 1px solid #aaa;
     padding-left: 1%;
     line-height: 3vh;
-    background-color: #efefef;
+    background-color: #eff7fc;
     margin-right: 1vw;
 }
 
@@ -207,12 +207,36 @@
 #runContent .start-button-container{
     /* outline: 1px solid red; */
     padding: 1vh 2vw 1vh 0;
-    background-color: #efefef;
+    background-color: #eff7fc;
 }
 
-#runContent .start-button:hover{cursor: pointer; color: #28a745; background-color: white; border: 1px solid #28a745;}
 #runContent .start-button{
-    /* outline: 1px solid red; */
+    width: 50%;
+    margin-left: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    height: 5vh;
+    
+}
+
+#runContent .start-button span:hover{cursor: pointer; color: green; background-color: white;}
+#runContent .start-button span{
+    display: block;
+    height: 100%;
+    width: 25%;
+    line-height: 5vh;
+    border: 1px solid green;
+    background-color: green;
+    color: white;
+    border-radius: 3px;
+    
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+/* #runContent .start-button:hover{cursor: pointer; color: #28a745; background-color: white; border: 1px solid #28a745;}
+#runContent .start-button{
     width: 20%;
     margin-left: 80%;
     text-align: center;
@@ -224,7 +248,7 @@
     transition-duration: 0.2s;
     -webkit-transition-duration: 0.2s;
     -moz-transition-duration: 0.2s;
-}
+} */
 
 .start-button.disabled{
     background-color: #ddd !important;
@@ -268,7 +292,7 @@
 .dash-bar .button-container .current-process-container{
     width: auto;
     padding: 1vh 1vw;
-    background-color: #eee;
+    background-color: #eff7fc;
     margin-right: 10%;
     border-radius: 2px;
     line-height: 1vh;
@@ -324,4 +348,8 @@
 
 .run-console-output span.stderr{
     color: orange;
+}
+
+.run-go-button{
+    
 }

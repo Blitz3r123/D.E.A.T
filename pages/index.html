@@ -51,7 +51,7 @@
                         <ion-icon name="speedometer" style="margin-bottom: -0.5vh;"></ion-icon>    
                         Test
                     </a>
-                <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Run</a>
+                <a href="#" onClick="showContent('#runContent')" class="side-link sidebar-link"><ion-icon name="play"></ion-icon>Execute</a>
                 <a href="#" onClick="showContent('#analyseContent')" class="side-link sidebar-link"><ion-icon name="analytics"></ion-icon>Analyse</a>
                 <a href="#" onClick="showContent('#settingsContent')" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="settings"></ion-icon>Settings</a>    
                 <a href="#" onClick="showContent('#helpContent')" class="side-link sidebar-link border-bot-1px-solid-black"><ion-icon name="help"></ion-icon>Help</a>
@@ -126,7 +126,7 @@
 
                 <div class="recent-results">
                     <p class="subtitle">
-                        <ion-icon name="stats" style="margin-bottom: -0.5vh;"></ion-icon>    
+                        <ion-icon name="analytics-outline" style="margin-bottom: -0.5vh;"></ion-icon>    
                         Recent Results
                     </p>
 
@@ -474,12 +474,18 @@
                             <div class="file-tab-container"></div>
 
                             <div class="repetition-count-container">
-                                <span>Run</span><input id="test-rep-input" type="number" value="1" min="1"><span>times.</span>
+                                <span>Execute</span><input id="test-rep-input" type="number" value="1" min="1"><span id="test-rep-time">time.</span>
                             </div>
 
                             <div class="buttons-container">
                                 <p class="create-test-back-button" onClick="showTestSettingsPage()">Back</p>
-                                <p class="create-test-start-button">Start</p>
+                                <p class="create-test-start-button-container">
+                                    <select id="create-test-run-option">
+                                        <option>Run local</option>
+                                        <option>Run on remote desktop</option>
+                                    </select>
+                                    <span class='go-button' id="run-create-test-button">Go</span>
+                                </p>
                             </div>
 
 
@@ -577,6 +583,54 @@
 
                 </div>
 
+                <div id="create-test-rdp-settings" class="create-test-index" style="display: none;">
+
+                    <div class="back-button-container">
+                        <p class="rdp-settings-back-button"><ion-icon name="chevron-back-outline"></ion-icon>Back</p>
+                    </div>
+
+                    <div class="machine-list-container">
+                        
+                        <div class="machine-list">
+                            
+                            <!-- <div class="machine">
+                            
+                                <input class="machine-title machine-title-input" value="Machine 1"></input>
+    
+                                <div class="machine-container">
+    
+                                    <div class="file-container">
+                                        <p class="file-name">Hello</p>
+                                        <p class="file-name">Hello</p>
+                                        <p class="file-name">Hello</p>
+                                    </div>
+        
+                                    <div class="reset-button-container">
+                                        <ion-icon name="trash"></ion-icon>
+                                    </div>
+        
+                                    <div class="add-file-container">
+                                        <ion-icon name='add'></ion-icon>
+                                    </div>
+    
+                                </div>
+    
+                            </div> -->
+
+                        </div>
+
+                        <div class="add-machine-container">
+                            <ion-icon name='add' id="add-machine"></ion-icon>
+                        </div><!-- End of div.add-machine-container -->
+
+                    </div><!-- End of div.machine-list -->
+
+                    <div class="create-test-rdp-run-button-container">
+                        <p class="create-test-rdp-run-button">Start</p>
+                    </div>
+
+                </div>
+
                 <div class="run-create-test-container">
 
                     <div class="dash-bar">
@@ -621,7 +675,7 @@
 
             <div class="main-content" id="runContent">
                 
-                <h1>Run</h1>
+                <h1>Execute</h1>
 
                 <div class="file-selection-window-container">
 
@@ -682,7 +736,14 @@
                     </div><!-- End of div.process-list -->
 
                     <div class="start-button-container">
-                        <p class="start-button" id='run-test-start'>Start</p>
+                        <p class="start-button">
+                            <select id="run-test-run-option">
+                                <option>Run local</option>
+                                <option>Run on remote desktop</option>
+                            </select>
+
+                            <span class="run-go-button" id="run-test-go-button">Go</span>
+                        </p>
                     </div><!-- End of div.start-button-container -->
 
                 </div><!-- End of div.run-selection-window -->
@@ -913,6 +974,93 @@
                 
                 <div class="scroll">
 
+                    <div id="rdp-settings-container">
+
+                        <h1>Remote Desktop Connections</h1>
+
+                        <div class="connection-list" id="rdp-connection-list">
+
+                            <!-- <div class="connection-list-item">
+
+                                <div class="connection-list-item-title-container">
+                                    <input type="text" value="Connection 1" class="connection-list-item-title" id="rdp-title"></input>
+                                </div>
+
+                                <div class="connection-list-item-content-container">
+
+                                    <div class="domain-container">
+                                        <input type="text" placeholder="Domain" value="nsq905ap" class="domain" id="rdp-domain"></input>
+                                    </div>
+
+                                    <div class="login-details-container">
+                                        <input type="text" class="username" placeholder="Username" value="acwh025" id="rdp-username"></input>
+
+                                        <div class="password-container">
+                                            <input type="password" placeholder="Password" value="Password" id="rdp-password"></input>
+                                            <ion-icon name="eye"></ion-icon>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="edit-container">
+
+                                        <ion-icon name="trash" class="delete" id="rdp-delete"></ion-icon>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="add-connection-container">
+                                <ion-icon name="add" id="rdp-add"></ion-icon>
+                            </div> -->
+
+                            
+                        </div>
+                        
+                        <div class="add-rdp-connection-container" style="display: none;">
+
+                            <div class="close-button-container">
+                                <ion-icon name='close' id="close-rdp-box"></ion-icon>
+                            </div>
+
+                            <h1 class="add-rdp-heading">Add RDP Connection</h1>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Title:</p>
+                                <input type="text" autofocus class="rdp-input" placeholder="Connection Title" id='rdp-connection-title'>
+                            </div>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Domain:</p>
+                                <input type="text" autofocus class="rdp-input" placeholder="Domain" id='rdp-domain'>
+                            </div>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Username:</p>
+                                <input type="text" class="rdp-input" placeholder="Username" id='rdp-username'>
+                            </div>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Password:</p>
+                                <input type="password" class="rdp-input" placeholder="Password" id='rdp-password'>
+                            </div>
+
+                            <div class="buttons-container">
+
+                                <span class="test-button" id="test-rdp-button">Test</span>
+
+                                <span class="add-rdp-button" id="add-rdp-button">Add</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
                     <div id='general-settings-container'>
                     
                         <h1>General</h1>
@@ -1036,7 +1184,7 @@
 
                     <hr>
 
-                    <div id="results-settings-container">  
+                    <div id="results-settings-container" style="display: none;">  
 
                         <h1>Test Results</h1>
 
@@ -1104,6 +1252,10 @@
 
                     </div><!-- End of div#results-settings-container -->
 
+                    <!-- <hr> -->
+
+                    
+
                 </div><!-- End of div.scroll -->
 
             </div><!-- End of div.main-content#settingsContent -->
@@ -1114,9 +1266,8 @@
         <!-- JavaScript Dependencies --><script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <!-- <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script> -->
-        <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
         <script src="https://unpkg.com/d3@5.12.0/dist/d3.min.js"></script>
         <link href="https://unpkg.com/c3@0.7.11/c3.min.css" rel="stylesheet">
         <script src="https://unpkg.com/c3@0.7.11/c3.min.js"></script>
@@ -1130,6 +1281,7 @@
        <script src="./../js/createGeneralSettings.js"></script>
        <script src="./../js/createPublisherSettings.js"></script>
        <script src="./../js/createSubscriberSettings.js"></script>
+       <script src="./../js/rdpSettings.js"></script>
        <script src="./../js/analyse.js"></script>
        <script src="./../js/createTest.js"></script>
        <!-- End of JavaScript Functions -->

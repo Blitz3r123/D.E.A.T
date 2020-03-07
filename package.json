@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "electron": "^6.1.7",
-    "mathjs": "^6.6.0"
+    "mathjs": "^6.6.0",
+    "node-rdpjs": "^0.3.0"
   }
 }

@@ -1,0 +1,6 @@
+- Running multiple bat files with restart between them:
+    - https://superuser.com/questions/1215040/resume-batch-script-after-reboot
+    - https://stackoverflow.com/questions/3331947/resume-batch-script-after-computer-restart
+    - https://www.computerhope.com/forum/index.php?topic=25018.0
+    - https://www.google.com/search?hl=en&q=bat%20file%20restart%20and%20continue%20running%20file
+
