@@ -34,10 +34,98 @@ $('#run-test-go-button').on('click', e => {
     option == 'local' ? runTestsLocally() : runTestsRemotely();
 });
 
-function runTestsLocally(){
-    let processes = data.processes;
+function runTestsRemotely(){
+    console.log(`%c Running tests remotely...shhhhhhhh......`, 'color: blue;');
+}
 
-    console.log(processes);
+async function runTestsLocally(){
+    let processes = data.processes;
+    let saveDir = path.join(__dirname, '../data/currentRun');;
+
+    setCurrentProcessDom(processes[0]);
+    let delFiles = await readFolder(saveDir);
+    delFiles.forEach(file => {
+        fs.unlink(path.join(saveDir, file), err => {
+            if(err){
+                console.log(`%c err`, 'color: red;');
+            }
+        });
+    });
+    
+    // Delete all files in currentRun folder
+
+
+    /*
+        1. Create bat file for each process
+        2. Create bat file for all processes
+        3. Run bat file from step 2
+    */
+
+    // 1. Create bat file for each process
+
+    processes.forEach(process => {
+        process.files.forEach((file, index) => {
+
+            let fileOutput = `
+                ${file.path}
+                exit
+            `;
+
+            let fileName = normaliseString(process.title + " File " + parseInt(index + 1));
+
+            asyncWriteFile(path.join( saveDir, fileName + '.bat' ), fileOutput);
+        });
+    });
+
+    // 2. Create bat file for all processes
+    let files = await asyncReadFolder(saveDir);
+    let batFiles = files.filter(a => path.extname(a) == '.bat');
+
+    let batOut = `@echo off\n`;
+
+    batFiles.forEach(file => {
+        batOut += `start /wait "${file}"\n`;
+    });
+
+    asyncWriteFile(path.join( saveDir, 'run.bat' ), batOut);
+    
+    // 3. Run bat file created in step 2
+    if(process.platform === 'darwin'){              // Its a mac
+        exec(`chmod 755 "${path.join(saveDir, 'run.bat')}" && ` + path.join(saveDir, 'run.bat'), (err, stdout, stderr) => {
+            if(err){
+                console.log(`%c ${err}`, 'color: red;');
+            }
+    
+            if(stdout){
+                console.log(`%c ${stdout}`, 'color: green;');
+            }
+    
+            if(stderr){
+                console.log(`%c ${stderr}`, 'color: orange;');
+            }
+        });
+    }else{
+        exec(path.join(saveDir, 'run.bat'), (err, stdout, stderr) => {
+            if(err){
+                console.log(`%c ${err}`, 'color: red;');
+            }
+    
+            if(stdout){
+                console.log(`%c ${stdout}`, 'color: green;');
+            }
+    
+            if(stderr){
+                console.log(`%c ${stderr}`, 'color: orange;');
+            }
+        });        
+    }
+
+    $('.run-selection-window').hide();
+    $('#run-test-window').show();
+}
+
+function setCurrentProcessDom(process){
+    document.querySelector('#current-process-title').textContent = process.title;
 }
 
 function getRunOption(){
@@ -51,10 +139,10 @@ function getRunOption(){
 }
 
 function validateStartButton(){
-    let startButton = document.querySelector('#run-test-start');
+    let startButton = document.querySelector('#run-test-go-button');
     let processAmount = data.processes.length;
     let emptyProcessAmount = data.processes.filter(a => a.files.length == 0).length;
-    processAmount > 0 && emptyProcessAmount == 0 ? startButton.className = 'start-button' : startButton.className = 'start-button disabled';
+    processAmount > 0 && emptyProcessAmount == 0 ? startButton.className = 'run-go-button' : startButton.className = 'run-go-button disabled';
 }
 
 $('#run-test-start').on('click', e => {
