@@ -67,7 +67,7 @@ async function runTestsLocally(){
         process.files.forEach((file, index) => {
 
             let fileOutput = `
-                ${file.path}
+                "${file.path}"
                 exit
             `;
 
