@@ -156,7 +156,7 @@
                         <option value="publisher" selected>Publisher</option>
                         <option value="subscriber" id="subscriber-type-select">Subscriber</option>
                     </select>
-                    <a id="reset-button" class="reset-button" onClick="resetValues()"><ion-icon name="refresh" style="margin-right: 1vw; font-size: 1.5em;"></ion-icon><span>Reset Values</span></a>
+                    <!-- <a id="reset-button" class="reset-button" onClick="resetValues()"><ion-icon name="refresh" style="margin-right: 1vw; font-size: 1.5em;"></ion-icon><span>Reset Values</span></a> -->
                 </div><!-- End of div.dropdown-reset-container -->
 
                 <div class="settings">
@@ -408,7 +408,7 @@
             </div><!-- End of div.main-content#createContent -->
 
             <div class="main-content" id="createTestContent">
-                <p style="width: 100%; height: 12%; margin-top: -2%;" class="page-title" id='create-test-page-title'>CREATE TEST</p>
+                <p style="width: 100%; height: 12%; margin-top: -2%; line-height: 250%;" class="page-title" id='create-test-page-title'>CREATE TEST</p>
 
                 <div class="create-test-index" id="create-test-index">
 
@@ -970,96 +970,11 @@
 
             </div> <!-- End of div.main-content#analyseContent -->
 
+<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+
             <div class="main-content" id="settingsContent">
                 
                 <div class="scroll">
-
-                    <div id="rdp-settings-container">
-
-                        <h1>Remote Desktop Connections</h1>
-
-                        <div class="connection-list" id="rdp-connection-list">
-
-                            <!-- <div class="connection-list-item">
-
-                                <div class="connection-list-item-title-container">
-                                    <input type="text" value="Connection 1" class="connection-list-item-title" id="rdp-title"></input>
-                                </div>
-
-                                <div class="connection-list-item-content-container">
-
-                                    <div class="domain-container">
-                                        <input type="text" placeholder="Domain" value="nsq905ap" class="domain" id="rdp-domain"></input>
-                                    </div>
-
-                                    <div class="login-details-container">
-                                        <input type="text" class="username" placeholder="Username" value="acwh025" id="rdp-username"></input>
-
-                                        <div class="password-container">
-                                            <input type="password" placeholder="Password" value="Password" id="rdp-password"></input>
-                                            <ion-icon name="eye"></ion-icon>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="edit-container">
-
-                                        <ion-icon name="trash" class="delete" id="rdp-delete"></ion-icon>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="add-connection-container">
-                                <ion-icon name="add" id="rdp-add"></ion-icon>
-                            </div> -->
-
-                            
-                        </div>
-                        
-                        <div class="add-rdp-connection-container" style="display: none;">
-
-                            <div class="close-button-container">
-                                <ion-icon name='close' id="close-rdp-box"></ion-icon>
-                            </div>
-
-                            <h1 class="add-rdp-heading">Add RDP Connection</h1>
-
-                            <div class="add-rdp-container">
-                                <p class="input-title">Title:</p>
-                                <input type="text" autofocus class="rdp-input" placeholder="Connection Title" id='rdp-connection-title'>
-                            </div>
-
-                            <div class="add-rdp-container">
-                                <p class="input-title">Domain:</p>
-                                <input type="text" autofocus class="rdp-input" placeholder="Domain" id='rdp-domain'>
-                            </div>
-
-                            <div class="add-rdp-container">
-                                <p class="input-title">Username:</p>
-                                <input type="text" class="rdp-input" placeholder="Username" id='rdp-username'>
-                            </div>
-
-                            <div class="add-rdp-container">
-                                <p class="input-title">Password:</p>
-                                <input type="password" class="rdp-input" placeholder="Password" id='rdp-password'>
-                            </div>
-
-                            <div class="buttons-container">
-
-                                <span class="test-button" id="test-rdp-button">Test</span>
-
-                                <span class="add-rdp-button" id="add-rdp-button">Add</span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <hr>
 
                     <div id='general-settings-container'>
                     
@@ -1254,7 +1169,91 @@
 
                     <!-- <hr> -->
 
-                    
+                    <div id="rdp-settings-container">
+
+                        <h1>Remote Desktop Connections</h1>
+
+                        <div class="connection-list" id="rdp-connection-list">
+
+                            <!-- <div class="connection-list-item">
+
+                                <div class="connection-list-item-title-container">
+                                    <input type="text" value="Connection 1" class="connection-list-item-title" id="rdp-title"></input>
+                                </div>
+
+                                <div class="connection-list-item-content-container">
+
+                                    <div class="domain-container">
+                                        <input type="text" placeholder="Domain" value="nsq905ap" class="domain" id="rdp-domain"></input>
+                                    </div>
+
+                                    <div class="login-details-container">
+                                        <input type="text" class="username" placeholder="Username" value="acwh025" id="rdp-username"></input>
+
+                                        <div class="password-container">
+                                            <input type="password" placeholder="Password" value="Password" id="rdp-password"></input>
+                                            <ion-icon name="eye"></ion-icon>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="edit-container">
+
+                                        <ion-icon name="trash" class="delete" id="rdp-delete"></ion-icon>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="add-connection-container">
+                                <ion-icon name="add" id="rdp-add"></ion-icon>
+                            </div> -->
+
+                            
+                        </div>
+                        
+                        <div class="add-rdp-connection-container" style="display: none;">
+
+                            <div class="close-button-container">
+                                <ion-icon name='close' id="close-rdp-box"></ion-icon>
+                            </div>
+
+                            <h1 class="add-rdp-heading">Add RDP Connection</h1>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Title:</p>
+                                <input type="text" autofocus class="rdp-input" placeholder="Connection Title" id='rdp-connection-title'>
+                            </div>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Domain:</p>
+                                <input type="text" autofocus class="rdp-input" placeholder="Domain" id='rdp-domain'>
+                            </div>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Username:</p>
+                                <input type="text" class="rdp-input" placeholder="Username" id='rdp-username'>
+                            </div>
+
+                            <div class="add-rdp-container">
+                                <p class="input-title">Password:</p>
+                                <input type="password" class="rdp-input" placeholder="Password" id='rdp-password'>
+                            </div>
+
+                            <div class="buttons-container">
+
+                                <span class="test-button" id="test-rdp-button">Test</span>
+
+                                <span class="add-rdp-button" id="add-rdp-button">Add</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
 
                 </div><!-- End of div.scroll -->
 

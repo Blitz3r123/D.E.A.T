@@ -15,7 +15,7 @@
     padding: 1vh 1vw;
 }
 
-.dropdown-reset-container{display: flex; justify-content: space-between; align-items: center; margin-top: -4vh;}
+.dropdown-reset-container{display: flex; justify-content: space-between; align-items: center; margin-top: 0vh;}
 
 .dropdown{
     margin-left: 3vw;
@@ -46,8 +46,8 @@
     margin-top: 2vh;
     width: 96%;
     margin-left: 2%;
-    max-height: 75vh;
-    min-height: 75vh;
+    max-height: 83vh;
+    min-height: 83vh;
     overflow-y: scroll;
 }
 

@@ -11,8 +11,8 @@ var hasError;
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
 $('#createTestContent').hide();
-// $('#runContent').hide();
-$('#indexContent').hide();
+$('#runContent').hide();
+// $('#indexContent').hide();
 $('#analyseContent').hide();
 $('#settingsContent').hide();
 

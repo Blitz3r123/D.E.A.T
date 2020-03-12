@@ -74,8 +74,8 @@
 
 #summary-file-selection-input, #summary-folder-selection-input{
 /* outline: 1px solid black; */
-    width: 80%;
-    margin-left: 10%;
+    /* width: 80%; */
+    /* margin-left: 10%; */
     margin-bottom: 1vh;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .analyse-selection-list{
-    outline: 1px solid #444;
+    outline: 1px solid #aaa;
     width: 30%;
     overflow-y: scroll;
     padding: 1vh 1vw;
@@ -153,7 +153,7 @@
 }
 
 .summary-file-list{
-    outline: 1px solid #444;
+    outline: 1px solid #aaa;
     overflow-y: scroll;
     padding: 1vh 1vw;
     margin-top: 2vh;

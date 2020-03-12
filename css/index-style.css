@@ -54,6 +54,6 @@ html{
         .list-item:hover{text-decoration: none; color: white; background-color: #444; cursor: pointer;}
         .publisher-list, .subscriber-list {outline: 1px solid #444; width: 45%; overflow: scroll; max-height: 28vh; min-height: 100%;}
         .publisher-list::-webkit-scrollbar, .subscriber-list::-webkit-scrollbar{width: 0px !important;}
-        .recent-results{width: 73vw; margin-left: 3.5vw; outline: 1px solid #444; margin-top: 3vh; height: 35vh; padding: 2vh 1vw;}
+        .recent-results{width: 73vw; margin-left: 3.5vw; outline: 1px solid #444; margin-top: 3vh; height: 45vh; padding: 2vh 1vw;}
     .empty-message{text-align: center; margin-top: 8vh;}
         .action-link{text-decoration: underline;}

@@ -1,11 +1,1 @@
-{
-    "files": [{
-        "path": "/Users/kaleem/Documents/University/D.E.A.T/test/Test_One/Publisher_0.bat",
-        "title": "Publisher_0.bat",
-        "status": "pending"
-    }, {
-        "path": "/Users/kaleem/Documents/University/D.E.A.T/test/Test_One/Subscriber_0.bat",
-        "title": "Subscriber_0.bat",
-        "status": "pending"
-    }]
-}
+{"files":[{"path":"/Users/kaleem/Documents/University/D.E.A.T/test/Test_One/Publisher_0.bat","title":"Publisher_0.bat","status":"pending","output":""},{"path":"/Users/kaleem/Documents/University/D.E.A.T/test/Test_One/Subscriber_0.bat","title":"Subscriber_0.bat","status":"pending","output":"/bin/sh: /Users/kaleem/Documents/University/D.E.A.T/test/Test_One/Subscriber_0.bat: Permission denied\nError: Command failed: /Users/kaleem/Documents/University/D.E.A.T/test/Test_One/Subscriber_0.bat\n/bin/sh: /Users/kaleem/Documents/University/D.E.A.T/test/Test_One/Subscriber_0.bat: Permission denied\n"}]}
