@@ -4,7 +4,8 @@
   "description": "DDS Experiment Automation Tool",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "npx electron-packager ./ --platform=darwin"
   },
   "author": "Kaleem Peeroo",
   "license": "ISC",
@@ -13,7 +14,8 @@
   },
   "devDependencies": {
     "electron": "^6.1.7",
-    "mathjs": "^6.6.0",
-    "node-rdpjs": "^0.3.0"
+    "node-rdpjs": "^0.3.0",
+    "electron-packager": "^14.2.1",
+    "mathjs": "^6.6.0"
   }
 }
