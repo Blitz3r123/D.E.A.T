@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { exec, spawn } = require('child_process');
-var rdp = require('node-rdpjs');
+// var rdp = require('node-rdpjs');
 
 // GLOBAL VARIABLES
 var hasError;
