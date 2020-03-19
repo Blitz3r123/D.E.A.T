@@ -12,8 +12,8 @@ var hasError;
 $('#createContent').hide();
 $('#createTestContent').hide();
 $('#runContent').hide();
-// $('#indexContent').hide();
-$('#analyseContent').hide();
+$('#indexContent').hide();
+// $('#analyseContent').hide();
 $('#settingsContent').hide();
 
 // Hide popup view
