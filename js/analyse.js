@@ -254,7 +254,7 @@ function analyseFile(file){
             
             let latencyArray = [];
 
-            // console.log(dataArray);
+            // console.log(dataArray);`
 
             let latencyIndex;
 
@@ -295,6 +295,9 @@ function analyseFile(file){
                     }else{
                         zeroCount ++;
                     }
+                    console.log(parseInt(item));
+                }else{
+                    console.log(`%c ${item} is NaN`, 'color: red;');
                 }
             });
 
@@ -612,6 +615,8 @@ function analyseFile(file){
             $('#nonzero-graph-container').hide();
             $('#cdf-graph-container').hide();
 
+        }else{
+            console.log(`%c I don't know what kind of file it is....`, 'color: blue;');
         }
 
     }
