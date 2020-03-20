@@ -296,10 +296,12 @@ function analyseFile(file){
         */
 
         let newCsvArray = [];
+        let arrayHeaders = [];
 
         csvArray.forEach(array => {
             
             let arrayHeader = array[0];
+            arrayHeaders.push(arrayHeader);
 
             array = array.filter(a => {return !( isNaN(a) )});
 
@@ -311,16 +313,37 @@ function analyseFile(file){
 
         csvArray = newCsvArray;
 
-        // At this point, the array is full of numbers :)
+        // At this point, the arrays are full of numbers :)
 
-        
+        let arrayAvgs = [];
+        csvArray.forEach((array, index) => {
+            
+            avg = calcAverage(array);
+            
+            let newArr = [];
+            newArr.push(array[0]);
+
+            arrayAvgs.push(newArr);
+
+
+            arrayAvgs[index].push(avg);
+
+
+        });
+
+        // arrayAvgs has the title followed by the average for the title
+
+
+
+        analysisTableDOM.appendChild( createTable( arrayHeaders ) );
+
 
 
     }
 
 }
 
-function createTable(headTitle){
+function createTable(headTitles){
     let tableDOM = document.createElement('table');
     tableDOM.className = 'table table-bordered';
 
@@ -328,11 +351,12 @@ function createTable(headTitle){
     theadDOM.className = 'thead-dark';
 
     let trDOM = document.createElement('tr');
-    let thDOM = document.createElement('th');
-    thDOM.colSpan = '4';
-    thDOM.textContent = headTitle;
+    headTitles.forEach(title => {
+        let thDOM = document.createElement('th');
+        thDOM.textContent = title;
+        trDOM.appendChild(thDOM);
+    });
 
-    trDOM.appendChild(thDOM);
     theadDOM.appendChild(trDOM);
     tableDOM.appendChild(theadDOM);
 

@@ -1033,3 +1033,16 @@ function createSubBatOutput(perftestLoc, generalSettings, subscriberSettings){
 
     return `"${perftestLoc}" ${generalOutput} ${subscriberOutput}`;
 }
+
+function calcAverage(array){
+    let total = 0;
+    let length = 0;
+    array.forEach(item => {
+        if(!isNaN(parseInt(item))){
+            total += parseInt(item);
+            length ++;
+        }
+    });
+
+    return ( total / length );
+}
