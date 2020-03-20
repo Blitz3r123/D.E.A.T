@@ -1,5 +1,7 @@
 var summaryFilePaths = [];
 
+$('#graph-loader').hide();
+
 // Hide analysis summary window on start
 $('.analyse-summary-window').hide();
 
@@ -80,11 +82,13 @@ $('#analysis-back-button').on('click', e => {
 
     clearChildren(document.querySelector('#analysis-data-table'));
     
-    clearChildren(document.querySelector('#general-graph-container'));
-    clearChildren(document.querySelector('#nonzero-graph-container'));
-    clearChildren(document.querySelector('#cdf-graph-container'));
-    clearChildren(document.querySelector('#throughput-graph-container'));
-    clearChildren(document.querySelector('#packets-per-sec-graph-container'));
+    // clearChildren(document.querySelector('#general-graph-container'));
+    // clearChildren(document.querySelector('#nonzero-graph-container'));
+    // clearChildren(document.querySelector('#cdf-graph-container'));
+    // clearChildren(document.querySelector('#throughput-graph-container'));
+    // clearChildren(document.querySelector('#packets-per-sec-graph-container'));
+
+    clearChildren(document.querySelector('#analyse-publisher-graphs-container'));
     
     $('#general-graph-title').hide();
     $('#non-zero-graph-title').hide();
@@ -347,15 +351,55 @@ function analyseFile(file){
 
         analysisTableDOM.appendChild( valueTable );
 
-        let summaryTable = createTable( ['Summaries'] );
+        let summaryTable = createTable( ['Averages'] );
         let summBody = document.createElement('tbody');
 
         arrayAvgs.forEach(item => {
-            addTableRow(summBody, item[0], item[1]);
+            addTableRow(summBody, item[0], formatNumber(item[1]));
         });
 
         summaryTable.appendChild(summBody);
         summaryTableContainerDOM.appendChild(summaryTable);
+
+        let graphsContainer = document.querySelector('#analyse-publisher-graphs-container');
+
+        $('#graph-loader').show();
+
+        csvArray.forEach(array => {
+
+            let graphTitle = document.createElement('p');
+            graphTitle.textContent = array[0];
+
+            graphsContainer.appendChild(graphTitle);
+
+            let graphContainer = document.createElement('div');
+            graphContainer.className = 'cdf-graph-container';
+            graphContainer.id = removeWhiteSpaces( remSpecials( array[0] ) );
+            
+            graphsContainer.appendChild(graphContainer);
+
+            let chart = c3.generate({
+                bindto: `#${removeWhiteSpaces( remSpecials( array[0] ) )}`,
+                data: {
+                    columns: [
+                        array
+                    ]
+                }
+            });
+
+
+        });
+
+        $('#graph-loader').hide();
+
+        // var chart = c3.generate({
+        //     bindto: '#nonzero-graph-container',
+        //     data: {
+        //         columns: [
+        //         nonZeroArray
+        //         ]
+        //     }
+        // });
 
     }
 
@@ -372,8 +416,10 @@ function createTable(headTitles){
     headTitles.forEach(title => {
         let thDOM = document.createElement('th');
         thDOM.textContent = title;
-        thDOM.colSpan = 3;
         trDOM.appendChild(thDOM);
+        if(headTitles.length == 1){
+            thDOM.colSpan = 10;
+        }
     });
 
     theadDOM.appendChild(trDOM);

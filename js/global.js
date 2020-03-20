@@ -880,6 +880,10 @@ function removeForwardSlashes(string){
     return string.replace(/\//g, "");
 }
 
+function remSpecials(string){
+    return string.replace(/[^\w\s]/gi, '');
+}
+
 // Removes white spaces, periods and forward slashes
 function stringate(string){
     return removeWhiteSpaces( removePeriods( removeForwardSlashes(string) ) );
@@ -1045,4 +1049,11 @@ function calcAverage(array){
     });
 
     return ( total / length );
+}
+
+function formatNumber(num){
+    return num.toLocaleString(
+        undefined,
+        {minimumFractionDigits: 2}
+    );
 }
