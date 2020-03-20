@@ -1,12 +1,3 @@
-// Delete these after development of this component
-// $('.analyse-selection-window').hide();
-// $('.analyse-summary-window').show();
-// $('.analyse-summary-publisher-content').hide();
-// $('.analyse-summary-subscriber-content').hide();
-// document.getElementById('analyse-summary-subscriber-tab').className = 'analyse-summary-tab active-tab';
-// document.getElementById('analyse-summary-publisher-tab').className = 'analyse-summary-tab';
-
-// var summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/sub1.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 2/sub1.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 3/sub1.csv"];
 var summaryFilePaths = [];
 
 // Hide analysis summary window on start
@@ -333,11 +324,29 @@ function analyseFile(file){
 
         // arrayAvgs has the title followed by the average for the title
 
+        let valueTable = createTable(arrayHeaders);
 
+        let valueBody = document.createElement('tbody');
 
-        analysisTableDOM.appendChild( createTable( arrayHeaders ) );
+        for(var i = 1; i < csvArray[0].length; i++){
+            
+            let tr = document.createElement('tr');
 
+            for(var j = 0; j < csvArray.length; j ++){
+                let td = document.createElement('td');
+                td.textContent = csvArray[j][i];
+                tr.appendChild(td);
+            }
 
+            valueBody.appendChild(tr);
+
+        }
+
+        valueTable.appendChild(valueBody);
+
+        analysisTableDOM.appendChild( valueTable );
+
+        console.log(arrayHeaders);
 
     }
 

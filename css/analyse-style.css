@@ -34,6 +34,12 @@
     overflow-y: scroll;
 }
 
+.analyse-publisher-content thead{
+    /* position: fixed;
+    overflow: scroll;
+    width: 26%; */
+}
+
 .analyse-publisher-content{
     /* background-color: red; */
     display: flex;
