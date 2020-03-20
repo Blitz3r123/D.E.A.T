@@ -235,6 +235,7 @@ function analyseFile(file){
         document.querySelector('#analyse-current-tab').textContent = path.basename(file);
     
         let analysisTableDOM = document.querySelector('#analysis-data-table');
+        let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
 
         let data = fs.readFileSync(file, 'utf8');
 
@@ -346,7 +347,15 @@ function analyseFile(file){
 
         analysisTableDOM.appendChild( valueTable );
 
-        console.log(arrayHeaders);
+        let summaryTable = createTable( ['Summaries'] );
+        let summBody = document.createElement('tbody');
+
+        arrayAvgs.forEach(item => {
+            addTableRow(summBody, item[0], item[1]);
+        });
+
+        summaryTable.appendChild(summBody);
+        summaryTableContainerDOM.appendChild(summaryTable);
 
     }
 
@@ -363,6 +372,7 @@ function createTable(headTitles){
     headTitles.forEach(title => {
         let thDOM = document.createElement('th');
         thDOM.textContent = title;
+        thDOM.colSpan = 3;
         trDOM.appendChild(thDOM);
     });
 
