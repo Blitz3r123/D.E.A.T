@@ -6,27 +6,30 @@ function populateQuickRunLists(){
 
     let scriptFiles = readFolder(defScriptLoc);
 
+    clearList(document.querySelector('.pub-list'));
+    clearList(document.querySelector('.sub-list'));
+
     if(scriptFiles.length <= 1){
         let pdom = document.createElement('p');
         pdom.className = 'list-item';
         pdom.textContent = "Couldn't find anything. Why not create one?";
 
-        document.querySelector('.publisher-list').appendChild(pdom);
+        document.querySelector('.pub-list').appendChild(pdom);
 
         pdom = document.createElement('p');
         pdom.className = 'list-item';
         pdom.textContent = "Couldn't find anything. Why not create one?";
 
-        document.querySelector('.subscriber-list').appendChild(pdom);
+        document.querySelector('.sub-list').appendChild(pdom);
     }else{
         scriptFiles.forEach(file => {
             let pdom = document.createElement('p');
             pdom.className = 'list-item';
             pdom.textContent = file;
             if(file.toLowerCase().includes('pub')){
-                document.querySelector('.publisher-list').appendChild(pdom);
+                document.querySelector('.pub-list').appendChild(pdom);
             }else if(file.toLowerCase().includes('sub')){
-                document.querySelector('.subscriber-list').appendChild(pdom);
+                document.querySelector('.sub-list').appendChild(pdom);
             }
         });
     }
@@ -48,6 +51,7 @@ function createDefPub(){
 
     fs.writeFile(path.join(defScriptLoc, newName), output, err => err ? console.log(err) : console.log(''));
     showPopup('Publisher Created in ' + defScriptLoc + '!');
+    populateQuickRunLists();
 }
 
 function createDefSub(){
@@ -66,4 +70,5 @@ function createDefSub(){
 
     fs.writeFile(path.join(defScriptLoc, newName), output, err => err ? console.log(err) : console.log(''));
     showPopup('Subscriber Created in ' + defScriptLoc + '!');
+    populateQuickRunLists();
 }
