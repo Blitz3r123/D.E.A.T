@@ -100,11 +100,12 @@
     min-height: 80vh;
     max-height: 80vh;
 }
+
 .analyse-selection-list::-webkit-scrollbar{width: 0px !important;}
 .analyse-selection-window .empty-message{margin-top: 110%; color: #9a9a9a; text-align: center;}
 #summary-empty-message{margin-top: 0;}
 
-    .analyse-section-list-item{color: #6f80ff; border: 1px solid #6f80ff; padding: 1vh 1vw;}
+    .analyse-section-list-item{color: #6f80ff; border: 1px solid #6f80ff; padding: 1vh 1vw; overflow: scroll;}
     .analyse-section-list-item:hover{cursor: pointer;}
 
     .analyse-section-list-primary-item ion-icon{margin-right: 0.5vw; font-size: 1.1em;}

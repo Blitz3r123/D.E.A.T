@@ -206,6 +206,9 @@ $('#folder-selection-input').on('change', e => {
             analyseFile(path.join(pathValue, file));
         });
 
+        item.addEventListener('mouseenter', e => {showFullPath(e, path.join(pathValue, file))});
+        item.addEventListener('mouseleave', e => {showFullPath(e, path.join(path.basename(pathValue), file))});
+
         item.textContent = path.join(path.basename(pathValue), file);
         item.title = pathValue;
 
@@ -840,4 +843,9 @@ function displaySubGraphs(){
         }
 
     });
+
+}
+
+function showFullPath(event, pathval){
+    event.target.textContent = pathval;
 }
