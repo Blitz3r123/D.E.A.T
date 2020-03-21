@@ -218,7 +218,7 @@ function stopCreateTest(){
     $('.run-create-test-container').hide();
 }
 
-function startCreateTest(){
+async function startCreateTest(){
     let data = document.querySelector('#create-test-settings').attributes;
     let testConfig = readData( path.join(data.path.value, path.basename(data.path.value) + '.json') );
     let batFiles = readFolder(data.path.value).filter(a => a.toLowerCase().includes('.bat'));
@@ -227,6 +227,7 @@ function startCreateTest(){
 
     clearList(fileDrop);
 
+    // Populates the file dropdown
     batFiles.forEach(file => {
         file = unnormaliseString(file);
         // Populate file dropdown:
@@ -238,92 +239,90 @@ function startCreateTest(){
 
     let runConfig = createRunConfig();
 
-    fs.writeFile(path.join(createTestState.path.value, 'runConfig.json'), JSON.stringify(runConfig), err => err ? console.log(err) : console.log(`%c Created run config file in \n ${createTestState.path.value}`, 'color: green;'));
+    fs.writeFileSync(path.join(createTestState.path.value, 'runConfig.json'), JSON.stringify(runConfig));
 
     // runNextPendingFile(runConfig);
+
+    // Run all the files
     runConfig.files.forEach(file => {
         file.status = 'running';
-        runFile(file.path);
-
+        runFile(file.path, runConfig);
     });
     
+    outputConsole(runConfig.files[0]);
+
     $('#create-test-settings').hide();
     $('.run-create-test-container').show();
 }
 
-async function runFile(pathval){
-    let runConfig = await asyncReadData(path.join(createTestState.path.value, 'runConfig.json'));
-
-    let fileConf = runConfig.files.filter(a => a.path == pathval)[0];
+function outputConsole(fileConf){
+    let output = fileConf.output;
 
     let conOut = document.querySelector('#create-test-console');
 
+    conOut.value += output;
+
+    console.log(output);
+}
+
+async function runFile(pathval, runConfig){
+    // let runConfig = await asyncReadData(path.join(createTestState.path.value, 'runConfig.json'));
+
+    let fileConf = runConfig.files.filter(a => a.path == pathval)[0];
+
     let command = `${pathval}`;
-    let dir = exec(command, (err, stdout, stderr) => {
-        if(err){
-            fileConf.output += err;
-            conOut.value += err;
-        }else if(stdout){
-            fileConf.output += stdout;
-            conOut.value += stdout;
-        }else if(stderr){
-            fileConf.output += stderr;
-            conOut.value += stderr;
-        }
+    let dir = spawn(command);
+    // let dir = exec(command, (err, stdout, stderr) => {
+    //     if(err){
+    //         fileConf.output += err;
+    //     }else if(stdout){
+    //         fileConf.output += stdout;
+    //     }else if(stderr){
+    //         fileConf.output += stderr;
+    //     }
 
-        fs.writeFile(
-            path.join(
-                createTestState.path.value,
-                'runConfig.json'
-            ),
-            JSON.stringify(runConfig),
-            err => {
-                if(err){
-                    console.log(err);
-                }
-            }
-        );
+    //     fs.writeFile(
+    //         path.join(
+    //             createTestState.path.value,
+    //             'runConfig.json'
+    //         ),
+    //         JSON.stringify(runConfig),
+    //         err => {
+    //             if(err){
+    //                 console.log(err);
+    //             }
+    //         }
+    //     );
 
-    });
+    // });
 
     dir.stdout.on('data', data => {
         console.log('STDOUT: \n');
         console.log(data);
         fileConf.output += data;
-        conOut.value += data;
-        fs.writeFile(
+        fs.writeFileSync(
             path.join(
                 createTestState.path.value,
                 'runConfig.json'
             ),
-            JSON.stringify(runConfig),
-            err => {
-                if(err){
-                    console.log(err);
-                }
-            }
+            JSON.stringify(runConfig)
         );
     });
     
     dir.stderr.on('data', data => {
         console.log('STDERR: \n');
         console.log(data);
-        conOut.value += data;
-        fileConf.output += data;
-        fs.writeFile(
+        fileConf.output += data + '\n';
+        fs.writeFileSync(
             path.join(
                 createTestState.path.value,
                 'runConfig.json'
             ),
-            JSON.stringify(runConfig),
-            err => {
-                if(err){
-                    console.log(err);
-                }
-            }
+            JSON.stringify(runConfig)
         );
 
     });
+
 }
 
 // Takes in run config file and runs next pending file
