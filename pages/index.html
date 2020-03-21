@@ -119,9 +119,20 @@
                         Recent Results
                     </p>
 
-                    <p class="empty-message">
-                        Looks like you haven't run any tests recently. Why not <a href="" class="action-link">run</a> some tests or <a href="" class="action-link">import</a> some results?
+                    <p class="empty-message" id="recent-empty-message">
+                        Looks like you haven't run any tests recently. Why not <span class="action-link" onClick="showContent('#runContent')">run</span> some tests?
+                        Or <span class="action-link" onClick="showContent('#settingsContent')">update</span> your settings to find some results.
                     </p>
+
+                    <p id="recent-graph-title"></p>
+
+                    <div class="recent-graphs-container">
+                        
+                        <div class="recent-graph-container" id="recent-graph">
+
+                        </div>
+
+                    </div>
 
                 </div><!-- End of div.recent-results -->
 

@@ -1057,3 +1057,11 @@ function formatNumber(num){
         {minimumFractionDigits: 2}
     );
 }
+
+function isFolder(pathval){
+    return fs.lstatSync(pathval).isDirectory();
+}
+
+function pathExists(pathval){
+    return fs.existsSync(pathval);
+}

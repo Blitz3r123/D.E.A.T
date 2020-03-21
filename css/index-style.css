@@ -56,4 +56,21 @@ html{
         .publisher-list::-webkit-scrollbar, .subscriber-list::-webkit-scrollbar{width: 0px !important;}
         .recent-results{width: 73vw; margin-left: 3.5vw; outline: 1px solid #aaa; margin-top: 3vh; height: 45vh; padding: 2vh 1vw;}
     .empty-message{text-align: center; margin-top: 8vh;}
-        .action-link{text-decoration: underline;}
+        .action-link{text-decoration: underline; color: blue;}
+        .action-link:hover{cursor: pointer;}
+
+.recent-graphs-container{
+    height: 70%;
+    display: flex;
+    justify-content: center;
+}
+
+.recent-graph-container{
+    width: 50vw;
+    height: 100%;
+}
+
+#recent-graph-title{
+    margin-left: 2vw;
+    text-decoration: underline;
+}

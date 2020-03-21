@@ -1,4 +1,101 @@
+$('#recent-empty-message').hide();
+
 populateQuickRunLists();
+renderRecentResults();
+
+
+function renderRecentResults(){
+    let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
+    let resDir = generalSettings.pubResultLoc;                                      // resDir = results directory
+
+    if(pathExists(resDir) && isFolder(resDir)){                                     // Check path exists and that it is a folder
+
+        let files = fs.readdirSync(resDir);
+        let csvFiles = files.filter(file => {return path.extname(file) == '.csv'});
+
+        if(csvFiles.length == 0){                                                   // No csv files so display empty message
+
+            $('#recent-empty-message').show();
+            
+        }else{
+
+            let pubFiles = csvFiles.filter(file => path.basename(file).toLowerCase().includes('pub'));
+            let subFiles = csvFiles.filter(file => path.basename(file).toLowerCase().includes('sub'));
+
+            if(pubFiles.length == 0){
+
+                displayGraph( path.join( resDir, subFiles[0] ));
+
+            }else{
+
+                displayGraph( path.join( resDir, pubFiles[0] ));
+
+            }
+        }
+
+    }else{
+        console.log(`%c I can't find the path \n ${resDir}`, 'color: red;');
+    }
+
+}
+
+function displayGraph(filepath){
+
+    fs.readFile(filepath, 'utf8', (err, data) => {
+        if(err){
+            console.log(`%c ${err}`, 'color: red;');
+        }else{
+            data = getRawData(data);
+
+            let title = document.querySelector('#recent-graph-title');
+
+            title.textContent = path.join( path.basename(path.dirname(filepath)), path.basename(filepath) );
+
+            let chart = c3.generate({
+                bindto: `#recent-graph`,
+                data: {
+                    columns: [
+                        data
+                    ]
+                }
+            });
+        }
+    });
+
+}
+
+function getRawData(data){
+    let rows = data.split('\n');
+
+    let headings = rows[0].split(',');
+
+    let item;
+
+    let normData = [];
+
+    let indexToUse;
+
+    rows.forEach(row => {
+
+        if( row.split(',')[0] == '' || row.split(',')[0] == ' '){
+            item = row.split(',')[1];
+            indexToUse = 1;
+        }else{
+            item = row.split(',')[0];
+            indexToUse = 0;
+        }
+
+        if(!isNaN(item)){
+            normData.push(item);
+        }
+
+    });
+
+    normData.unshift(headings[indexToUse]);
+
+    return normData;
+
+}
 
 function populateQuickRunLists(){
     let generalSettings = readData(__dirname + '/../data/GeneralSettings.json');
