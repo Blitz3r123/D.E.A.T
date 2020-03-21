@@ -9,7 +9,7 @@
 }
 
 .title-search-container input{
-    /* outline: 1px solid #444; */
+    /* outline: 1px solid #aaa; */
     max-height: 5vh;
     margin-right: 3vw;
     padding: 1vh 1vw;
@@ -23,14 +23,14 @@
 }
 
 .reset-button{
-    border: 1px solid #444;
+    border: 1px solid #144a6b;
     border-radius: 2px;
     margin-right: 3vw;
     display: block;
     padding: 1vh 2vw;
     width: 15vw;
     text-align: center;
-    color: #444;
+    color: #144a6b;
     transition-duration: 0.25s;
     -webkit-transition-duration: 0.25s;
 
@@ -38,11 +38,11 @@
     align-items: center;
 }
 
-.reset-button:hover{color: white !important; text-decoration: none; background-color: #444; cursor: pointer;}
+.reset-button:hover{color: white !important; text-decoration: none; background-color: #144a6b; cursor: pointer;}
 
 .settings::-webkit-scrollbar{width: 0 !important;}
 .settings{
-    outline: 1px solid #444;
+    outline: 1px solid #aaa;
     margin-top: 2vh;
     width: 96%;
     margin-left: 2%;
@@ -53,22 +53,22 @@
 
 .settings-column{width: 90%; margin-left: 5%; padding: 3vh 0;}
 
-.setting{padding: 2vh 6vw; border-bottom: 1px solid #444; border-right: 1px solid #444; border-left: 1px solid #444; margin: 0; display: flex; justify-content: space-between; align-items: center;}
-.create-setting{padding: 2vh 6vw; border-bottom: 1px solid #444; border-right: 1px solid #444; border-left: 1px solid #444; margin: 0; display: flex; justify-content: space-between; align-items: center;}
+.setting{padding: 2vh 6vw; border-bottom: 1px solid #eee; border-right: 1px solid #eee; border-left: 1px solid #eee; margin: 0; display: flex; justify-content: space-between; align-items: center;}
+.create-setting{padding: 2vh 6vw; border-bottom: 1px solid #eee; border-right: 1px solid #eee; border-left: 1px solid #eee; margin: 0; display: flex; justify-content: space-between; align-items: center;}
 .search-setting{display: none;}
-    .top-setting{border-top: 1px solid #444;}
+    .top-setting{border-top: 1px solid #eee;}
     .setting input{
         border-right: none;
         box-shadow: none;
         padding-left: 1vw;
         border: none;
-        border: 1px solid grey;
+        border: 1px solid #aaa;
 }
 
 .checkmark{height: 4vh; width: 4vw; margin-right: 5vw;}
 .checkmark:hover{cursor: pointer;}
 
-#createButton:hover{cursor: pointer; color: white;}
+#createButton:hover{cursor: pointer; color: white; background-color: #144a6b;}
 
 .found-item{
     margin-bottom: 2vh;

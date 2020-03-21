@@ -51,7 +51,7 @@
     overflow-y: scroll;
 }
 .test-list-content .empty-message{
-    color: #666;
+    color: #144a6b;
     padding-top: 20vh;
 }
 
@@ -122,13 +122,14 @@
 }
 
 .active-file-tab-item{
-    background-color: #aaa;
-    color: white;
+    background-color: #eff7fc;
+    color: #144a6b;
     white-space: nowrap;
 }
 
 .file-tab-item:hover{cursor: pointer;}
 .file-tab-item{
+    color: #144a6b;
     height: 100%;
     display: block;
     padding: 1vh 1vw;
@@ -464,7 +465,7 @@ input.pub-sub-list-item-title{
     height: 100%;
 }
 
-.add-machine-container:hover{cursor: pointer; color: #efefef; background-color: #666;}
+.add-machine-container:hover{cursor: pointer; color: #efefef; background-color: #144a6b;}
 .add-machine-container{
     outline: 1px solid #666;
     margin-top: 2vh;
@@ -472,7 +473,7 @@ input.pub-sub-list-item-title{
     width: 10%;
     text-align: center;
     height: 10vh;
-    color: #666;
+    color: #144a6b;
     transition-duration: 0.2s;
     -webkit-transition-duration: 0.2s;
 }
