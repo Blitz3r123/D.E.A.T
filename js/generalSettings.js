@@ -15,6 +15,9 @@ pubResultLocFileNameDOM.textContent = normalisePath(genSettingVals.pubResultLoc)
 subResultLocFileNameDOM.textContent = normalisePath(genSettingVals.subResultLoc);
 nddsHomeLocFileNameDOM.textContent = normalisePath(genSettingVals.nddsHomeLoc);
 
+// Collapse all collapses
+$('.collapse').collapse('hide');
+
 $('#defPerftestLoc').on('change', e => {
     let newPath = e.target.files[0].path;
     let oldData = readData(path.join(__dirname, '../data/GeneralSettings.json'));

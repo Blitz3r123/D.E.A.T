@@ -965,99 +965,107 @@
 
                     <div id='general-settings-container'>
                     
-                        <h1>General Settings</h1>
+                        <h1>
+                            <button type="button" style="background-color: white; border: none;" data-toggle="collapse" data-target="#general-collapse" aria-expanded="false" aria-controls="collapseExample">
+                                General Settings <ion-icon name="chevron-down-outline"></ion-icon>
+                            </button>
+                        </h1>
     
-                        <div class="general-setting-container">
-                            <p class="general-setting-text">
-                                Default perftest_java.bat location:
-                                <br>
-                                <span>
-                                    Where your perftest_java.bat is
-                                </span>
-                            </p>
-                            <p class="file-name" id="defPerftestLocFileName" onClick="togglePathView('#defPerftestLocFileName', genSettingVals.defPerftestLoc)"></p>
-                            <input type="file" name="perftest_location" id="defPerftestLoc">
-                        </div><!-- div.general-setting-container -->
-    
-                        <div class="general-setting-container">
-                            <p class="general-setting-text">
-                                Script Folder location:
-                                <br>
-                                <span>
-                                    Where to store your test scripts
-                                </span>
-                            </p>
-                            <p 
-                                class="file-name" 
-                                onClick="togglePathView('#defScriptLocFileName', genSettingVals.defScriptLoc)"
-                                id="defScriptLocFileName"
-                            ></p>
-                            <input type="file" name="script_location" id="defScriptLoc" multiple directory webkitdirectory>
-                        </div><!-- div.general-setting-container -->
+                        <div class="collapse multi-collapse" id="general-collapse">
 
-                        <div class="general-setting-container">
-                            <p class="general-setting-text">
-                                Test Folder Location:
-                                <br>
-                                <span>
-                                    Where to store your tests
-                                </span>
-                            </p>
-                            <p 
-                                class="file-name" 
-                                onClick="togglePathView('#testFolderLocFileName', genSettingVals.testFolderLoc)"
-                                id="testFolderLocFileName"
-                            ></p>
-                            <input type="file" name="script_location" id="testFolderLoc" multiple directory webkitdirectory>
-                        </div><!-- div.general-setting-container -->
+                            <div class="general-setting-container">
+                                <p class="general-setting-text">
+                                    Default perftest_java.bat location:
+                                    <br>
+                                    <span>
+                                        Where your perftest_java.bat is
+                                    </span>
+                                </p>
+                                <p class="file-name" id="defPerftestLocFileName" onClick="togglePathView('#defPerftestLocFileName', genSettingVals.defPerftestLoc)"></p>
+                                <input type="file" name="perftest_location" id="defPerftestLoc">
+                            </div><!-- div.general-setting-container -->
+        
+                            <div class="general-setting-container">
+                                <p class="general-setting-text">
+                                    Script Folder location:
+                                    <br>
+                                    <span>
+                                        Where to store your test scripts
+                                    </span>
+                                </p>
+                                <p 
+                                    class="file-name" 
+                                    onClick="togglePathView('#defScriptLocFileName', genSettingVals.defScriptLoc)"
+                                    id="defScriptLocFileName"
+                                ></p>
+                                <input type="file" name="script_location" id="defScriptLoc" multiple directory webkitdirectory>
+                            </div><!-- div.general-setting-container -->
     
-                        <div class="general-setting-container">
-                            <p class="general-setting-text">
-                                Publisher Results location:
-                                <br>
-                                <span>
-                                    Where to store your publisher results
-                                </span>
-                            </p>
-                            <p 
-                                class="file-name" 
-                                onClick="togglePathView('#pubResultLocFileName', genSettingVals.pubResultLoc)"
-                                id="pubResultLocFileName"
-                            ></p>
-                            <input type="file" name="script_location" id="pubResultLoc" multiple directory webkitdirectory>
-                        </div><!-- div.general-setting-container -->
-    
-                        <div class="general-setting-container">
-                            <p class="general-setting-text">
-                                Subscriber Results location:
-                                <br>
-                                <span>
-                                    Where to store your subscriber results
-                                </span>
-                            </p>
-                            <p 
-                                class="file-name" 
-                                onClick="togglePathView('#subResultLocFileName', genSettingVals.subResultLoc)"
-                                id="subResultLocFileName"
-                            ></p>
-                            <input type="file" name="script_location" id="subResultLoc" multiple directory webkitdirectory>
-                        </div><!-- div.general-setting-container -->
-    
-                        <div class="general-setting-container">
-                            <p class="general-setting-text">
-                                NDDS Home location:
-                                <br>
-                                <span>
-                                    Where NDDS is located
-                                </span>
-                            </p>
-                            <p 
-                                class="file-name" 
-                                onClick="togglePathView('#nddsHomeLocFileName', genSettingVals.nddsHomeLoc)"
-                                id="nddsHomeLocFileName"
-                            ></p>
-                            <input type="file" name="script_location" id="nddsHomeLoc" multiple directory webkitdirectory>
-                        </div><!-- div.general-setting-container -->
+                            <div class="general-setting-container">
+                                <p class="general-setting-text">
+                                    Test Folder Location:
+                                    <br>
+                                    <span>
+                                        Where to store your tests
+                                    </span>
+                                </p>
+                                <p 
+                                    class="file-name" 
+                                    onClick="togglePathView('#testFolderLocFileName', genSettingVals.testFolderLoc)"
+                                    id="testFolderLocFileName"
+                                ></p>
+                                <input type="file" name="script_location" id="testFolderLoc" multiple directory webkitdirectory>
+                            </div><!-- div.general-setting-container -->
+        
+                            <div class="general-setting-container">
+                                <p class="general-setting-text">
+                                    Publisher Results location:
+                                    <br>
+                                    <span>
+                                        Where to store your publisher results
+                                    </span>
+                                </p>
+                                <p 
+                                    class="file-name" 
+                                    onClick="togglePathView('#pubResultLocFileName', genSettingVals.pubResultLoc)"
+                                    id="pubResultLocFileName"
+                                ></p>
+                                <input type="file" name="script_location" id="pubResultLoc" multiple directory webkitdirectory>
+                            </div><!-- div.general-setting-container -->
+        
+                            <div class="general-setting-container">
+                                <p class="general-setting-text">
+                                    Subscriber Results location:
+                                    <br>
+                                    <span>
+                                        Where to store your subscriber results
+                                    </span>
+                                </p>
+                                <p 
+                                    class="file-name" 
+                                    onClick="togglePathView('#subResultLocFileName', genSettingVals.subResultLoc)"
+                                    id="subResultLocFileName"
+                                ></p>
+                                <input type="file" name="script_location" id="subResultLoc" multiple directory webkitdirectory>
+                            </div><!-- div.general-setting-container -->
+        
+                            <div class="general-setting-container">
+                                <p class="general-setting-text">
+                                    NDDS Home location:
+                                    <br>
+                                    <span>
+                                        Where NDDS is located
+                                    </span>
+                                </p>
+                                <p 
+                                    class="file-name" 
+                                    onClick="togglePathView('#nddsHomeLocFileName', genSettingVals.nddsHomeLoc)"
+                                    id="nddsHomeLocFileName"
+                                ></p>
+                                <input type="file" name="script_location" id="nddsHomeLoc" multiple directory webkitdirectory>
+                            </div><!-- div.general-setting-container -->
+
+                        </div>
     
                     </div><!-- End of div#general-settings-container -->
     
@@ -1065,9 +1073,14 @@
     
                     <div id='create-settings-container'>
                         
-                        <h1>Create</h1>
+                        <h1>
+                            <button style="background-color: white; border: none;" type="button" data-toggle="collapse" data-target="#create-collapse" aria-expanded="false" aria-controls="collapseExample">
+                                Create
+                                <ion-icon name="chevron-down-outline"></ion-icon>
+                            </button>
+                        </h1>
     
-                        <div class="quick-create-settings-container">
+                        <div class="quick-create-settings-container collapse" id="create-collapse">
                             <h4>General Settings</h4>
     
                             <div class="quick-create-general-settings-container" id="quick-create-general-settings-container"></div>
@@ -1086,81 +1099,16 @@
 
                     <hr>
 
-                    <div id="results-settings-container" style="display: none;">  
-
-                        <h1>Test Results</h1>
-
-                        <p>Choose what data you would like to view in the results:</p>
-
-                        <div id="field-selection-container">
-
-                            <div class="row">
-
-                                <h4>Publisher</h4>
-
-                                <div class="checkbox-container">
-                                    
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Latency
-                                    </p>
-
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Average Latency
-                                    </p>
-
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Minimum Latency
-                                    </p>
-
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Maximum Latency
-                                    </p>
-
-                                </div>
-
-                            </div><!-- End of div.row -->
-
-                            <div class="row">
-
-                                <h4>Subscriber</h4>
-
-                                <div class="checkbox-container">
-                                    
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Throughput
-                                    </p>
-
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Average Throughput
-                                    </p>
-
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Minimum Throughput
-                                    </p>
-
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Maximum Throughput
-                                    </p>
-
-                                    <p>
-                                        <input type="checkbox" name="" id=""> Packets Lost
-                                    </p>
-
-                                </div>
-
-                            </div><!-- End of div.row -->
-
-                        </div><!-- End of div#field-selection-container -->
-
-                    </div><!-- End of div#results-settings-container -->
-
-                    <!-- <hr> -->
-
                     <div id="rdp-settings-container">
 
-                        <h1>Remote Desktop Connections</h1>
+                        <h1>
+                            <button style="background-color: white; border: none;" type="button" data-toggle="collapse" data-target="#rdp-connection-list" aria-expanded="false" aria-controls="collapseExample">
+                                Remote Desktop Connections
+                                <ion-icon name="chevron-down-outline"></ion-icon>
+                            </button>
+                        </h1>
 
-                        <div class="connection-list" id="rdp-connection-list">
+                        <div class="connection-list collapse" id="rdp-connection-list">
 
                             <!-- <div class="connection-list-item">
 
