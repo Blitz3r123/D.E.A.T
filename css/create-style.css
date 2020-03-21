@@ -42,7 +42,7 @@
 
 .settings::-webkit-scrollbar{width: 0 !important;}
 .settings{
-    outline: 1px solid #aaa;
+    /* outline: 1px solid #aaa; */
     margin-top: 2vh;
     width: 96%;
     margin-left: 2%;
