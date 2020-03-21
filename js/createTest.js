@@ -1251,6 +1251,11 @@ function createNewTest(){
                     $('.settings-list-container').hide();
                 }
 
+                let data = document.querySelector('#create-test-settings').attributes;
+                let testFolderPath = data.path.value;
+
+                document.querySelector('#create-test-page-title').textContent = 'CREATE TEST: ' + unnormaliseString(path.basename(testFolderPath));
+
             }else{
                 showPopup("Test already exists with that name in that location!");
             }
