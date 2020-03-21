@@ -290,6 +290,7 @@ async function runFile(pathval){
         console.log('STDOUT: \n');
         console.log(data);
         fileConf.output += data;
+        conOut.value += data;
         fs.writeFile(
             path.join(
                 createTestState.path.value,
@@ -307,7 +308,7 @@ async function runFile(pathval){
     dir.stderr.on('data', data => {
         console.log('STDERR: \n');
         console.log(data);
-        
+        conOut.value += data;
         fileConf.output += data;
         fs.writeFile(
             path.join(
