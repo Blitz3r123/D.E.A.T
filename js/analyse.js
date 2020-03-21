@@ -1,13 +1,6 @@
-// Delete these after development of this component
-// $('.analyse-selection-window').hide();
-// $('.analyse-summary-window').show();
-// $('.analyse-summary-publisher-content').hide();
-// $('.analyse-summary-subscriber-content').hide();
-// document.getElementById('analyse-summary-subscriber-tab').className = 'analyse-summary-tab active-tab';
-// document.getElementById('analyse-summary-publisher-tab').className = 'analyse-summary-tab';
-
-// var summaryFilePaths = ["/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 1/sub1.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 2/sub1.csv", "/Users/kaleem/Documents/performance-testing/Tests/Set 14 [Set 13 Best Effort Rerun]/Best Effort Multicast/10 Subscribers/Run 3/sub1.csv"];
 var summaryFilePaths = [];
+
+$('#graph-loader').hide();
 
 // Hide analysis summary window on start
 $('.analyse-summary-window').hide();
@@ -89,11 +82,13 @@ $('#analysis-back-button').on('click', e => {
 
     clearChildren(document.querySelector('#analysis-data-table'));
     
-    clearChildren(document.querySelector('#general-graph-container'));
-    clearChildren(document.querySelector('#nonzero-graph-container'));
-    clearChildren(document.querySelector('#cdf-graph-container'));
-    clearChildren(document.querySelector('#throughput-graph-container'));
-    clearChildren(document.querySelector('#packets-per-sec-graph-container'));
+    // clearChildren(document.querySelector('#general-graph-container'));
+    // clearChildren(document.querySelector('#nonzero-graph-container'));
+    // clearChildren(document.querySelector('#cdf-graph-container'));
+    // clearChildren(document.querySelector('#throughput-graph-container'));
+    // clearChildren(document.querySelector('#packets-per-sec-graph-container'));
+
+    clearChildren(document.querySelector('#analyse-publisher-graphs-container'));
     
     $('#general-graph-title').hide();
     $('#non-zero-graph-title').hide();
@@ -244,386 +239,173 @@ function analyseFile(file){
         document.querySelector('#analyse-current-tab').textContent = path.basename(file);
     
         let analysisTableDOM = document.querySelector('#analysis-data-table');
+        let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
 
         let data = fs.readFileSync(file, 'utf8');
 
         let dataArray = data.split('\n');
-                
-        if(file.toLowerCase().includes('pub')){
-            let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
-            
-            let latencyArray = [];
+        
+        if( path.basename(file).toLowerCase().includes('pub') ){
 
-            // console.log(dataArray);`
-
-            let latencyIndex;
-
-            // Check if array has multiple values per row
-            if(dataArray[1].includes(',')){
-                dataArray[0].split(',').forEach((item, index) => {
-                
-                    if(item.toLowerCase().includes('latency')){
-                        latencyIndex = index;
-                    }
-
-                });
-
-                for(i = 1; i < dataArray.length; i++){
-                    latencyArray.push( parseInt(dataArray[i].split(',')[latencyIndex]) );
-                }
-
-            }else{
-                latencyArray = dataArray;
-                
-                latencyArray.forEach(item => {
-                    item = parseInt(item);
-                });
-
-                latencyArray = latencyArray.slice(1, latencyArray.length - 4);
-            }
-
-            // Calculate average:
-            let totalLatency = 0;
-            let nonZeroCount = 0;
-            let zeroCount = 0;
-
-            latencyArray.forEach(item => {
-                if(! (isNaN(parseInt(item))) ){
-                    totalLatency += parseInt(item);
-                    if(parseInt(item) != 0){
-                        nonZeroCount ++;
-                    }else{
-                        zeroCount ++;
-                    }
-                    console.log(parseInt(item));
-                }else{
-                    console.log(`%c ${item} is NaN`, 'color: red;');
-                }
-            });
-
-            let zeroAverage = totalLatency / (latencyArray.length - zeroCount);
-            let nonZeroAverage = totalLatency / latencyArray.length;
-
-            let summaryTableDOM = createTable('Summary');
-
-            let summaryTbodyDOM = document.createElement('tbody');
-
-            addTableRow(summaryTbodyDOM, 'Average with Zero', commaFormatNumber(zeroAverage.toFixed(2)));
-            addTableRow(summaryTbodyDOM, 'Average', commaFormatNumber(nonZeroAverage.toFixed(2)));
-            addTableRow(summaryTbodyDOM, 'No. of Zeros', commaFormatNumber(zeroCount.toFixed(2)));
-            addTableRow(summaryTbodyDOM, 'Zero %', commaFormatNumber((( zeroCount / ( nonZeroCount + zeroCount ) ) * 100).toFixed(2)));
-
-            summaryTableDOM.appendChild(summaryTbodyDOM);
-
-            summaryTableContainerDOM.appendChild(summaryTableDOM);
-
-            // <thead class='thead-dark'></thead>
-            let theadDOM = document.createElement('thead');
-            theadDOM.className = 'thead-dark';
-            
-            // <tr></tr>
-            let trDOM = document.createElement('tr');
-
-            // <th scope='col'>One-Way Latency (us)</th>
-            let latencyThDOM = document.createElement('th');
-            latencyThDOM.scope = 'col';
-            latencyThDOM.textContent = 'One-Way Latency (us)';
-
-            /*
-                <tr>
-                    <th scope='col'>One-Way Latency (us)</th>
-                </tr>
-            */
-            trDOM.appendChild(latencyThDOM);
-
-            /*
-                <thead class='thead-dark'>
-                    <tr>
-                        <th scope='col'>One-Way Latency (us)</th>
-                    </tr>
-                </thead>
-            */
-            theadDOM.appendChild(trDOM);
-
-            analysisTableDOM.appendChild(theadDOM);
-
-            let tbodyDOM = document.createElement('tbody');
-
-            latencyArray.forEach(row => {
-                let dataTrDOM = document.createElement('tr');
-                let latencyTdDOM = document.createElement('td');
-
-                latencyTdDOM.textContent = row;
-
-                dataTrDOM.appendChild(latencyTdDOM);
-
-                tbodyDOM.appendChild(dataTrDOM);
-            });
-
-            analysisTableDOM.appendChild(tbodyDOM);
-
-            let nonZeroArray = [];
-
-            latencyArray.forEach(item => {
-                if(parseInt(item) != 0){
-                    nonZeroArray.push(parseInt(item));
-                }
-            });
-
-            nonZeroArray.unshift('Latency');
-
-            // Create graph:
-            var chart = c3.generate({
-                bindto: '#nonzero-graph-container',
-                data: {
-                    columns: [
-                    nonZeroArray
-                    ]
-                }
-            });
-            
-            /*
-                CDF ALGORITHM:
-                1. Sort array from smallest to largest
-                2. Count how many times each item appears
-                3. Set count as fraction (count / length)
-                4. Plot count / length on y axis
-                5. Plot each unique value on x axis
-            */
-            
-            let cdfArray = [];
-            let cdfXValues = [];
-            let cdfYValues = [];
-
-            nonZeroArray = nonZeroArray.slice(1, nonZeroArray.length - 1 );
-
-            cdfArray = nonZeroArray.sort((a, b) => parseInt(a) - parseInt(b));
-
-            cdfArray.forEach((item, index) => {
-                if(item !== cdfArray[index - 1]){
-                    cdfXValues.push(item);
-                    cdfYValues.push(1);
-                }else{
-                    cdfYValues[cdfYValues.length-1]++;
-                }
-            });
-
-            for(var i = 0; i < cdfYValues.length; i++){
-                cdfYValues[i] = parseInt(cdfYValues[i]) / parseInt(cdfYValues.length);
-            }
-
-            for(var j = 1; j < cdfYValues.length; j++){
-                cdfYValues[j] += cdfYValues[j - 1];
-            }
-
-            latencyArray.unshift('Latency');
-            var chartTwo = c3.generate({
-                bindto: '#general-graph-container',
-                data: {
-                    columns: [
-                    latencyArray
-                    ]
-                }
-            });
-
-            let tickArray = [];
-
-            for(var k = 0; k < cdfXValues.length; k ++){
-                tickArray[k] = (cdfXValues[length] / k);
-            }
-
-            cdfXValues.unshift('x');
-            cdfYValues.unshift('CDF');
-
-            var chartTwo = c3.generate({
-                bindto: '#cdf-graph-container',
-                data: {
-                    x: 'x',
-                    y: 'CDF',
-                    columns: [
-                        cdfXValues,
-                        cdfYValues
-                    ]
-                },
-                axis: {
-                    x: {
-                        type: 'category',
-                        tick: {
-                            count: 1
-                        }
-                    }
-                }
-            });
-
-            $('#general-graph-title').show();
-            $('#non-zero-graph-title').show();
-            $('#cdf-graph-title').show();
-
-            $('#general-graph-container').show();
-            $('#nonzero-graph-container').show();
-            $('#cdf-graph-container').show();
-
-            $('#throughput-graph-container').hide();
-            $('#throughput-graph-title').hide();
-
-            $('#packets-per-sec-graph-container').hide();
-            $('#packets-per-sec-graph-title').hide();
-
-        }else if(file.toLowerCase().includes('sub')){
-            let totalPacketsArray = [];
-            let packetsPerSecArray = [];
-            let throughputArray = [];
-            let packetsLostArray = [];
-
-            dataArray = dataArray.slice(1, dataArray.length - 2);  
-
-            dataArray.forEach(row => {
-                let rowData = row.split(',');
-
-                totalPacketsArray.push(rowData[1]);
-                packetsPerSecArray.push(rowData[2]);
-                throughputArray.push(rowData[3]);
-                packetsLostArray.push(rowData[4]);
-            });
-
-            let theadDOM = document.createElement('thead');
-            theadDOM.className = 'thead-dark';
-
-            let trDOM = document.createElement('tr');
-
-            let totalPacketsThDOM = document.createElement('th');
-            totalPacketsThDOM.scope = 'col';
-            totalPacketsThDOM.textContent = 'Total Packets';
-
-            let packetsPerSecThDOM = document.createElement('th');
-            packetsPerSecThDOM.scope = 'col';
-            packetsPerSecThDOM.textContent = 'Packets Per Sec';
-
-            let throughputThDOM = document.createElement('th');
-            throughputThDOM.scope = 'col';
-            throughputThDOM.textContent = 'Throughput';
-
-            let packetsLostThDOM = document.createElement('th');
-            packetsLostThDOM.scope = 'col';
-            packetsLostThDOM.textContent = 'Packets Lost';
-
-            trDOM.appendChild(totalPacketsThDOM);
-            trDOM.appendChild(packetsPerSecThDOM);
-            trDOM.appendChild(throughputThDOM);
-            trDOM.appendChild(packetsLostThDOM);
-
-            theadDOM.appendChild(trDOM);
-
-            analysisTableDOM.appendChild(theadDOM);
-
-            let tbodyDOM = document.createElement('tbody');
-
-            for(var i = 0; i < totalPacketsArray.length; i ++){
-                let dataTrDOM = document.createElement('tr');
-                let totalPacketsTdDOM = document.createElement('td');
-                let packetsPerSecTdDOM = document.createElement('td');
-                let throughputTdDOM = document.createElement('td');
-                let packetsLostTdDOM = document.createElement('td');
-
-                totalPacketsTdDOM.textContent = parseInt(totalPacketsArray[i]);
-                packetsPerSecTdDOM.textContent = parseInt(packetsPerSecArray[i]);
-                throughputTdDOM.textContent = parseInt(throughputArray[i]);
-                packetsLostTdDOM.textContent = parseInt(packetsLostArray[i]);
-
-                dataTrDOM.appendChild(totalPacketsTdDOM);
-                dataTrDOM.appendChild(packetsPerSecTdDOM);
-                dataTrDOM.appendChild(throughputTdDOM);
-                dataTrDOM.appendChild(packetsLostTdDOM);
-
-                tbodyDOM.appendChild(dataTrDOM);
-            }
-
-            analysisTableDOM.appendChild(tbodyDOM);
-
-            // -------------------------------------------------------------------------------------------------
-
-            let summaryTableContainerDOM = document.querySelector('#analyse-summary-table-container');
-
-            let throughputSummaryTableDOM = createTable('Throughput Summary');
-
-            // Calculate throughput average
-            let totalThroughput = 0;
-            throughputArray.forEach(item => {
-                totalThroughput += parseInt(item);
-            });
-            
-            let throughputAverage = parseInt((totalThroughput / throughputArray.length)).toFixed(2);
-            let throughputLowerQuartile = parseInt(throughputArray[ (throughputArray.length / 4) - 1 ]).toFixed(2);
-            let throughputMedian = parseInt(throughputArray[ (throughputArray.length / 2) - 1 ]).toFixed(2);
-            let throughputUpperQuartile = parseInt(throughputArray[ ( 3 * (throughputArray.length) / 4) - 1 ]).toFixed(2);
-            
-            let totalPacketsValue = parseInt(totalPacketsArray[totalPacketsArray.length - 1]);
-            let packetsLostValue = parseInt(packetsLostArray[packetsLostArray.length - 1]);
-            let packetsLostPercentage = (( packetsLostValue / (totalPacketsValue + packetsLostValue) ) * 100).toFixed(2);
-            
-            let generalSummaryTableDOM = createTable('General Summary');
-            let generalTbodyDOM = document.createElement('tbody');
-            addTableRow(generalTbodyDOM, 'No. of packets sent', commaFormatNumber(totalPacketsValue + packetsLostValue));
-            addTableRow(generalTbodyDOM, 'No. of packets received', commaFormatNumber(totalPacketsValue));
-            addTableRow(generalTbodyDOM, 'No. of packets lost', commaFormatNumber(packetsLostValue));
-            addTableRow(generalTbodyDOM, 'Lost %', commaFormatNumber(packetsLostPercentage) + '%');
-
-            generalSummaryTableDOM.appendChild(generalTbodyDOM);
-
-            let tBodyDOM = document.createElement('tbody');
-            
-            addTableRow(tBodyDOM, 'Average', throughputAverage);
-            addTableRow(tBodyDOM, 'Lower Quartile', throughputLowerQuartile);
-            addTableRow(tBodyDOM, 'Median', throughputMedian);
-            addTableRow(tBodyDOM, 'Upper Quartile', throughputUpperQuartile);
-            
-            throughputSummaryTableDOM.appendChild(tBodyDOM);
-
-            summaryTableContainerDOM.appendChild(generalSummaryTableDOM);
-            summaryTableContainerDOM.appendChild(throughputSummaryTableDOM);
-
-            throughputArray.unshift('Throughput');
-            var chart = c3.generate({
-                bindto: '#throughput-graph-container',
-                data: {
-                    columns: [
-                        throughputArray
-                    ]
-                }
-            });
-
-            packetsPerSecArray.unshift('Packets/s');
-            var chart = c3.generate({
-                bindto: '#packets-per-sec-graph-container',
-                data: {
-                    columns: [
-                        packetsPerSecArray
-                    ]
-                }
-            });
-
-            $('#throughput-graph-title').show();
-            $('#throughput-graph-container').show();
-            $('#packets-per-sec-graph-title').show();
-            $('#packets-per-sec-graph-container').show();
-
-            $('#general-graph-title').hide();
-            $('#non-zero-graph-title').hide();
-            $('#cdf-graph-title').hide();
-
-            $('#general-graph-container').hide();
-            $('#nonzero-graph-container').hide();
-            $('#cdf-graph-container').hide();
+        }else if( path.basename(file).toLowerCase().includes('sub') ){
 
         }else{
-            console.log(`%c I don't know what kind of file it is....`, 'color: blue;');
+            console.log(`%c I can't tell if the file is a pub or sub...`, 'color: blue;');
         }
+        
+        let csvArray = [];
+
+        dataArray.forEach((row, index) => {
+            
+            row = row.split(',');
+            
+            // Remove all empty elements
+            row = row.filter(a => {return a != '' && a != ' ';});
+            
+            if(index == 0){
+                
+                row.forEach(item => {
+                    
+                    let array = [];
+                    array.push(item);
+                    csvArray.push(array);
+                    array = [];
+                    
+                });
+
+            }else{
+
+                for(var i = 0; i < csvArray.length; i++){
+                    csvArray[i].push(row[i]);
+                }
+
+            }
+
+        });
+        
+        
+        /*
+        
+            At this point csvArray consists of multiple arrays for each column in the csv file.
+            We need to check this data and make sure each row is a number, if it isn't remove it.
+
+        */
+
+        let newCsvArray = [];
+        let arrayHeaders = [];
+
+        csvArray.forEach(array => {
+            
+            let arrayHeader = array[0];
+            arrayHeaders.push(arrayHeader);
+
+            array = array.filter(a => {return !( isNaN(a) )});
+
+            array.unshift(arrayHeader);
+
+            newCsvArray.push(array);
+
+        });
+
+        csvArray = newCsvArray;
+
+        // At this point, the arrays are full of numbers :)
+
+        let arrayAvgs = [];
+        csvArray.forEach((array, index) => {
+            
+            avg = calcAverage(array);
+            
+            let newArr = [];
+            newArr.push(array[0]);
+
+            arrayAvgs.push(newArr);
+
+
+            arrayAvgs[index].push(avg);
+
+
+        });
+
+        // arrayAvgs has the title followed by the average for the title
+
+        let valueTable = createTable(arrayHeaders);
+
+        let valueBody = document.createElement('tbody');
+
+        for(var i = 1; i < csvArray[0].length; i++){
+            
+            let tr = document.createElement('tr');
+
+            for(var j = 0; j < csvArray.length; j ++){
+                let td = document.createElement('td');
+                td.textContent = csvArray[j][i];
+                tr.appendChild(td);
+            }
+
+            valueBody.appendChild(tr);
+
+        }
+
+        valueTable.appendChild(valueBody);
+
+        analysisTableDOM.appendChild( valueTable );
+
+        let summaryTable = createTable( ['Averages'] );
+        let summBody = document.createElement('tbody');
+
+        arrayAvgs.forEach(item => {
+            addTableRow(summBody, item[0], formatNumber(item[1]));
+        });
+
+        summaryTable.appendChild(summBody);
+        summaryTableContainerDOM.appendChild(summaryTable);
+
+        let graphsContainer = document.querySelector('#analyse-publisher-graphs-container');
+
+        $('#graph-loader').show();
+
+        csvArray.forEach(array => {
+
+            let graphTitle = document.createElement('p');
+            graphTitle.textContent = array[0];
+
+            graphsContainer.appendChild(graphTitle);
+
+            let graphContainer = document.createElement('div');
+            graphContainer.className = 'cdf-graph-container';
+            graphContainer.id = removeWhiteSpaces( remSpecials( array[0] ) );
+            
+            graphsContainer.appendChild(graphContainer);
+
+            let chart = c3.generate({
+                bindto: `#${removeWhiteSpaces( remSpecials( array[0] ) )}`,
+                data: {
+                    columns: [
+                        array
+                    ]
+                }
+            });
+
+
+        });
+
+        $('#graph-loader').hide();
+
+        // var chart = c3.generate({
+        //     bindto: '#nonzero-graph-container',
+        //     data: {
+        //         columns: [
+        //         nonZeroArray
+        //         ]
+        //     }
+        // });
 
     }
 
 }
 
-function createTable(headTitle){
+function createTable(headTitles){
     let tableDOM = document.createElement('table');
     tableDOM.className = 'table table-bordered';
 
@@ -631,11 +413,15 @@ function createTable(headTitle){
     theadDOM.className = 'thead-dark';
 
     let trDOM = document.createElement('tr');
-    let thDOM = document.createElement('th');
-    thDOM.colSpan = '4';
-    thDOM.textContent = headTitle;
+    headTitles.forEach(title => {
+        let thDOM = document.createElement('th');
+        thDOM.textContent = title;
+        trDOM.appendChild(thDOM);
+        if(headTitles.length == 1){
+            thDOM.colSpan = 10;
+        }
+    });
 
-    trDOM.appendChild(thDOM);
     theadDOM.appendChild(trDOM);
     tableDOM.appendChild(theadDOM);
 

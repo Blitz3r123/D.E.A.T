@@ -12,8 +12,8 @@ var hasError;
 $('#createContent').hide();
 $('#createTestContent').hide();
 $('#runContent').hide();
-// $('#indexContent').hide();
-$('#analyseContent').hide();
+$('#indexContent').hide();
+// $('#analyseContent').hide();
 $('#settingsContent').hide();
 
 // Hide popup view
@@ -880,6 +880,10 @@ function removeForwardSlashes(string){
     return string.replace(/\//g, "");
 }
 
+function remSpecials(string){
+    return string.replace(/[^\w\s]/gi, '');
+}
+
 // Removes white spaces, periods and forward slashes
 function stringate(string){
     return removeWhiteSpaces( removePeriods( removeForwardSlashes(string) ) );
@@ -1032,4 +1036,24 @@ function createSubBatOutput(perftestLoc, generalSettings, subscriberSettings){
     });
 
     return `"${perftestLoc}" ${generalOutput} ${subscriberOutput}`;
+}
+
+function calcAverage(array){
+    let total = 0;
+    let length = 0;
+    array.forEach(item => {
+        if(!isNaN(parseInt(item))){
+            total += parseInt(item);
+            length ++;
+        }
+    });
+
+    return ( total / length );
+}
+
+function formatNumber(num){
+    return num.toLocaleString(
+        undefined,
+        {minimumFractionDigits: 2}
+    );
 }
