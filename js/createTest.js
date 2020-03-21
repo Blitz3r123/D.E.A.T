@@ -256,14 +256,19 @@ async function runFile(pathval){
 
     let fileConf = runConfig.files.filter(a => a.path == pathval)[0];
 
+    let conOut = document.querySelector('#create-test-console');
+
     let command = `${pathval}`;
     let dir = exec(command, (err, stdout, stderr) => {
         if(err){
             fileConf.output += err;
+            conOut.value += err;
         }else if(stdout){
             fileConf.output += stdout;
+            conOut.value += stdout;
         }else if(stderr){
             fileConf.output += stderr;
+            conOut.value += stderr;
         }
 
         fs.writeFile(

@@ -89,19 +89,24 @@ async function runTestsLocally(){
 
     asyncWriteFile(path.join( saveDir, 'run.bat' ), batOut);
     
+    
+
     // 3. Run bat file created in step 2
     if(process.platform === 'darwin'){              // Its a mac
         exec(`chmod 755 "${path.join(saveDir, 'run.bat')}" && ` + path.join(saveDir, 'run.bat'), (err, stdout, stderr) => {
             if(err){
                 console.log(`%c ${err}`, 'color: red;');
+                conOut.value += err;
             }
     
             if(stdout){
                 console.log(`%c ${stdout}`, 'color: green;');
+                conOut.value += stdout;
             }
     
             if(stderr){
                 console.log(`%c ${stderr}`, 'color: orange;');
+                conOut.value += stderr;
             }
         });
     }else{
