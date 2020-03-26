@@ -42,6 +42,7 @@ async function runTestsLocally(){
     let processes = data.processes;
     let saveDir = path.join(__dirname, '../data/currentRun');;
 
+    // Empty the currentRun folder before adding new files into it
     setCurrentProcessDom(processes[0]);
     let delFiles = await readFolder(saveDir);
     delFiles.forEach(file => {
@@ -52,65 +53,84 @@ async function runTestsLocally(){
         });
     });
     
-    // Delete all files in currentRun folder
-
 
     /*
         1. Create bat file for each process
         2. Create bat file for all processes
-        3. Run bat file from step 2
     */
 
     // 1. Create bat file for each process
 
+    let fileOutput;
     processes.forEach(process => {
+        
+        fileOutput = '';
+        
         process.files.forEach((file, index) => {
 
-            let fileOutput = `
-                "${file.path}"
-                exit
-            `;
+            fileOutput += `"${file.path}"\n`;
 
-            let fileName = normaliseString(process.title + " File " + parseInt(index + 1));
-
-            asyncWriteFile(path.join( saveDir, fileName + '.bat' ), fileOutput);
         });
+        fileOutput += `exit`;
+
+        fs.writeFileSync(path.join(saveDir, `${process.title}.bat`), fileOutput);
     });
 
     // 2. Create bat file for all processes
-    let files = await asyncReadFolder(saveDir);
+    let files = fs.readdirSync(saveDir);
     let batFiles = files.filter(a => path.extname(a) == '.bat');
 
-    let batOut = `@echo off\n`;
+    let batOut;
 
-    batFiles.forEach(file => {
-        batOut += `start /wait "${file}"\n`;
+    batFiles.forEach((file, index) => {
+        // 3 cases: first, last and in between
+        if(index == 0){                             // first
+            batOut = `@echo off \n`;
+            batOut += `start /wait "${file}" \n`;
+            batOut += `REG ADD "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "2.bat" /t REG_SZ /F /D "2.bat" \n`;
+            batOut += `mkdir "${file.replace('.bat', '')}" \n`;
+            batOut += `move *.csv "${file.replace('.bat', '')}" \n`;
+            batOut += `pause \n`;
+            batOut += `shutdown -r -t 0 \n`;
+            fs.writeFileSync(`${path.join( saveDir, (index + 1) + '.bat' )}`, batOut);
+        }else if(index == batFiles.length - 1){         // last
+            batOut = `@echo off \n`;
+            batOut += `start /wait "${file}" \n`;
+            batOut += `REG DELETE "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "${index + 1}.bat" /t REG_SZ /F /D "${index + 1}.bat" \n`;
+            batOut += `mkdir "${file.replace('.bat', '')}" \n`;
+            batOut += `move *.csv "${file.replace('.bat', '')}" \n`;
+            fs.writeFileSync(`${path.join( saveDir, (index + 1) + '.bat' )}`, batOut);
+        }else{                                      // in between
+            batOut = `@echo off \n`;
+            batOut += `start /wait "${file}" \n`;
+            batOut += `REG DELETE "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "${index + 1}.bat"\n`;
+            batOut += `REG ADD "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "${index + 2}.bat" /t REG_SZ /F /D "${index + 2}.bat" \n`;
+            batOut += `mkdir "${file.replace('.bat', '')}" \n`;
+            batOut += `move *.csv "${file.replace('.bat', '')}" \n`;
+            batOut += `pause \n`;
+            batOut += `shutdown -r -t 0 \n`;
+            fs.writeFileSync(`${path.join( saveDir, (index + 1) + '.bat' )}`, batOut);
+        }
     });
 
-    asyncWriteFile(path.join( saveDir, 'run.bat' ), batOut);
-    
-    
 
     // 3. Run bat file created in step 2
     if(process.platform === 'darwin'){              // Its a mac
-        exec(`chmod 755 "${path.join(saveDir, 'run.bat')}" && ` + path.join(saveDir, 'run.bat'), (err, stdout, stderr) => {
+        exec(`chmod 755 "${path.join(saveDir, '1.bat')}" && ` + path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
             if(err){
                 console.log(`%c ${err}`, 'color: red;');
-                conOut.value += err;
             }
     
             if(stdout){
                 console.log(`%c ${stdout}`, 'color: green;');
-                conOut.value += stdout;
             }
     
             if(stderr){
                 console.log(`%c ${stderr}`, 'color: orange;');
-                conOut.value += stderr;
             }
         });
     }else{
-        exec(path.join(saveDir, 'run.bat'), (err, stdout, stderr) => {
+        exec(path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
             if(err){
                 console.log(`%c ${err}`, 'color: red;');
             }
