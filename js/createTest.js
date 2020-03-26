@@ -244,18 +244,17 @@ async function startCreateTest(){
     // runNextPendingFile(runConfig);
 
     // Run all the files
-    runConfig.files.forEach(file => {
+    runConfig.files.forEach((file, index) => {
         file.status = 'running';
-        runFile(file.path, runConfig);
+        runFile(file.path, runConfig, index);
     });
     
-    outputConsole(runConfig.files[0]);
-
     $('#create-test-settings').hide();
     $('.run-create-test-container').show();
 }
 
 function outputConsole(fileConf){
+    console.log('Outputting to console...');
     let output = fileConf.output;
 
     let conOut = document.querySelector('#create-test-console');
@@ -265,36 +264,34 @@ function outputConsole(fileConf){
     console.log(output);
 }
 
-async function runFile(pathval, runConfig){
+async function runFile(pathval, runConfig, fileIndex){
     // let runConfig = await asyncReadData(path.join(createTestState.path.value, 'runConfig.json'));
 
     let fileConf = runConfig.files.filter(a => a.path == pathval)[0];
 
     let command = `${pathval}`;
-    let dir = spawn(command);
-    // let dir = exec(command, (err, stdout, stderr) => {
-    //     if(err){
-    //         fileConf.output += err;
-    //     }else if(stdout){
-    //         fileConf.output += stdout;
-    //     }else if(stderr){
-    //         fileConf.output += stderr;
-    //     }
+    let dir = exec(command, (err, stdout, stderr) => {
+        if(err){
+            fileConf.output += err;
+        }else if(stdout){
+            fileConf.output += stdout;
+        }else if(stderr){
+            fileConf.output += stderr;
+        }
 
-    //     fs.writeFile(
-    //         path.join(
-    //             createTestState.path.value,
-    //             'runConfig.json'
-    //         ),
-    //         JSON.stringify(runConfig),
-    //         err => {
-    //             if(err){
-    //                 console.log(err);
-    //             }
-    //         }
-    //     );
+        fs.writeFileSync(
+            path.join(
+                createTestState.path.value,
+                'runConfig.json'
+            ),
+            JSON.stringify(runConfig)
+        );
 
-    // });
+        if(fileIndex = 0){
+            outputConsole(fileConf);
+        }
+
+    });
 
     dir.stdout.on('data', data => {
         console.log('STDOUT: \n');
@@ -307,6 +304,9 @@ async function runFile(pathval, runConfig){
             ),
             JSON.stringify(runConfig)
         );
+        if(fileIndex = 0){
+            outputConsole(fileConf);
+        }
     });
     
     dir.stderr.on('data', data => {
@@ -320,7 +320,9 @@ async function runFile(pathval, runConfig){
             ),
             JSON.stringify(runConfig)
         );
-
+        if(fileIndex = 0){
+            outputConsole(fileConf);
+        }
     });
 
 }
@@ -412,6 +414,8 @@ async function createBatSequenceFiles(){
     let allFiles = await asyncReadFolder(createTestState.path.value).catch(err => console.log(err));
     let batFiles = await allFiles.filter(a => path.extname(a) == '.bat');
     let fileName, fileOutput;
+
+    
 
     // for(var i = 0; i < batFiles.length; i++){
     //     if(i != batFiles.length - 1){

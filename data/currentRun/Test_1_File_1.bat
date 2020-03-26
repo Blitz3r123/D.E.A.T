@@ -1,4 +1,4 @@
 
-                "/Users/kaleem/Documents/D.E.A.T Testing/Scripts/pub.bat"
+                "/Users/kaleem/Documents/D.E.A.T_Testing/Scripts/Publisher 1.bat"
                 exit
             
