@@ -68,7 +68,11 @@ async function runTestsLocally(){
         
         process.files.forEach((file, index) => {
 
-            fileOutput += `"${file.path}"\n`;
+            if(index !== (process.files.length - 1)){
+                fileOutput += `"${file.path}" && `;
+            }else{
+                fileOutput += `"${file.path}"\n`;
+            }
 
         });
         fileOutput += `exit`;
@@ -130,7 +134,8 @@ async function runTestsLocally(){
             }
         });
     }else{
-        exec(path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
+        console.log(`Executing "${path.join(saveDir, '1.bat')}"`);
+        exec(`"${path.join(saveDir, '1.bat')}"`, (err, stdout, stderr) => {
             if(err){
                 console.log(`%c ${err}`, 'color: red;');
             }
