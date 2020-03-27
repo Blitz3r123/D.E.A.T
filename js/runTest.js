@@ -139,36 +139,36 @@ async function runTestsLocally(){
 
 
     // 3. Run bat file created in step 2
-    // if(process.platform === 'darwin'){              // Its a mac
-    //     exec(`chmod 755 "${path.join(saveDir, '1.bat')}" && ` + path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
-    //         if(err){
-    //             console.log(`%c ${err}`, 'color: red;');
-    //         }
+    if(process.platform === 'darwin'){              // Its a mac
+        exec(`chmod 755 "${path.join(saveDir, '1.bat')}" && ` + path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
+            if(err){
+                console.log(`%c ${err}`, 'color: red;');
+            }
     
-    //         if(stdout){
-    //             console.log(`%c ${stdout}`, 'color: green;');
-    //         }
+            if(stdout){
+                console.log(`%c ${stdout}`, 'color: green;');
+            }
     
-    //         if(stderr){
-    //             console.log(`%c ${stderr}`, 'color: orange;');
-    //         }
-    //     });
-    // }else{
-    //     console.log(`Executing "${path.join(saveDir, '1.bat')}"`);
-    //     exec(`"${path.join(saveDir, '1.bat')}"`, (err, stdout, stderr) => {
-    //         if(err){
-    //             console.log(`%c ${err}`, 'color: red;');
-    //         }
+            if(stderr){
+                console.log(`%c ${stderr}`, 'color: orange;');
+            }
+        });
+    }else{
+        console.log(`Executing "${path.join(saveDir, '1.bat')}"`);
+        exec(`"${path.join(saveDir, '1.bat')}"`, (err, stdout, stderr) => {
+            if(err){
+                console.log(`%c ${err}`, 'color: red;');
+            }
     
-    //         if(stdout){
-    //             console.log(`%c ${stdout}`, 'color: green;');
-    //         }
+            if(stdout){
+                console.log(`%c ${stdout}`, 'color: green;');
+            }
     
-    //         if(stderr){
-    //             console.log(`%c ${stderr}`, 'color: orange;');
-    //         }
-    //     });        
-    // }
+            if(stderr){
+                console.log(`%c ${stderr}`, 'color: orange;');
+            }
+        });        
+    }
 
     $('.run-selection-window').hide();
     $('#run-test-window').show();
