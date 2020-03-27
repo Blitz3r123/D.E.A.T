@@ -64,20 +64,39 @@ async function runTestsLocally(){
     let fileOutput;
     processes.forEach(process => {
         
-        fileOutput = '';
+        // fileOutput = '';
         
         process.files.forEach((file, index) => {
 
-            if(index !== (process.files.length - 1)){
-                fileOutput += `"${file.path}" && `;
-            }else{
-                fileOutput += `"${file.path}"\n`;
+            // Rewrite the bat files to add exit to their end
+            /*
+                For example:
+                
+                ```
+                perftest_java.bat ....
+                ```
+                
+                would become
+                
+                ```
+                perftest_java.bat ...
+                exit
+                ```
+
+            */
+
+           let fileContents = fs.readFileSync( file.path, 'utf8' );
+           
+           // Check if there is exit at the end:
+            if(!fileContents.split('\n').includes('exit')){
+                let toWrite = fs.readFileSync( file.path, 'utf8' ) + '\nexit';
+                fs.writeFileSync(file.path, toWrite);
             }
 
         });
-        fileOutput += `exit`;
+        // fileOutput += `exit`;
 
-        fs.writeFileSync(path.join(saveDir, `${process.title}.bat`), fileOutput);
+        // fs.writeFileSync(path.join(saveDir, `${process.title}.bat`), fileOutput);
     });
 
     // 2. Create bat file for all processes
@@ -87,6 +106,31 @@ async function runTestsLocally(){
     let batOut;
 
     batFiles.forEach((file, index) => {
+        console.log(file);
+        console.log(fs.readFileSync(path.join(saveDir, file), 'utf8'));
+
+        /*
+
+            This is just to help me find out what I want to do:
+
+            Imagine test1 has pub1 and sub1 to run, 
+                    test2 has pub2 and sub2 to run, 
+                    and so on until 
+                    test5 has pub5 and sub5 to run.
+
+            I want to run pub1 and sub1 at the same time,
+            wait for that to finish,
+            restart,
+            run pub2 and sub2 at same time,
+            wait for that to finish,
+            restart,
+            and so on until,
+            run pub5 and sub5 at same time,
+            wait for that to finish,
+            voila,
+            all done.
+
+        */
         // 3 cases: first, last and in between
         if(index == 0){                             // first
             batOut = `@echo off \n`;
@@ -119,36 +163,36 @@ async function runTestsLocally(){
 
 
     // 3. Run bat file created in step 2
-    if(process.platform === 'darwin'){              // Its a mac
-        exec(`chmod 755 "${path.join(saveDir, '1.bat')}" && ` + path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
-            if(err){
-                console.log(`%c ${err}`, 'color: red;');
-            }
+    // if(process.platform === 'darwin'){              // Its a mac
+    //     exec(`chmod 755 "${path.join(saveDir, '1.bat')}" && ` + path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
+    //         if(err){
+    //             console.log(`%c ${err}`, 'color: red;');
+    //         }
     
-            if(stdout){
-                console.log(`%c ${stdout}`, 'color: green;');
-            }
+    //         if(stdout){
+    //             console.log(`%c ${stdout}`, 'color: green;');
+    //         }
     
-            if(stderr){
-                console.log(`%c ${stderr}`, 'color: orange;');
-            }
-        });
-    }else{
-        console.log(`Executing "${path.join(saveDir, '1.bat')}"`);
-        exec(`"${path.join(saveDir, '1.bat')}"`, (err, stdout, stderr) => {
-            if(err){
-                console.log(`%c ${err}`, 'color: red;');
-            }
+    //         if(stderr){
+    //             console.log(`%c ${stderr}`, 'color: orange;');
+    //         }
+    //     });
+    // }else{
+    //     console.log(`Executing "${path.join(saveDir, '1.bat')}"`);
+    //     exec(`"${path.join(saveDir, '1.bat')}"`, (err, stdout, stderr) => {
+    //         if(err){
+    //             console.log(`%c ${err}`, 'color: red;');
+    //         }
     
-            if(stdout){
-                console.log(`%c ${stdout}`, 'color: green;');
-            }
+    //         if(stdout){
+    //             console.log(`%c ${stdout}`, 'color: green;');
+    //         }
     
-            if(stderr){
-                console.log(`%c ${stderr}`, 'color: orange;');
-            }
-        });        
-    }
+    //         if(stderr){
+    //             console.log(`%c ${stderr}`, 'color: orange;');
+    //         }
+    //     });        
+    // }
 
     $('.run-selection-window').hide();
     $('#run-test-window').show();

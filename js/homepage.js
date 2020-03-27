@@ -35,6 +35,7 @@ function renderRecentResults(){
 
     }else{
         console.log(`%c I can't find the path \n ${resDir}`, 'color: red;');
+        console.log(`%c Update the results folder in the settings!`, 'color: green;');
     }
 
 }
