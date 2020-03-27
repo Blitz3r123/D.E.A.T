@@ -53,18 +53,7 @@ async function runTestsLocally(){
         });
     });
     
-
-    /*
-        1. Create bat file for each process
-        2. Create bat file for all processes
-    */
-
-    // 1. Create bat file for each process
-
-    let fileOutput;
     processes.forEach(process => {
-        
-        // fileOutput = '';
         
         process.files.forEach((file, index) => {
 
@@ -72,16 +61,12 @@ async function runTestsLocally(){
             /*
                 For example:
                 
-                ```
                 perftest_java.bat ....
-                ```
                 
                 would become
                 
-                ```
                 perftest_java.bat ...
                 exit
-                ```
 
             */
 
@@ -93,10 +78,21 @@ async function runTestsLocally(){
                 fs.writeFileSync(file.path, toWrite);
             }
 
-        });
-        // fileOutput += `exit`;
+            // Create starter for each file
+            /*
+                Example stater file:
+                
+                start /wait "" "publisher 1.bat"
+                exit
 
-        // fs.writeFileSync(path.join(saveDir, `${process.title}.bat`), fileOutput);
+            */
+            let fileName = normaliseString( (file.title).replace('.bat', '') + ' starter.bat' );
+            let fileOutput = '';
+            fileOutput += `start /wait "" "${file.title}" \n`;
+            fileOutput += `exit`;
+            fs.writeFileSync( path.join(saveDir, fileName), fileOutput );
+        });
+
     });
 
     // 2. Create bat file for all processes
@@ -106,58 +102,38 @@ async function runTestsLocally(){
     let batOut;
 
     batFiles.forEach((file, index) => {
-        console.log(file);
-        console.log(fs.readFileSync(path.join(saveDir, file), 'utf8'));
-
-        /*
-
-            This is just to help me find out what I want to do:
-
-            Imagine test1 has pub1 and sub1 to run, 
-                    test2 has pub2 and sub2 to run, 
-                    and so on until 
-                    test5 has pub5 and sub5 to run.
-
-            I want to run pub1 and sub1 at the same time,
-            wait for that to finish,
-            restart,
-            run pub2 and sub2 at same time,
-            wait for that to finish,
-            restart,
-            and so on until,
-            run pub5 and sub5 at same time,
-            wait for that to finish,
-            voila,
-            all done.
-
-        */
+        // At this point, only starter files should be here
+        
         // 3 cases: first, last and in between
         if(index == 0){                             // first
             batOut = `@echo off \n`;
-            batOut += `start /wait "${file}" \n`;
+            batOut += `start "" "${file}" \n`;
             batOut += `REG ADD "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "2.bat" /t REG_SZ /F /D "2.bat" \n`;
-            batOut += `mkdir "${file.replace('.bat', '')}" \n`;
-            batOut += `move *.csv "${file.replace('.bat', '')}" \n`;
+            batOut += `mkdir "${file.replace('.bat', '').replace('_starter', '')}" \n`;
+            batOut += `move *.csv "${file.replace('.bat', '').replace('_starter', '')}" \n`;
             batOut += `pause \n`;
             batOut += `shutdown -r -t 0 \n`;
             fs.writeFileSync(`${path.join( saveDir, (index + 1) + '.bat' )}`, batOut);
+            // console.log(batOut);
         }else if(index == batFiles.length - 1){         // last
             batOut = `@echo off \n`;
-            batOut += `start /wait "${file}" \n`;
+            batOut += `start "" "${file}" \n`;
             batOut += `REG DELETE "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "${index + 1}.bat" /t REG_SZ /F /D "${index + 1}.bat" \n`;
-            batOut += `mkdir "${file.replace('.bat', '')}" \n`;
-            batOut += `move *.csv "${file.replace('.bat', '')}" \n`;
+            batOut += `mkdir "${file.replace('.bat', '').replace('_starter', '')}" \n`;
+            batOut += `move *.csv "${file.replace('.bat', '').replace('_starter', '')}" \n`;
             fs.writeFileSync(`${path.join( saveDir, (index + 1) + '.bat' )}`, batOut);
+            // console.log(batOut);
         }else{                                      // in between
             batOut = `@echo off \n`;
-            batOut += `start /wait "${file}" \n`;
+            batOut += `start "" "${file}" \n`;
             batOut += `REG DELETE "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "${index + 1}.bat"\n`;
             batOut += `REG ADD "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" /V "${index + 2}.bat" /t REG_SZ /F /D "${index + 2}.bat" \n`;
-            batOut += `mkdir "${file.replace('.bat', '')}" \n`;
-            batOut += `move *.csv "${file.replace('.bat', '')}" \n`;
+            batOut += `mkdir "${file.replace('.bat', '').replace('_starter', '')}" \n`;
+            batOut += `move *.csv "${file.replace('.bat', '').replace('_starter', '')}" \n`;
             batOut += `pause \n`;
             batOut += `shutdown -r -t 0 \n`;
             fs.writeFileSync(`${path.join( saveDir, (index + 1) + '.bat' )}`, batOut);
+            // console.log(batOut);
         }
     });
 
