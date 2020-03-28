@@ -28,11 +28,26 @@ function setState(item, value){
     document.querySelector('#runContent').setAttribute(item, value);
 }
 
+$('#process-dropdown-selection').on('change', e => {showConsole(e.target.value)});
+
 $('#run-test-go-button').on('click', e => {
     let option = getRunOption();
 
     option == 'local' ? runTestsLocally() : runTestsRemotely();
 });
+
+function showConsole(value){
+    let saveDir = path.join(__dirname, '../data/currentRun');
+    let output = JSON.parse(fs.readFileSync( path.join(saveDir, 'runConf.json') )).filter(a => a.title == value)[0].output;
+    let consoleOut = document.querySelector('#run-test-console');
+
+    if(output == ''){
+        consoleOut.value = 'Pending...';
+    }else{
+        consoleOut.value = output;
+    }
+    
+}
 
 function runTestsRemotely(){
     console.log(`%c Running tests remotely...shhhhhhhh......`, 'color: blue;');
@@ -40,7 +55,7 @@ function runTestsRemotely(){
 
 async function runTestsLocally(){
     let processes = data.processes;
-    let saveDir = path.join(__dirname, '../data/currentRun');;
+    let saveDir = path.join(__dirname, '../data/currentRun');
 
     // Empty the currentRun folder before adding new files into it
     setCurrentProcessDom(processes[0]);
@@ -80,7 +95,7 @@ async function runTestsLocally(){
 
             // Create starter for each file
             /*
-                Example stater file:
+                Example starter file:
                 
                 start /wait "" "publisher 1.bat"
                 exit
@@ -137,24 +152,65 @@ async function runTestsLocally(){
         }
     });
 
+    // Create run config file
+    /*
+        Example:
+
+        title: '1.bat',
+        path: 'path/to/1.bat',
+        status: 'running',
+        output: ''                      // This is the console output
+
+    */
+    let confOut = [];
+
+    fs.readdirSync(saveDir).filter(a => !(a.includes('_starter'))).forEach(file => {
+        
+        let fileConf = {
+            title: '',
+            path: '',
+            status: 'running',
+            output: ''
+        };
+
+        fileConf.title = file;
+        fileConf.path = path.join(saveDir, file);
+
+        confOut.push(fileConf);
+
+    });
+
+    fs.writeFileSync( path.join( saveDir, 'runConf.json' ), JSON.stringify(confOut) );
 
     // 3. Run bat file created in step 2
     if(process.platform === 'darwin'){              // Its a mac
+        let runConf = fs.readFileSync( path.join(saveDir, 'runConf.json') );
+        runConf = JSON.parse(runConf);
+        
         exec(`chmod 755 "${path.join(saveDir, '1.bat')}" && ` + path.join(saveDir, '1.bat'), (err, stdout, stderr) => {
+
             if(err){
-                console.log(`%c ${err}`, 'color: red;');
+                // console.log(`%c ${err}`, 'color: red;');
+                runConf[0].output += err;
+                fs.writeFileSync( path.join( saveDir, 'runConf.json' ), JSON.stringify(runConf) );
             }
-    
+            
             if(stdout){
-                console.log(`%c ${stdout}`, 'color: green;');
+                // console.log(`%c ${stdout}`, 'color: green;');
+                runConf[0].output += stdout;
+                fs.writeFileSync( path.join( saveDir, 'runConf.json' ), JSON.stringify(runConf) );
             }
-    
+            
             if(stderr){
-                console.log(`%c ${stderr}`, 'color: orange;');
+                // console.log(`%c ${stderr}`, 'color: orange;');
+                runConf[0].output += stderr;
+                fs.writeFileSync( path.join( saveDir, 'runConf.json' ), JSON.stringify(runConf) );
             }
         });
+
+        
     }else{
-        console.log(`Executing "${path.join(saveDir, '1.bat')}"`);
+        // console.log(`Executing "${path.join(saveDir, '1.bat')}"`);
         exec(`"${path.join(saveDir, '1.bat')}"`, (err, stdout, stderr) => {
             if(err){
                 console.log(`%c ${err}`, 'color: red;');
@@ -170,8 +226,30 @@ async function runTestsLocally(){
         });        
     }
 
+    renderTestDropdown();    
+    showConsole('1.bat');
+
     $('.run-selection-window').hide();
     $('#run-test-window').show();
+}
+
+function renderTestDropdown(){
+    let dropdown = document.querySelector('#process-dropdown-selection');
+    let saveDir = path.join(__dirname, '../data/currentRun');
+    let testBatFiles = fs.readdirSync( saveDir ).filter(a => !(a.includes('_starter')) && path.extname(a) == '.bat' );
+
+    clearList(dropdown);
+
+    testBatFiles.forEach(file => {
+
+        let option = document.createElement('option');
+        option.value = file;
+        option.textContent = file;
+
+        dropdown.appendChild(option);
+
+    });
+
 }
 
 function setCurrentProcessDom(process){
@@ -210,23 +288,6 @@ function startTests(){
 
     $('.run-selection-window').hide();
     $('#run-test-window').show();
-}
-
-function populateRunFileList(){
-    let processes = data.processes;
-
-    let pendingProcesses = processes.filter(a => a.status.toLowerCase() == 'pending');
-
-    let dropdown = document.querySelector('#process-dropdown-selection');
-
-    pendingProcesses[0].files.forEach(file => {
-        let optiondom = document.createElement('option');
-        optiondom.value = file.path;
-        optiondom.textContent = file.title;
-        dropdown.appendChild(optiondom);
-    });
-
-    document.querySelector('#current-process-title').textContent = pendingProcesses[0].title;
 }
 
 function removeFileItem(event){
