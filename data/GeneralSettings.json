@@ -1,1 +1,8 @@
-{"defPerftestLoc":"C:\\Users\\kalee\\Documents\\RTI Performance Testing\\performance-testing\\rtiperftest\\perftest_java.bat","defScriptLoc":"/Users/kaleem/Documents/D.E.A.T_Testing/Scripts","testFolderLoc":"/Users/kaleem/Documents/D.E.A.T_Testing/Tests","pubResultLoc":"/Users/kaleem/Documents/D.E.A.T_Testing/Publisher Results","subResultLoc":"/Users/kaleem/Documents/D.E.A.T_Testing/Subscriber Results","nddsHomeLoc":"/Users/kaleem/Documents/University"}
+{
+    "defPerftestLoc": "C:\\Users\\kalee\\Documents\\RTI Performance Testing\\performance-testing\\rtiperftest\\perftest_java.bat",
+    "defScriptLoc": "/Users/kaleem/Documents/D.E.A.T_Testing/Scripts",
+    "testFolderLoc": "/Users/kaleem/Documents/D.E.A.T_Testing/Tests",
+    "pubResultLoc": "/Users/kaleem/Documents/D.E.A.T_Testing/Publisher Results",
+    "subResultLoc": "/Users/kaleem/Documents/D.E.A.T_Testing/Subscriber Results",
+    "nddsHomeLoc": "/Users/kaleem/Documents/University"
+}

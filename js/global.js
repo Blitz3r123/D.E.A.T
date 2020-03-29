@@ -11,8 +11,8 @@ var hasError;
 // HIDE ALL WINDOWS EXCEPT INDEX
 $('#createContent').hide();
 $('#createTestContent').hide();
-// $('#runContent').hide();
-$('#indexContent').hide();
+$('#runContent').hide();
+// $('#indexContent').hide();
 $('#analyseContent').hide();
 $('#settingsContent').hide();
 
@@ -917,39 +917,101 @@ function createPubBatOutput(perftestLoc, generalSettings, publisherSettings){
 
     generalSettings.forEach(item => {
         if(item.title == 'Best Effort'){
-            item.value ? generalOutput += ' -bestEffort ' : generalOutput += '';
+            
+            // item.value ? generalOutput += ' -bestEffort ' : generalOutput += '';
+
+            if(item.value == true){
+                generalOutput += ' -bestEffort ';
+            }
+
         }else if(item.title == 'Data Length (bytes)'){
             generalOutput += ' -dataLen ' + item.value;
         }else if(item.title == 'Verbosity'){
             generalOutput += ' -verbosity ' + item.value;
         }else if(item.title == 'Dynamic Data'){
-            item.value ? generalOutput += ' -dynamicData ' : generalOutput += '';
+            
+            // item.value ? generalOutput += ' -dynamicData ' : generalOutput += '';
+
+            if(item.value == true){
+                generalOutput += ' -dynamicData ';
+            }
+
         }else if(item.title == 'Durability'){
             generalOutput += ' -durability ' + item.value;
         }else if(item.title == 'Domain ID'){
             generalOutput += ' -domain ' + item.value;
         }else if(item.title == 'Keyed Data'){
-            item.value ? generalOutput += ' -keyed' : generalOutput += '';
+            
+            // item.value ? generalOutput += ' -keyed' : generalOutput += '';
+
+            if(item.value == true){
+                generalOutput += ' -keyed';
+            }
+
         }else if(item.title == 'Multicast'){
-            item.value ? generalOutput += ' -multicast' : generalOutput = generalOutput;
+            
+            // item.value ? generalOutput += ' -multicast' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -multicast';
+            }
+
         }else if(item.title == 'Direct Communication'){
-            item.value ? generalOutput += '' : generalOutput += ' -noDirectCommunication ';
+            
+            // item.value ? generalOutput += '' : generalOutput += ' -noDirectCommunication ';
+
+            if(item.value == false){
+                generalOutput += ' -noDirectCommunication ';
+            }
+
         }else if(item.title == 'Positive Acknowledgements'){
-            item.value ? generalOutput += '' : generalOutput += ' -noPositiveAcks ';
+            
+            // item.value ? generalOutput += '' : generalOutput += ' -noPositiveAcks ';
+
+            if(item.value == false){
+                generalOutput += ' -noPositiveAcks ';
+            }
+
         }else if(item.title == 'Print Interval'){
-            item.value ? generalOutput += '' : generalOutput += ' -noPrintIntervals ';
+            
+            // item.value ? generalOutput += '' : generalOutput += ' -noPrintIntervals ';
+
+            if(item.value == false){
+                generalOutput += ' -noPrintIntervals ';
+            }
+
         }else if(item.title == 'Custom QOS File'){
-            generalOutput += ' -qosProfile ' + item.value;
+
+            // Check the path actually exists
+            if(isFolder(item.value)){
+                generalOutput += ' -qosProfile ' + item.value;
+            }
+
         }else if(item.title == 'Use Read Thread'){
-            item.value ? generalOutput += ' -useReadThread ' : generalOutput = generalOutput;
+            // item.value ? generalOutput += ' -useReadThread ' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -useReadThread ';
+            }
+
         }else if(item.title == 'Wait Set Delay (Microseconds)'){
             generalOutput += ' -waitSetDelayUSec ' + item.value;
         }else if(item.title == 'Wait Set Event Count'){
             generalOutput += ' -waitSetEventCount ' + item.value;
         }else if(item.title == 'Asynchronous'){
-            item.value ? generalOutput += ' -asynchronous ' : generalOutput = generalOutput;
+            // item.value ? generalOutput += ' -asynchronous ' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -asynchronous ';
+            }
+
         }else if(item.title == 'Display CPU'){
-            item.value ? generalOutput += ' -cpu ' : generalOutput = generalOutput;
+            // item.value ? generalOutput += ' -cpu ' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -cpu ';
+            }
+
         }
     });
 
@@ -958,17 +1020,37 @@ function createPubBatOutput(perftestLoc, generalSettings, publisherSettings){
         if(item.title == 'Batch Size'){
             publisherOutput += ' -batchSize ' + item.value;
         }else if(item.title == 'Enable Auto Throttle'){
-            item.value ? publisherOutput += ' -enableAutoThrottle ' : publisherOutput = publisherOutput;
+
+            // item.value ? publisherOutput += ' -enableAutoThrottle ' : publisherOutput = publisherOutput;
+
+            if(item.value == true){
+                publisherOutput += ' -enableAutoThrottle ';
+            }
+
         }else if(item.title == 'Enable Turbo Mode'){
-            item.value ? publisherOutput += ' -enableTurboMode ' : publisherOutput = publisherOutput;
+            
+            // item.value ? publisherOutput += ' -enableTurboMode ' : publisherOutput = publisherOutput;
+
+            if(item.value == true){
+                publisherOutput += ' -enableTurboMode ';
+            }
+
         }else if(item.title == 'Execution Time (s)'){
             publisherOutput += ' -executionTime ' + item.value;
         }else if(item.title == 'Number of Iterations'){
             publisherOutput += ' -numIter ' + item.value;
         }else if(item.title == 'Latency Test'){
-            item.value ? publisherOutput += ' -latencyTest ' : publisherOutput = publisherOutput;
+
+            if(item.value == true){
+                publisherOutput += ' -latencyTest ';
+            }
+            
         }else if(item.title == 'Latency Count'){
-            publisherOutput += ' -latencyCount ' + item.value;           
+
+            if(publisherOutput.includes(' -latencyTest ')){
+                publisherOutput += ' -latencyCount ' + item.value;           
+            }
+
         }else if(item.title == 'Number of Subscribers'){
             publisherOutput += ' -numSubscribers ' + item.value;
         }else if(item.title == 'Publisher ID'){
@@ -990,39 +1072,93 @@ function createSubBatOutput(perftestLoc, generalSettings, subscriberSettings){
 
     generalSettings.forEach(item => {
         if(item.title == 'Best Effort'){
-            item.value ? generalOutput += ' -bestEffort ' : generalOutput += '';
+            // item.value ? generalOutput += ' -bestEffort ' : generalOutput += '';
+
+            if(item.value == true){
+                generalOutput += ' -bestEffort ';
+            }
+
         }else if(item.title == 'Data Length (bytes)'){
             generalOutput += ' -dataLen ' + item.value;
         }else if(item.title == 'Verbosity'){
             generalOutput += ' -verbosity ' + item.value;
         }else if(item.title == 'Dynamic Data'){
-            item.value ? generalOutput += ' -dynamicData ' : generalOutput += '';
+            // item.value ? generalOutput += ' -dynamicData ' : generalOutput += '';
+
+            if(item.value == true){
+                generalOutput += ' -dynamicData ';
+            }
+
         }else if(item.title == 'Durability'){
             generalOutput += ' -durability ' + item.value;
         }else if(item.title == 'Domain ID'){
             generalOutput += ' -domain ' + item.value;
         }else if(item.title == 'Keyed Data'){
-            item.value ? generalOutput += ' -keyed' : generalOutput += '';
+            // item.value ? generalOutput += ' -keyed' : generalOutput += '';
+
+            if(item.value == true){
+                generalOutput += ' -keyed';
+            }
+
         }else if(item.title == 'Multicast'){
-            item.value ? generalOutput += ' -multicast' : generalOutput = generalOutput;
+            // item.value ? generalOutput += ' -multicast' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -multicast';
+            }
+
         }else if(item.title == 'Direct Communication'){
-            item.value ? generalOutput += '' : generalOutput += ' -noDirectCommunication ';
+            // item.value ? generalOutput += '' : generalOutput += ' -noDirectCommunication ';
+
+            if(item.value == false){
+                generalOutput += ' -noDirectCommunication ';
+            }
+
         }else if(item.title == 'Positive Acknowledgements'){
-            item.value ? generalOutput += '' : generalOutput += ' -noPositiveAcks ';
+            // item.value ? generalOutput += '' : generalOutput += ' -noPositiveAcks ';
+
+            if(item.value == false){
+                generalOutput += ' -noPositiveAcks ';
+            }
+
         }else if(item.title == 'Print Interval'){
-            item.value ? generalOutput += '' : generalOutput += ' -noPrintIntervals ';
-        }else if(item.title == 'Custom QOS File'){
-            generalOutput += ' -qosProfile ' + item.value;
+            // item.value ? generalOutput += '' : generalOutput += ' -noPrintIntervals ';
+
+            if(item.value == false){
+                generalOutput += ' -noPrintIntervals ';
+            }
+
+        }else if(item.title == 'Custom QOS File'){            
+            
+            if(isFolder(item.value)){
+                generalOutput += ' -qosProfile ' + item.value;
+            }
+
         }else if(item.title == 'Use Read Thread'){
-            item.value ? generalOutput += ' -useReadThread ' : generalOutput = generalOutput;
+            // item.value ? generalOutput += ' -useReadThread ' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -useReadThread ';
+            }
+
         }else if(item.title == 'Wait Set Delay (Microseconds)'){
             generalOutput += ' -waitSetDelayUSec ' + item.value;
         }else if(item.title == 'Wait Set Event Count'){
             generalOutput += ' -waitSetEventCount ' + item.value;
         }else if(item.title == 'Asynchronous'){
-            item.value ? generalOutput += ' -asynchronous ' : generalOutput = generalOutput;
+            // item.value ? generalOutput += ' -asynchronous ' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -asynchronous ';
+            }
+
         }else if(item.title == 'Display CPU'){
-            item.value ? generalOutput += ' -cpu ' : generalOutput = generalOutput;
+            // item.value ? generalOutput += ' -cpu ' : generalOutput = generalOutput;
+
+            if(item.value == true){
+                generalOutput += ' -cpu ';
+            }
+
         }
     });
 
@@ -1059,7 +1195,7 @@ function formatNumber(num){
 }
 
 function isFolder(pathval){
-    return fs.lstatSync(pathval).isDirectory();
+    return fs.existsSync(pathval) && fs.lstatSync(pathval).isDirectory();
 }
 
 function pathExists(pathval){

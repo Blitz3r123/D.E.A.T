@@ -138,7 +138,7 @@ function createDefPub(){
     let defScriptLoc = generalSettings.defScriptLoc;
     let perfTestLoc = generalSettings.defPerftestLoc;
 
-    let pubFiles = readFolder(defScriptLoc).filter(a => a.toLowerCase().includes('publisher'));
+    let pubFiles = fs.readdirSync(defScriptLoc).filter(a => a.toLowerCase().includes('publisher'));
 
     let newName = 'Publisher ' + (pubFiles.length + 1) + '.bat';
 
@@ -147,7 +147,7 @@ function createDefPub(){
 
     let output = createPubBatOutput(perfTestLoc, generalSettingValues, publisherSettingValues);
 
-    fs.writeFile(path.join(defScriptLoc, newName), output, err => err ? console.log(err) : console.log(''));
+    fs.writeFileSync(path.join(defScriptLoc, newName), output);
     showPopup('Publisher Created in ' + defScriptLoc + '!');
     populateQuickRunLists();
 }
