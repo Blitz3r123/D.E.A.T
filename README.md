@@ -26,5 +26,3 @@ For Windows:
 4. Edit the `package.json` file and change `--platform=darwin` to correspond with your operating system.
 4. Enter `npm run build` to build the application.
 5. The application should be found in the newly created folder (folder name may differ).
-
-**_This application is currently under heavy development. Once the application reaches a deployable state this message will disappear._**
