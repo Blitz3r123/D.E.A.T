@@ -394,16 +394,6 @@ function analyseFile(file){
         });
 
         $('#graph-loader').hide();
-
-        // var chart = c3.generate({
-        //     bindto: '#nonzero-graph-container',
-        //     data: {
-        //         columns: [
-        //         nonZeroArray
-        //         ]
-        //     }
-        // });
-
     }
 
 }

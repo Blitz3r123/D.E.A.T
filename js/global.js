@@ -97,7 +97,7 @@ $('.selection-close-button').on('click', e => {
 
 /*
     SEARCH TAGS:
-    STATUS: In Progress
+    STATUS: Complete
     DESCRIPTION: Adds publisher to create test and also writes to file
 */
 $('#addPublisher').on('click', e => {
@@ -755,9 +755,6 @@ function showContent(content){
     $('#runContent').hide();
     $('#analyseContent').hide();
     $('#settingsContent').hide();
-
-    // Check for data if content is #createTestContent
-    // readCreateTestData('./../data/CreateTest.json');
 
     // Show parameter content
     $(content).show();

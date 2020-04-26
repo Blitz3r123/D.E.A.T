@@ -1,8 +1,8 @@
 @echo off 
-start "" "Publisher_4_starter.bat" 
+start "" "Subscriber_1_starter.bat" 
 REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "4.bat"
 REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "5.bat" /t REG_SZ /F /D "5.bat" 
-mkdir "Publisher_4" 
-move *.csv "Publisher_4" 
+mkdir "Subscriber_1" 
+move *.csv "Subscriber_1" 
 pause 
 shutdown -r -t 0 

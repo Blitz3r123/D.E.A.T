@@ -1,14 +1,8 @@
 let createTestState = document.querySelector('#create-test-settings').attributes;
 
-// $('#create-test-index').hide();
 $('#create-test-settings').hide();
 $('.run-create-test-container').hide();
 $('.test-list-content .empty-message').hide();
-
-// Delete following 3 line when finished working on this:
-// $('#create-test-settings').show();
-// $('#create-test-index').hide();
-// $('#create-test-rdp-settings').show();
 
 createTestConstructor();
 
@@ -103,7 +97,6 @@ async function renderMachineList(){
             machines.forEach(machine => {
                 let machineItem = createMachineItem(machine);
                 list.appendChild(machineItem);
-                // console.log(machine);
             });
         }
 

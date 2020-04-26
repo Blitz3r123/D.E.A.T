@@ -51,7 +51,7 @@
     overflow-y: scroll;
 }
 
-.settings-column{width: 90%; margin-left: 5%; padding: 3vh 0;}
+.settings-column{padding: 3vh 0;}
 
 .setting{padding: 2vh 6vw; border-bottom: 1px solid #eee; border-right: 1px solid #eee; border-left: 1px solid #eee; margin: 0; display: flex; justify-content: space-between; align-items: center;}
 .create-setting{padding: 2vh 6vw; border-bottom: 1px solid #eee; border-right: 1px solid #eee; border-left: 1px solid #eee; margin: 0; display: flex; justify-content: space-between; align-items: center;}
