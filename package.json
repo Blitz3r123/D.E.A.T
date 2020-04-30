@@ -10,7 +10,7 @@
   "author": "Kaleem Peeroo",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   },
   "devDependencies": {
     "electron": "^6.1.7",
