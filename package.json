@@ -16,6 +16,6 @@
     "electron": "^6.1.7",
     "node-rdpjs": "^0.3.0",
     "electron-packager": "^14.2.1",
-    "mathjs": "^6.6.0"
+    "mathjs": "^7.5.1"
   }
 }
