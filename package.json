@@ -13,7 +13,7 @@
     "jquery": "^3.4.1"
   },
   "devDependencies": {
-    "electron": "^6.1.7",
+    "electron": "^11.5.0",
     "node-rdpjs": "^0.3.0",
     "electron-packager": "^14.2.1",
     "mathjs": "^6.6.0"
